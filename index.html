@@ -3,15 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Krishna Anvith V | Upgrade in Progress</title>
+    <title>Krishna Anvith V | Data Scientist & AI Engineer</title>
     
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
     <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.7.0/vanilla-tilt.min.js"></script>
+    
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     <style>
-        /* --- CSS VARIABLES (Your Original Theme) --- */
+        /* --- CSS VARIABLES --- */
         :root {
+            /* Light Theme */
             --primary: #1e3a8a;
             --accent: #2563eb;
             --bg-body: #f8fafc;
@@ -19,10 +24,12 @@
             --text-main: #0f172a;
             --text-sub: #475569;
             --border: #e2e8f0;
+            --shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.1);
             --nav-bg: rgba(255, 255, 255, 0.85);
         }
 
         [data-theme="dark"] {
+            /* Dark Theme */
             --primary: #60a5fa;
             --accent: #3b82f6;
             --bg-body: #0b1120;
@@ -30,171 +37,139 @@
             --text-main: #f8fafc;
             --text-sub: #94a3b8;
             --border: #334155;
+            --shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.5);
             --nav-bg: rgba(11, 17, 32, 0.95);
         }
 
+        /* --- RESET --- */
         * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { transition: background-color 0.3s, color 0.3s; font-family: 'Inter', sans-serif; background-color: var(--bg-body); color: var(--text-main); line-height: 1.6; overflow-x: hidden; }
+        a, .btn, .theme-switch, .form-control { transition: 0.3s; }
         
-        body { 
-            font-family: 'Inter', sans-serif;
-            background-color: var(--bg-body);
-            color: var(--text-main);
-            line-height: 1.6;
-            overflow: hidden; /* Lock scroll for single page feel */
-            height: 100vh;
-            display: flex;
-            flex-direction: column;
-            transition: background-color 0.3s, color 0.3s;
-        }
+        /* --- CANVAS BG --- */
+        #canvas-bg { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; }
 
-        #canvas-bg {
-            position: fixed;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            z-index: -1;
-        }
+        a { text-decoration: none; color: inherit; }
+        ul { list-style: none; }
+        .section-padding { padding: 6rem 5%; }
+        
+        /* --- ANIMATIONS --- */
+        .reveal { opacity: 0; transform: translateY(30px); transition: all 0.8s ease-out; }
+        .reveal.active { opacity: 1; transform: translateY(0); }
+        
+        @keyframes float { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-15px); } }
 
-        /* --- HEADER --- */
-        header {
-            position: absolute; top: 0; width: 100%; z-index: 100;
-            padding: 1.5rem 5%; display: flex; justify-content: space-between; align-items: center;
-        }
-        .logo {
-            font-size: 1.5rem; font-weight: 800; letter-spacing: -1px;
-            background: linear-gradient(to right, var(--primary), var(--accent));
-            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-        }
-        .theme-switch { cursor: pointer; padding: 0.5rem; font-size: 1.2rem; color: var(--text-main); transition: 0.3s; }
+        /* --- NAV --- */
+        header { position: sticky; top: 0; z-index: 1000; background: var(--nav-bg); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); padding: 1rem 5%; display: flex; justify-content: space-between; align-items: center; }
+        .logo { font-size: 1.5rem; font-weight: 800; letter-spacing: -1px; background: linear-gradient(to right, var(--primary), var(--accent)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; white-space: nowrap; }
+        nav { display: flex; align-items: center; gap: 1.5rem; flex-wrap: nowrap; }
+        nav ul { display: flex; gap: 1.5rem; }
+        nav a { font-weight: 500; font-size: 0.95rem; position: relative; white-space: nowrap; }
+        nav a:hover { color: var(--accent); }
+        nav a::after { content: ''; position: absolute; width: 0; height: 2px; bottom: -4px; left: 0; background: var(--accent); transition: 0.3s; }
+        nav a:hover::after { width: 100%; }
+        .theme-switch { cursor: pointer; padding: 0.5rem; font-size: 1.2rem; display: flex; align-items: center; }
         .theme-switch:hover { transform: rotate(20deg); color: var(--accent); }
 
-        /* --- MAIN CENTERED CONTENT --- */
-        .main-container {
-            flex: 1;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 2rem;
-            position: relative;
-            z-index: 1;
-        }
-
-        .maintenance-card {
-            background: var(--bg-card);
-            backdrop-filter: blur(15px);
-            border: 1px solid var(--border);
-            border-radius: 24px;
-            padding: 3rem;
-            max-width: 700px;
-            text-align: center;
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
-            
-            /* Tilt Settings */
-            transform-style: preserve-3d;
-            transform: perspective(1000px);
-        }
-
-        .status-badge {
-            display: inline-flex; align-items: center; gap: 8px;
-            background: rgba(245, 158, 11, 0.1);
-            color: #f59e0b;
-            border: 1px solid rgba(245, 158, 11, 0.3);
-            padding: 6px 16px;
-            border-radius: 50px;
-            font-size: 0.85rem;
-            font-weight: 600;
-            margin-bottom: 1.5rem;
-            transform: translateZ(30px);
-        }
-
-        h1 {
-            font-size: 3.5rem;
-            font-weight: 800;
-            line-height: 1.1;
-            margin-bottom: 1rem;
-            letter-spacing: -1px;
-            transform: translateZ(40px);
-        }
-
-        .highlight-text {
-            color: var(--accent);
-        }
-
-        p.description {
-            color: var(--text-sub);
-            font-size: 1.1rem;
-            margin-bottom: 2.5rem;
-            transform: translateZ(30px);
-        }
-
-        .btn-container {
-            display: flex;
-            justify-content: center;
-            gap: 1rem;
-            transform: translateZ(50px);
-        }
-
-        .btn {
-            padding: 0.8rem 2rem;
-            border-radius: 50px;
-            font-weight: 600;
-            display: inline-flex; gap: 0.5rem; align-items: center;
-            font-size: 0.95rem;
-            text-decoration: none;
-            transition: 0.3s;
-            cursor: pointer;
-        }
-
-        .btn-primary {
-            background: var(--accent);
-            color: white;
-            box-shadow: 0 5px 15px rgba(37, 99, 235, 0.3);
-        }
-        .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 8px 25px rgba(37, 99, 235, 0.5); }
-
-        .btn-outline {
-            border: 2px solid var(--border);
-            color: var(--text-main);
-        }
-        .btn-outline:hover {
-            border-color: var(--accent);
-            color: var(--accent);
-        }
-
-        /* --- LOADING BAR ANIMATION --- */
-        .loader-container {
-            width: 100%;
-            height: 6px;
-            background: var(--border);
-            border-radius: 10px;
-            margin: 2rem 0;
-            overflow: hidden;
-            position: relative;
-            transform: translateZ(20px);
-        }
+        /* --- HERO --- */
+        .hero { min-height: 90vh; display: flex; align-items: center; justify-content: space-between; }
+        .hero-text { flex: 1; padding-right: 3rem; }
+        .hero-greeting { font-size: 1.2rem; font-weight: 600; color: var(--accent); display: block; margin-bottom: 0.5rem; }
+        .hero h1 { font-size: 4.2rem; font-weight: 800; line-height: 1.1; margin-bottom: 1rem; letter-spacing: -1.5px; }
+        .hero-role { font-size: 1.5rem; font-weight: 600; color: var(--text-sub); margin-bottom: 1.5rem; }
+        .typewriter { font-family: 'Courier New', monospace; color: var(--accent); font-weight: 700; }
         
-        .loader-bar {
-            height: 100%;
-            background: var(--accent);
-            width: 60%;
-            border-radius: 10px;
-            position: relative;
-            animation: load 3s ease-in-out infinite;
-        }
+        .btn { padding: 0.8rem 2rem; border-radius: 50px; font-weight: 600; display: inline-flex; gap: 0.5rem; align-items: center; font-size: 0.95rem; cursor: pointer; border: none; }
+        .btn-primary { background: var(--accent); color: white; box-shadow: 0 5px 15px rgba(37, 99, 235, 0.3); }
+        .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 8px 25px rgba(37, 99, 235, 0.5); }
+        .btn-outline { border: 2px solid var(--border); color: var(--text-main); background: transparent; }
+        .btn-outline:hover { border-color: var(--accent); color: var(--accent); background: rgba(37, 99, 235, 0.05); }
 
-        @keyframes load {
-            0% { width: 10%; }
-            50% { width: 70%; }
-            100% { width: 100%; }
-        }
+        .hero-image-wrapper { position: relative; z-index: 1; }
+        .hero-image-wrapper::before { content: ''; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 120%; height: 120%; background: radial-gradient(circle, var(--accent) 0%, transparent 70%); opacity: 0.15; filter: blur(40px); z-index: -1; animation: float 6s ease-in-out infinite reverse; }
+        .hero-image { width: 380px; height: 380px; border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%; object-fit: cover; border: 4px solid var(--bg-body); box-shadow: 0 20px 40px rgba(0,0,0,0.2); animation: float 6s ease-in-out infinite; }
 
-        footer {
-            text-align: center; padding: 1.5rem; color: var(--text-sub); font-size: 0.9rem; z-index: 10;
-        }
+        /* --- MARQUEE (New Feature) --- */
+        .marquee-container { overflow: hidden; padding: 2rem 0; background: rgba(255,255,255,0.02); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); margin-top: -2rem; margin-bottom: 2rem; }
+        .marquee { display: flex; gap: 4rem; width: max-content; animation: scroll 30s linear infinite; }
+        .marquee-item { display: flex; align-items: center; gap: 10px; color: var(--text-sub); font-weight: 600; font-size: 1.2rem; }
+        .marquee-item i { color: var(--accent); font-size: 1.5rem; }
+        @keyframes scroll { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+
+        /* --- SECTIONS --- */
+        .section-header { text-align: center; margin-bottom: 4rem; }
+        .section-title { font-size: 2.5rem; font-weight: 800; margin-bottom: 0.5rem; }
+        .underline { width: 60px; height: 5px; background: var(--accent); margin: 0 auto; border-radius: 5px; }
+
+        /* --- CARDS --- */
+        .grid-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 2rem; }
+        .card { background: var(--bg-card); border: 1px solid var(--border); padding: 2rem; border-radius: 20px; display: flex; flex-direction: column; backdrop-filter: blur(10px); transform-style: preserve-3d; transform: perspective(1000px); }
+        .card h3 { font-size: 1.4rem; margin-bottom: 0.5rem; font-weight: 700; color: var(--text-main); transform: translateZ(30px); }
+        .tags { margin-bottom: 1rem; display: flex; flex-wrap: wrap; gap: 0.5rem; transform: translateZ(30px); }
+        .tags .tag { background: rgba(59, 130, 246, 0.1); color: var(--accent); padding: 4px 12px; border-radius: 20px; font-size: 0.75rem; font-weight: 600; border: 1px solid rgba(59, 130, 246, 0.2); }
+        .card p { color: var(--text-sub); font-size: 0.95rem; margin-bottom: 1.5rem; flex-grow: 1; transform: translateZ(20px); }
+        
+        .card-actions { display: flex; gap: 1rem; transform: translateZ(40px); }
+        .card-link { color: var(--accent); font-weight: 700; display: inline-flex; align-items: center; gap: 5px; cursor: pointer; font-size: 0.9rem; }
+        .card-link:hover { text-decoration: underline; }
+
+        /* --- MODAL (New Feature) --- */
+        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); backdrop-filter: blur(5px); z-index: 3000; display: none; justify-content: center; align-items: center; opacity: 0; transition: opacity 0.3s; }
+        .modal-overlay.open { opacity: 1; }
+        .modal-content { background: var(--bg-body); width: 90%; max-width: 700px; padding: 2.5rem; border-radius: 20px; border: 1px solid var(--border); position: relative; max-height: 90vh; overflow-y: auto; box-shadow: 0 25px 50px rgba(0,0,0,0.5); transform: translateY(20px); transition: transform 0.3s; }
+        .modal-overlay.open .modal-content { transform: translateY(0); }
+        .modal-close { position: absolute; top: 1.5rem; right: 1.5rem; font-size: 1.5rem; cursor: pointer; color: var(--text-sub); transition: 0.3s; }
+        .modal-close:hover { color: var(--accent); }
+        .modal-body h2 { color: var(--accent); margin-bottom: 1.5rem; }
+        .modal-section { margin-bottom: 1.5rem; }
+        .modal-section h4 { color: var(--text-main); font-size: 1.1rem; margin-bottom: 0.5rem; border-left: 3px solid var(--accent); padding-left: 10px; }
+        .modal-section p { color: var(--text-sub); font-size: 0.95rem; }
+
+        /* --- SKILLS & CHART --- */
+        .chart-container { max-width: 600px; margin: 0 auto 3rem; position: relative; height: 350px; }
+        .skill-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 1.5rem; }
+        .skill-box { background: var(--bg-card); border: 1px solid var(--border); padding: 1.5rem; text-align: center; border-radius: 16px; backdrop-filter: blur(5px); transform-style: preserve-3d; transform: perspective(1000px); }
+        .skill-icon { font-size: 2.5rem; color: var(--accent); margin-bottom: 0.8rem; transform: translateZ(20px); }
+
+        /* --- EDUCATION --- */
+        .edu-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; }
+        .edu-card { background: var(--bg-card); border: 1px solid var(--border); padding: 2rem; border-radius: 16px; border-left: 5px solid var(--accent); backdrop-filter: blur(5px); transform-style: preserve-3d; transform: perspective(1000px); }
+        .edu-card h3 { transform: translateZ(20px); font-size: 1.25rem; margin-bottom: 0.2rem; font-weight: 700; }
+        .edu-card h4 { transform: translateZ(20px); color: var(--accent); font-weight: 600; }
+        .edu-card .date { transform: translateZ(20px); color: var(--text-sub); font-size: 0.85rem; font-style: italic; margin-bottom: 1rem; display: block; }
+
+        /* --- AWARDS --- */
+        .award-card { background: var(--bg-card); border: 1px solid var(--border); border-left: 5px solid #f59e0b; padding: 2.5rem; border-radius: 16px; display: flex; gap: 2rem; max-width: 900px; margin: 0 auto; align-items: flex-start; backdrop-filter: blur(5px); transform-style: preserve-3d; transform: perspective(1000px); }
+        .award-icon { font-size: 3rem; color: #f59e0b; transform: translateZ(30px); }
+
+        /* --- CONTACT --- */
+        .contact-container { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; max-width: 1000px; margin: 0 auto; }
+        .contact-icon { width: 50px; height: 50px; background: var(--bg-card); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: var(--accent); border: 1px solid var(--border); font-size: 1.2rem; }
+        .form-control { width: 100%; padding: 1rem; border-radius: 10px; border: 1px solid var(--border); margin-bottom: 1rem; background: var(--bg-card); color: var(--text-main); outline: none; }
+        .form-control:focus { border-color: var(--accent); box-shadow: 0 0 0 2px var(--accent); }
+
+        /* --- FOOTER --- */
+        footer { text-align: center; padding: 3rem 2rem; border-top: 1px solid var(--border); margin-top: 4rem; color: var(--text-sub); background: var(--bg-body); position: relative; z-index: 2; }
+
+        /* --- CHATBOT --- */
+        #chatbot-icon { position: fixed; bottom: 2rem; right: 2rem; background: var(--accent); color: white; width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 10px 25px rgba(37, 99, 235, 0.4); cursor: pointer; z-index: 2000; transition: 0.3s; animation: float 4s ease-in-out infinite; }
+        #chatbot-icon:hover { transform: scale(1.1); }
+        #chatbot-window { position: fixed; bottom: 6rem; right: 2rem; width: 360px; height: 520px; background: var(--bg-card); backdrop-filter: blur(15px); border: 1px solid var(--border); border-radius: 20px; display: none; flex-direction: column; z-index: 2000; overflow: hidden; box-shadow: 0 25px 50px rgba(0,0,0,0.3); }
+        #chat-header { background: var(--accent); color: white; padding: 1rem; display: flex; justify-content: space-between; align-items: center; font-weight: 600; }
+        #chat-messages { flex: 1; padding: 1rem; overflow-y: auto; display: flex; flex-direction: column; gap: 10px; }
+        .chat-message { padding: 10px 14px; border-radius: 12px; font-size: 0.9rem; max-width: 80%; }
+        .chat-message.bot { background: rgba(255,255,255,0.1); border: 1px solid var(--border); align-self: flex-start; }
+        .chat-message.user { background: var(--accent); color: white; align-self: flex-end; }
+        #chat-input-container { padding: 1rem; border-top: 1px solid var(--border); display: flex; gap: 8px; }
+        #chat-input { flex: 1; padding: 10px; border-radius: 8px; border: 1px solid var(--border); background: transparent; color: var(--text-main); }
 
         @media (max-width: 768px) {
-            h1 { font-size: 2.5rem; }
-            .maintenance-card { padding: 2rem; margin: 1rem; }
-            .btn-container { flex-direction: column; }
+            .hero { flex-direction: column-reverse; text-align: center; padding-top: 4rem; }
+            .hero-text { padding-right: 0; margin-top: 2rem; }
+            .hero h1 { font-size: 3rem; }
+            nav ul { display: none; }
+            .contact-container { grid-template-columns: 1fr; }
+            #chatbot-window { width: 90%; right: 5%; }
         }
     </style>
 </head>
@@ -204,170 +179,482 @@
 
     <header>
         <div class="logo">ANVITH.AI</div>
-        <div class="theme-switch" id="theme-toggle" title="Switch Theme">
-            <i class="fas fa-sun"></i>
-        </div>
+        <nav>
+            <ul>
+                <li><a href="#about">About</a></li>
+                <li><a href="#projects">Projects</a></li>
+                <li><a href="#skills">Skills</a></li>
+                <li><a href="#education">Education</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+            <div class="theme-switch" id="theme-toggle" title="Switch Theme">
+                <i class="fas fa-sun"></i>
+            </div>
+        </nav>
     </header>
 
-    <div class="main-container">
-        <div class="maintenance-card" data-tilt>
-            
-            <div class="status-badge">
-                <i class="fas fa-sync fa-spin"></i> System Upgrade In Progress
+    <section class="hero section-padding" id="about">
+        <div class="hero-text reveal active">
+            <span class="hero-greeting">👋 Hi there, I'm</span>
+            <h1>Krishna Anvith V.</h1>
+            <div class="hero-role">
+                I am a <span class="typewriter" id="typewriter"></span>
             </div>
-
-            <h1>Hi, I'm <br><span class="highlight-text">Krishna Anvith V.</span></h1>
-
-            <div class="loader-container">
-                <div class="loader-bar"></div>
-            </div>
-
-            <p class="description">
-                Running experiments on a new design.<br>
-                This portfolio is currently <strong>undergoing fine-tuning</strong> for better performance.
+            <p>
+                I specialize in building predictive models and scalable AI systems. My work bridges the gap between raw data and real-world impact, focusing on Generative AI, Automation, and Environmental Analytics.
             </p>
-
-            <div class="btn-container">
-                <a href="KAV.pdf" target="_blank" class="btn btn-primary">
-                    Download Resume <i class="fas fa-download"></i>
+            <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+                <a href="https://github.com/AnvithAnvi" target="_blank" class="btn btn-primary">
+                    View GitHub <i class="fab fa-github"></i>
                 </a>
-                <a href="mailto:vattikutianvith@gmail.com" class="btn btn-outline">
-                    Contact Me <i class="fas fa-envelope"></i>
+                <a href="KAV.pdf" target="_blank" class="btn btn-outline">
+                    Resume <i class="fas fa-download"></i>
                 </a>
             </div>
+        </div>
+        <div class="hero-image-wrapper reveal active">
+            <img src="Pf.jpg" alt="Krishna Anvith V" class="hero-image">
+        </div>
+    </section>
 
-            <div style="margin-top: 2rem; transform: translateZ(20px);">
-                <a href="https://linkedin.com/in/anvithvattikuti" target="_blank" style="color: var(--text-sub); margin: 0 10px; font-size: 1.2rem;"><i class="fab fa-linkedin"></i></a>
-                <a href="https://github.com/AnvithAnvi" target="_blank" style="color: var(--text-sub); margin: 0 10px; font-size: 1.2rem;"><i class="fab fa-github"></i></a>
-            </div>
+    <div class="marquee-container reveal">
+        <div class="marquee">
+            <div class="marquee-item"><i class="fab fa-python"></i> Python</div>
+            <div class="marquee-item"><i class="fas fa-brain"></i> TensorFlow</div>
+            <div class="marquee-item"><i class="fas fa-fire"></i> PyTorch</div>
+            <div class="marquee-item"><i class="fas fa-database"></i> SQL</div>
+            <div class="marquee-item"><i class="fab fa-docker"></i> Docker</div>
+            <div class="marquee-item"><i class="fas fa-project-diagram"></i> LangChain</div>
+            <div class="marquee-item"><i class="fas fa-server"></i> Apache Spark</div>
+            <div class="marquee-item"><i class="fab fa-aws"></i> AWS</div>
+            <div class="marquee-item"><i class="fab fa-python"></i> Python</div>
+            <div class="marquee-item"><i class="fas fa-brain"></i> TensorFlow</div>
+            <div class="marquee-item"><i class="fas fa-fire"></i> PyTorch</div>
+            <div class="marquee-item"><i class="fas fa-database"></i> SQL</div>
+            <div class="marquee-item"><i class="fab fa-docker"></i> Docker</div>
+            <div class="marquee-item"><i class="fas fa-project-diagram"></i> LangChain</div>
+            <div class="marquee-item"><i class="fas fa-server"></i> Apache Spark</div>
+            <div class="marquee-item"><i class="fab fa-aws"></i> AWS</div>
         </div>
     </div>
 
+    <section class="section-padding" id="projects">
+        <div class="section-header reveal">
+            <h2 class="section-title">Featured Projects</h2>
+            <div class="underline"></div>
+            <p style="margin-top: 1rem; color: var(--text-sub);">Pinned Repositories</p>
+        </div>
+        <div class="grid-container">
+            
+            <div class="card reveal" data-tilt data-tilt-max="5" data-tilt-glare data-tilt-max-glare="0.2">
+                <h3>Blog_to_Podcast</h3>
+                <div class="tags">
+                    <span class="tag">OpenAI API</span> <span class="tag">TTS</span> <span class="tag">Streamlit</span>
+                </div>
+                <p>Automated pipeline converting written articles into audio podcasts using GPT summarization.</p>
+                <div class="card-actions">
+                    <span class="card-link" onclick="openModal('blog2pod')">View Details <i class="fas fa-info-circle"></i></span>
+                    <a href="https://github.com/AnvithAnvi/Blog_to_Podcast" target="_blank" class="card-link">GitHub <i class="fas fa-external-link-alt"></i></a>
+                </div>
+            </div>
+
+            <div class="card reveal" data-tilt data-tilt-max="5" data-tilt-glare data-tilt-max-glare="0.2">
+                <h3>explain-my-model</h3>
+                <div class="tags">
+                    <span class="tag">SHAP</span> <span class="tag">XAI</span> <span class="tag">Data Viz</span>
+                </div>
+                <p>Interactive dashboard demystifying black-box ML models using SHAP values.</p>
+                <div class="card-actions">
+                    <span class="card-link" onclick="openModal('explain')">View Details <i class="fas fa-info-circle"></i></span>
+                    <a href="https://github.com/AnvithAnvi/explain-my-model" target="_blank" class="card-link">GitHub <i class="fas fa-external-link-alt"></i></a>
+                </div>
+            </div>
+
+            <div class="card reveal" data-tilt data-tilt-max="5" data-tilt-glare data-tilt-max-glare="0.2">
+                <h3>medical-diagnosis-agent</h3>
+                <div class="tags">
+                    <span class="tag">RAG</span> <span class="tag">LangChain</span> <span class="tag">Healthcare</span>
+                </div>
+                <p>Intelligent agent leveraging RAG to provide citation-backed medical insights.</p>
+                <div class="card-actions">
+                    <span class="card-link" onclick="openModal('medical')">View Details <i class="fas fa-info-circle"></i></span>
+                    <a href="https://github.com/AnvithAnvi/medical-diagnosis-agent" target="_blank" class="card-link">GitHub <i class="fas fa-external-link-alt"></i></a>
+                </div>
+            </div>
+
+            <div class="card reveal" data-tilt data-tilt-max="5" data-tilt-glare data-tilt-max-glare="0.2">
+                <h3>Mcp_agent_browser</h3>
+                <div class="tags">
+                    <span class="tag">Playwright</span> <span class="tag">Automation</span> <span class="tag">AI Agent</span>
+                </div>
+                <p>Autonomous browser agent translating natural language instructions into web actions.</p>
+                <div class="card-actions">
+                    <span class="card-link" onclick="openModal('mcp')">View Details <i class="fas fa-info-circle"></i></span>
+                    <a href="https://github.com/AnvithAnvi/Mcp_agent_browser" target="_blank" class="card-link">GitHub <i class="fas fa-external-link-alt"></i></a>
+                </div>
+            </div>
+
+            <div class="card reveal" data-tilt data-tilt-max="5" data-tilt-glare data-tilt-max-glare="0.2">
+                <h3>Local_RAG_Assistant</h3>
+                <div class="tags">
+                    <span class="tag">Local LLMs</span> <span class="tag">Privacy</span> <span class="tag">Vector DB</span>
+                </div>
+                <p>Privacy-first document assistant running offline using local open-source LLMs.</p>
+                <div class="card-actions">
+                    <span class="card-link" onclick="openModal('localrag')">View Details <i class="fas fa-info-circle"></i></span>
+                    <a href="https://github.com/AnvithAnvi/Local_RAG_Assistant" target="_blank" class="card-link">GitHub <i class="fas fa-external-link-alt"></i></a>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <section class="section-padding" id="skills">
+        <div class="section-header reveal">
+            <h2 class="section-title">Technical Stack</h2>
+            <div class="underline"></div>
+        </div>
+        
+        <div class="chart-container reveal">
+            <canvas id="skillsChart"></canvas>
+        </div>
+
+        <div class="skill-grid reveal">
+            <div class="skill-box" data-tilt data-tilt-scale="1.1"><i class="fab fa-python skill-icon"></i><div class="skill-name">Python</div></div>
+            <div class="skill-box" data-tilt data-tilt-scale="1.1"><i class="fas fa-project-diagram skill-icon"></i><div class="skill-name">LangChain</div></div>
+            <div class="skill-box" data-tilt data-tilt-scale="1.1"><i class="fas fa-search skill-icon"></i><div class="skill-name">RAG</div></div>
+            <div class="skill-box" data-tilt data-tilt-scale="1.1"><i class="fas fa-microchip skill-icon"></i><div class="skill-name">LLMs</div></div>
+            <div class="skill-box" data-tilt data-tilt-scale="1.1"><i class="fas fa-robot skill-icon"></i><div class="skill-name">Playwright</div></div>
+            <div class="skill-box" data-tilt data-tilt-scale="1.1"><i class="fas fa-chart-bar skill-icon"></i><div class="skill-name">SHAP</div></div>
+            <div class="skill-box" data-tilt data-tilt-scale="1.1"><i class="fas fa-laptop-code skill-icon"></i><div class="skill-name">Streamlit</div></div>
+            <div class="skill-box" data-tilt data-tilt-scale="1.1"><i class="fas fa-database skill-icon"></i><div class="skill-name">Vector DBs</div></div>
+        </div>
+    </section>
+
+    <section class="section-padding" id="education">
+        <div class="section-header reveal">
+            <h2 class="section-title">Education</h2>
+            <div class="underline"></div>
+        </div>
+        
+        <div class="edu-grid reveal">
+            <div class="edu-card" data-tilt>
+                <h3>Master of Science in Data Science</h3>
+                <h4>New Jersey Institute of Technology</h4>
+                <span class="date">Aug 2024 - Present</span>
+                <p>Big Data, Deep Learning, Scalable AI Architectures.</p>
+            </div>
+
+            <div class="edu-card" data-tilt>
+                <h3>Bachelor's in Computer Science</h3>
+                <h4>Lovely Professional University</h4>
+                <span class="date">Aug 2020 - May 2024</span>
+                <p>AI & Machine Learning Specialization.</p>
+            </div>
+
+            <div class="edu-card" data-tilt>
+                <h3>Professional Certifications</h3>
+                <h4>Coursera & DataCamp</h4>
+                <span class="date">2025</span>
+                <p>Google Data Analytics, Neural Networks & Deep Learning.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="section-padding" id="awards">
+        <div class="section-header reveal">
+            <h2 class="section-title">Awards</h2>
+            <div class="underline"></div>
+        </div>
+        
+        <div class="award-card reveal" data-tilt>
+            <div class="award-icon"><i class="fas fa-medal"></i></div>
+            <div>
+                <h3 style="font-size: 1.5rem; margin-bottom: 0.5rem;">National Service Scheme (NSS)</h3>
+                <p style="font-weight: 600; color: var(--accent); margin-bottom: 0.8rem;">Govt. of India Recognition</p>
+                <p style="color: var(--text-sub);">Completed <strong>470+ hours</strong> of community service, leading blood donation camps and sanitation drives.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="section-padding" id="contact">
+        <div class="section-header reveal">
+            <h2 class="section-title">Get In Touch</h2>
+            <div class="underline"></div>
+        </div>
+
+        <div class="contact-container reveal">
+            <div>
+                <h3 style="margin-bottom: 1.5rem;">Let's Collaborate</h3>
+                <p style="color: var(--text-sub); margin-bottom: 2rem;">Open to new opportunities in Data Science and AI Engineering.</p>
+                
+                <div class="contact-info-item" style="margin-bottom: 1rem; display: flex; gap: 1rem; align-items: center;">
+                    <div class="contact-icon"><i class="fas fa-envelope"></i></div>
+                    <span>vattikutianvith@gmail.com</span>
+                </div>
+                <div class="contact-info-item" style="margin-bottom: 1rem; display: flex; gap: 1rem; align-items: center;">
+                    <div class="contact-icon"><i class="fab fa-linkedin-in"></i></div>
+                    <a href="https://linkedin.com/in/anvithvattikuti" target="_blank">LinkedIn Profile</a>
+                </div>
+            </div>
+
+            <form id="contactForm">
+                <input type="text" id="name" class="form-control" placeholder="Name" required>
+                <input type="email" id="email" class="form-control" placeholder="Email" required>
+                <textarea id="message" rows="5" class="form-control" placeholder="Message" required></textarea>
+                <button type="submit" class="btn btn-primary" style="width: 100%; justify-content: center;">Send <i class="fas fa-paper-plane"></i></button>
+            </form>
+        </div>
+    </section>
+
     <footer>
-        &copy; <span id="year"></span> Krishna Anvith V.
+        <p>&copy; <span id="year"></span> Krishna Anvith V. Built with AI.</p>
     </footer>
 
+    <div id="chatbot-icon"><i class="fas fa-comment-dots fa-lg"></i></div>
+    <div id="chatbot-window">
+        <div id="chat-header">
+            <span>Ask Krishna AI</span>
+            <i class="fas fa-times" id="close-chatbot" style="cursor:pointer;"></i>
+        </div>
+        <div id="chat-messages"></div>
+        <div id="loading-indicator" style="text-align: center; padding: 10px; color: #888; font-size: 0.8rem; display:none;">Thinking...</div>
+        <div id="chat-input-container">
+            <input type="text" id="chat-input" placeholder="Ask about skills...">
+            <button id="send-button" style="border:none; background:transparent; cursor:pointer; color:var(--accent);"><i class="fas fa-paper-plane fa-lg"></i></button>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="projectModal">
+        <div class="modal-content">
+            <i class="fas fa-times modal-close" onclick="closeModal()"></i>
+            <div class="modal-body" id="modalBody">
+                </div>
+        </div>
+    </div>
+
     <script>
-        // --- 1. CANVAS PARTICLES (Exact logic from your theme) ---
+        // --- 1. NEURAL NETWORK CANVAS ---
         const canvas = document.getElementById('canvas-bg');
         const ctx = canvas.getContext('2d');
         let particlesArray;
-
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
-
+        canvas.width = window.innerWidth; canvas.height = window.innerHeight;
         let mouse = { x: null, y: null, radius: (canvas.height/80) * (canvas.width/80) };
-
-        window.addEventListener('mousemove', (event) => {
-            mouse.x = event.x;
-            mouse.y = event.y;
-        });
-
+        window.addEventListener('mousemove', (event) => { mouse.x = event.x; mouse.y = event.y; });
         class Particle {
-            constructor(x, y, directionX, directionY, size, color) {
-                this.x = x; this.y = y;
-                this.directionX = directionX; this.directionY = directionY;
-                this.size = size; this.color = color;
-            }
+            constructor(x, y, dX, dY, size) { this.x = x; this.y = y; this.dX = dX; this.dY = dY; this.size = size; }
             draw() {
-                ctx.beginPath();
-                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2, false);
+                ctx.beginPath(); ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
                 const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
-                ctx.fillStyle = isDark ? 'rgba(255,255,255,0.2)' : 'rgba(30, 58, 138, 0.25)';
-                ctx.fill();
+                ctx.fillStyle = isDark ? 'rgba(255,255,255,0.2)' : 'rgba(30, 58, 138, 0.25)'; ctx.fill();
             }
             update() {
-                if (this.x > canvas.width || this.x < 0) this.directionX = -this.directionX;
-                if (this.y > canvas.height || this.y < 0) this.directionY = -this.directionY;
-                
-                let dx = mouse.x - this.x;
-                let dy = mouse.y - this.y;
+                if (this.x > canvas.width || this.x < 0) this.dX = -this.dX;
+                if (this.y > canvas.height || this.y < 0) this.dY = -this.dY;
+                let dx = mouse.x - this.x, dy = mouse.y - this.y;
                 let distance = Math.sqrt(dx*dx + dy*dy);
                 if (distance < mouse.radius + this.size){
-                    if (mouse.x < this.x && this.x < canvas.width - this.size * 10) this.x += 3;
-                    if (mouse.x > this.x && this.x > this.size * 10) this.x -= 3;
-                    if (mouse.y < this.y && this.y < canvas.height - this.size * 10) this.y += 3;
-                    if (mouse.y > this.y && this.y > this.size * 10) this.y -= 3;
+                    if (mouse.x < this.x && this.x < canvas.width - 10) this.x += 3;
+                    if (mouse.x > this.x && this.x > 10) this.x -= 3;
+                    if (mouse.y < this.y && this.y < canvas.height - 10) this.y += 3;
+                    if (mouse.y > this.y && this.y > 10) this.y -= 3;
                 }
-                this.x += this.directionX;
-                this.y += this.directionY;
-                this.draw();
+                this.x += this.dX; this.y += this.dY; this.draw();
             }
         }
-
         function init() {
             particlesArray = [];
-            let numberOfParticles = (canvas.height * canvas.width) / 9000;
-            for (let i = 0; i < numberOfParticles; i++) {
+            let num = (canvas.height * canvas.width) / 9000;
+            for (let i = 0; i < num; i++) {
                 let size = (Math.random() * 3) + 1;
-                let x = (Math.random() * ((innerWidth - size * 2) - (size * 2)) + size * 2);
-                let y = (Math.random() * ((innerHeight - size * 2) - (size * 2)) + size * 2);
-                let directionX = (Math.random() * 2) - 1;
-                let directionY = (Math.random() * 2) - 1;
-                particlesArray.push(new Particle(x, y, directionX, directionY, size, '#ffffff'));
+                let x = Math.random() * innerWidth, y = Math.random() * innerHeight;
+                particlesArray.push(new Particle(x, y, (Math.random()*2)-1, (Math.random()*2)-1, size));
             }
         }
-
         function animate() {
-            requestAnimationFrame(animate);
-            ctx.clearRect(0, 0, innerWidth, innerHeight);
-            for (let i = 0; i < particlesArray.length; i++) { particlesArray[i].update(); }
+            requestAnimationFrame(animate); ctx.clearRect(0, 0, innerWidth, innerHeight);
+            for (let i = 0; i < particlesArray.length; i++) particlesArray[i].update();
             connect();
         }
-
         function connect() {
             const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
-            let opacityValue = 1;
             for (let a = 0; a < particlesArray.length; a++) {
                 for (let b = a; b < particlesArray.length; b++) {
-                    let distance = ((particlesArray[a].x - particlesArray[b].x) * (particlesArray[a].x - particlesArray[b].x))
-                    + ((particlesArray[a].y - particlesArray[b].y) * (particlesArray[a].y - particlesArray[b].y));
-                    if (distance < (canvas.width/7) * (canvas.height/7)) {
-                        opacityValue = (1 - (distance/20000)) * 0.15; 
-                        ctx.strokeStyle = isDark 
-                            ? 'rgba(255, 255, 255,' + opacityValue + ')' 
-                            : 'rgba(30, 58, 138,' + opacityValue + ')';
-                        ctx.lineWidth = 1;
-                        ctx.beginPath();
-                        ctx.moveTo(particlesArray[a].x, particlesArray[a].y);
-                        ctx.lineTo(particlesArray[b].x, particlesArray[b].y);
-                        ctx.stroke();
+                    let d = ((particlesArray[a].x - particlesArray[b].x)**2) + ((particlesArray[a].y - particlesArray[b].y)**2);
+                    if (d < (canvas.width/7) * (canvas.height/7)) {
+                        let op = (1 - (d/20000)) * 0.15;
+                        ctx.strokeStyle = isDark ? `rgba(255,255,255,${op})` : `rgba(30,58,138,${op})`;
+                        ctx.lineWidth = 1; ctx.beginPath(); ctx.moveTo(particlesArray[a].x, particlesArray[a].y);
+                        ctx.lineTo(particlesArray[b].x, particlesArray[b].y); ctx.stroke();
                     }
                 }
             }
         }
-        window.addEventListener('resize', () => {
-            canvas.width = innerWidth; canvas.height = innerHeight;
-            mouse.radius = ((canvas.height/80) * (canvas.height/80));
-            init();
-        });
-        init();
-        animate();
+        window.addEventListener('resize', () => { canvas.width = innerWidth; canvas.height = innerHeight; init(); });
+        init(); animate();
 
-        // --- 2. THEME TOGGLE ---
+        // --- 2. MODAL LOGIC (New Feature) ---
+        const projectData = {
+            'blog2pod': {
+                title: 'Blog_to_Podcast',
+                problem: 'Reading long technical articles takes time and focus that many busy professionals lack.',
+                solution: 'I built an automated pipeline using Streamlit. It takes a URL, scrapes the text, summarizes it using GPT-4, and converts the summary into natural-sounding audio using advanced TTS models.',
+                impact: 'Increases content accessibility and allows consumption on-the-go. Demonstrated proficiency in API integration and Generative AI workflows.'
+            },
+            'explain': {
+                title: 'explain-my-model',
+                problem: 'Machine Learning models are often "black boxes," making it hard for stakeholders to trust their predictions.',
+                solution: 'Developed an interactive dashboard using SHAP (Shapley Additive exPlanations). Users can upload a model and dataset to see exactly which features drove specific predictions.',
+                impact: 'Improved model transparency and stakeholder trust. Essential for regulated industries like finance and healthcare.'
+            },
+            'medical': {
+                title: 'medical-diagnosis-agent',
+                problem: 'General LLMs often hallucinate when asked for specific medical advice.',
+                solution: 'Built a Retrieval Augmented Generation (RAG) system using LangChain. It retrieves context from a curated database of medical papers before answering, ensuring citations are accurate.',
+                impact: 'Reduced hallucination rate and provided evidence-backed answers, showcasing ability to build reliable AI systems.'
+            },
+            'mcp': {
+                title: 'Mcp_agent_browser',
+                problem: 'Web scraping scripts break easily when UI changes, requiring constant maintenance.',
+                solution: 'Created an autonomous agent using Playwright and LLMs. You give it a goal (e.g., "Find the price of X"), and it intelligently figures out which buttons to click and inputs to fill.',
+                impact: 'Created robust, self-healing automation workflows that save hours of manual data entry.'
+            },
+            'localrag': {
+                title: 'Local_RAG_Assistant',
+                problem: 'Companies cannot upload sensitive documents to public cloud LLMs due to privacy concerns.',
+                solution: 'Designed a fully offline RAG system using local open-source models (via Ollama) and a local Vector Database.',
+                impact: 'Enables secure document querying without data ever leaving the local machine, critical for enterprise privacy.'
+            }
+        };
+
+        function openModal(id) {
+            const data = projectData[id];
+            if(!data) return;
+            const html = `
+                <h2>${data.title}</h2>
+                <div class="modal-section"><h4>The Problem</h4><p>${data.problem}</p></div>
+                <div class="modal-section"><h4>The Solution</h4><p>${data.solution}</p></div>
+                <div class="modal-section"><h4>The Impact</h4><p>${data.impact}</p></div>
+            `;
+            document.getElementById('modalBody').innerHTML = html;
+            const modal = document.getElementById('projectModal');
+            modal.style.display = 'flex';
+            setTimeout(() => modal.classList.add('open'), 10);
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('projectModal');
+            modal.classList.remove('open');
+            setTimeout(() => modal.style.display = 'none', 300);
+        }
+
+        // Close modal when clicking outside
+        document.getElementById('projectModal').addEventListener('click', (e) => {
+            if(e.target === document.getElementById('projectModal')) closeModal();
+        });
+
+        // --- 3. CHART.JS (Radar Chart) ---
+        const cCtx = document.getElementById('skillsChart').getContext('2d');
+        new Chart(cCtx, {
+            type: 'radar',
+            data: {
+                labels: ['Python/Coding', 'Deep Learning', 'SQL/Data Eng', 'Visualization', 'Communication', 'Statistics'],
+                datasets: [{
+                    label: 'Proficiency',
+                    data: [95, 85, 80, 85, 90, 75],
+                    fill: true,
+                    backgroundColor: 'rgba(59, 130, 246, 0.2)',
+                    borderColor: '#3b82f6',
+                    pointBackgroundColor: '#fff',
+                    pointBorderColor: '#3b82f6'
+                }]
+            },
+            options: {
+                scales: {
+                    r: {
+                        angleLines: { color: 'rgba(150, 150, 150, 0.2)' },
+                        grid: { color: 'rgba(150, 150, 150, 0.2)' },
+                        pointLabels: { color: '#94a3b8', font: { size: 12 } },
+                        ticks: { display: false, backdropColor: 'transparent' }
+                    }
+                },
+                plugins: { legend: { display: false } }
+            }
+        });
+
+        // --- 4. VANILLA TILT ---
+        VanillaTilt.init(document.querySelectorAll(".card, .skill-box, .edu-card, .award-card"), {
+            max: 10, speed: 400, glare: true, "max-glare": 0.2, scale: 1.02
+        });
+
+        // --- 5. STANDARD LOGIC (Year, Scroll, Chat, etc.) ---
+        document.getElementById('year').textContent = new Date().getFullYear();
+        
+        // Typewriter
+        const roles = ["Data Scientist.", "ML Engineer.", "AI Enthusiast."];
+        let rI = 0, cI = 0, isDel = false;
+        function type() {
+            const txt = roles[rI]; const el = document.getElementById('typewriter');
+            el.textContent = txt.substring(0, isDel ? cI-1 : cI+1);
+            cI = isDel ? cI-1 : cI+1;
+            let spd = isDel ? 50 : 100;
+            if(!isDel && cI === txt.length) { spd = 2000; isDel = true; }
+            else if(isDel && cI === 0) { isDel = false; rI = (rI+1)%roles.length; }
+            setTimeout(type, spd);
+        }
+        document.addEventListener('DOMContentLoaded', type);
+
+        // Theme Toggle
         const tog = document.getElementById('theme-toggle');
         tog.addEventListener('click', () => {
             const html = document.documentElement;
             const icon = tog.querySelector('i');
             if(html.getAttribute('data-theme') === 'light') {
-                html.setAttribute('data-theme', 'dark');
-                icon.className = 'fas fa-sun';
+                html.setAttribute('data-theme', 'dark'); icon.className = 'fas fa-sun';
             } else {
-                html.setAttribute('data-theme', 'light');
-                icon.className = 'fas fa-moon';
+                html.setAttribute('data-theme', 'light'); icon.className = 'fas fa-moon';
             }
         });
 
-        document.getElementById('year').textContent = new Date().getFullYear();
+        // Scroll Reveal
+        const obs = new IntersectionObserver((e) => e.forEach(x => x.isIntersecting && x.target.classList.add('active')));
+        document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
 
-        // --- 3. TILT EFFECT ---
-        VanillaTilt.init(document.querySelectorAll(".maintenance-card"), {
-            max: 10,
-            speed: 400,
-            glare: true,
-            "max-glare": 0.2,
-            scale: 1.02
+        // Contact & Chatbot (Same as before)
+        document.getElementById('contactForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const n = document.getElementById('name').value;
+            const em = document.getElementById('email').value;
+            const m = document.getElementById('message').value;
+            window.location.href = `mailto:vattikutianvith@gmail.com?subject=Portfolio: ${n}&body=Name: ${n}%0D%0AEmail: ${em}%0D%0A%0D%0A${m}`;
         });
+
+        const cIcon = document.getElementById('chatbot-icon'), cWin = document.getElementById('chatbot-window'), cInp = document.getElementById('chat-input'), cLoad = document.getElementById('loading-indicator');
+        cIcon.onclick = () => { cWin.style.display = 'flex'; cIcon.style.display = 'none'; };
+        document.getElementById('close-chatbot').onclick = () => { cWin.style.display = 'none'; cIcon.style.display = 'flex'; };
+        function addMsg(t, s) {
+            const d = document.createElement('div'); d.className = `chat-message ${s}`; d.textContent = t;
+            document.getElementById('chat-messages').append(d);
+        }
+        addMsg("Hi! Ask me about Krishna's projects.", 'bot');
+        const profile = `Name: Krishna Anvith V. Role: Data Scientist. Education: MS (NJIT). Projects: Blog_to_Podcast, explain-my-model, medical-diagnosis-agent. Skills: Python, RAG, LLMs, Playwright. Email: vattikutianvith@gmail.com`;
+        let hist = [{role: "user", parts: [{text: `System: Answer based on: ${profile}`}]}];
+        async function send() {
+            const v = cInp.value.trim(); if(!v) return;
+            addMsg(v, 'user'); cInp.value=''; cLoad.style.display='block';
+            hist.push({role:"user", parts:[{text:v}]});
+            try {
+                const k = "AIzaSyCXd7mUmMhKv2nDnbApTcUOZaHvh3ZPvKw";
+                const r = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${k}`, {
+                    method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({contents:hist})
+                });
+                const d = await r.json(); const ans = d.candidates[0].content.parts[0].text;
+                addMsg(ans, 'bot'); hist.push({role:"model", parts:[{text:ans}]});
+            } catch(e) { addMsg("Connection error.", 'bot'); }
+            cLoad.style.display='none';
+        }
+        document.getElementById('send-button').onclick = send;
+        cInp.onkeypress = e => e.key==='Enter' && send();
     </script>
 </body>
 </html>
