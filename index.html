@@ -8,15 +8,10 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.7.0/vanilla-tilt.min.js"></script>
-    
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     <style>
         /* --- CSS VARIABLES --- */
         :root {
-            /* Light Theme */
             --primary: #1e3a8a;
             --accent: #2563eb;
             --bg-body: #f8fafc;
@@ -29,7 +24,6 @@
         }
 
         [data-theme="dark"] {
-            /* Dark Theme */
             --primary: #60a5fa;
             --accent: #3b82f6;
             --bg-body: #0b1120;
@@ -44,7 +38,7 @@
         /* --- RESET --- */
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { transition: background-color 0.3s, color 0.3s; font-family: 'Inter', sans-serif; background-color: var(--bg-body); color: var(--text-main); line-height: 1.6; overflow-x: hidden; }
-        a, .btn, .theme-switch, .form-control { transition: 0.3s; }
+        a, .btn, .theme-switch, .form-control, .card, .skill-box, .edu-card, .award-card { transition: 0.3s; }
         
         /* --- CANVAS BG --- */
         #canvas-bg { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; }
@@ -89,7 +83,7 @@
         .hero-image-wrapper::before { content: ''; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 120%; height: 120%; background: radial-gradient(circle, var(--accent) 0%, transparent 70%); opacity: 0.15; filter: blur(40px); z-index: -1; animation: float 6s ease-in-out infinite reverse; }
         .hero-image { width: 380px; height: 380px; border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%; object-fit: cover; border: 4px solid var(--bg-body); box-shadow: 0 20px 40px rgba(0,0,0,0.2); animation: float 6s ease-in-out infinite; }
 
-        /* --- MARQUEE (New Feature) --- */
+        /* --- MARQUEE --- */
         .marquee-container { overflow: hidden; padding: 2rem 0; background: rgba(255,255,255,0.02); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); margin-top: -2rem; margin-bottom: 2rem; }
         .marquee { display: flex; gap: 4rem; width: max-content; animation: scroll 30s linear infinite; }
         .marquee-item { display: flex; align-items: center; gap: 10px; color: var(--text-sub); font-weight: 600; font-size: 1.2rem; }
@@ -103,17 +97,17 @@
 
         /* --- CARDS --- */
         .grid-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 2rem; }
-        .card { background: var(--bg-card); border: 1px solid var(--border); padding: 2rem; border-radius: 20px; display: flex; flex-direction: column; backdrop-filter: blur(10px); transform-style: preserve-3d; transform: perspective(1000px); }
-        .card h3 { font-size: 1.4rem; margin-bottom: 0.5rem; font-weight: 700; color: var(--text-main); transform: translateZ(30px); }
-        .tags { margin-bottom: 1rem; display: flex; flex-wrap: wrap; gap: 0.5rem; transform: translateZ(30px); }
+        .card { background: var(--bg-card); border: 1px solid var(--border); padding: 2rem; border-radius: 20px; display: flex; flex-direction: column; backdrop-filter: blur(10px); }
+        .card:hover { transform: translateY(-8px); border-color: var(--accent); box-shadow: var(--shadow); }
+        .card h3 { font-size: 1.4rem; margin-bottom: 0.5rem; font-weight: 700; color: var(--text-main); }
+        .tags { margin-bottom: 1rem; display: flex; flex-wrap: wrap; gap: 0.5rem; }
         .tags .tag { background: rgba(59, 130, 246, 0.1); color: var(--accent); padding: 4px 12px; border-radius: 20px; font-size: 0.75rem; font-weight: 600; border: 1px solid rgba(59, 130, 246, 0.2); }
-        .card p { color: var(--text-sub); font-size: 0.95rem; margin-bottom: 1.5rem; flex-grow: 1; transform: translateZ(20px); }
-        
-        .card-actions { display: flex; gap: 1rem; transform: translateZ(40px); }
+        .card p { color: var(--text-sub); font-size: 0.95rem; margin-bottom: 1.5rem; flex-grow: 1; }
+        .card-actions { display: flex; gap: 1rem; }
         .card-link { color: var(--accent); font-weight: 700; display: inline-flex; align-items: center; gap: 5px; cursor: pointer; font-size: 0.9rem; }
         .card-link:hover { text-decoration: underline; }
 
-        /* --- MODAL (New Feature) --- */
+        /* --- MODAL --- */
         .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); backdrop-filter: blur(5px); z-index: 3000; display: none; justify-content: center; align-items: center; opacity: 0; transition: opacity 0.3s; }
         .modal-overlay.open { opacity: 1; }
         .modal-content { background: var(--bg-body); width: 90%; max-width: 700px; padding: 2.5rem; border-radius: 20px; border: 1px solid var(--border); position: relative; max-height: 90vh; overflow-y: auto; box-shadow: 0 25px 50px rgba(0,0,0,0.5); transform: translateY(20px); transition: transform 0.3s; }
@@ -125,22 +119,24 @@
         .modal-section h4 { color: var(--text-main); font-size: 1.1rem; margin-bottom: 0.5rem; border-left: 3px solid var(--accent); padding-left: 10px; }
         .modal-section p { color: var(--text-sub); font-size: 0.95rem; }
 
-        /* --- SKILLS & CHART --- */
-        .chart-container { max-width: 600px; margin: 0 auto 3rem; position: relative; height: 350px; }
+        /* --- SKILLS --- */
         .skill-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 1.5rem; }
-        .skill-box { background: var(--bg-card); border: 1px solid var(--border); padding: 1.5rem; text-align: center; border-radius: 16px; backdrop-filter: blur(5px); transform-style: preserve-3d; transform: perspective(1000px); }
-        .skill-icon { font-size: 2.5rem; color: var(--accent); margin-bottom: 0.8rem; transform: translateZ(20px); }
+        .skill-box { background: var(--bg-card); border: 1px solid var(--border); padding: 1.5rem; text-align: center; border-radius: 16px; backdrop-filter: blur(5px); }
+        .skill-box:hover { transform: translateY(-5px); border-color: var(--accent); }
+        .skill-icon { font-size: 2.5rem; color: var(--accent); margin-bottom: 0.8rem; }
 
         /* --- EDUCATION --- */
         .edu-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; }
-        .edu-card { background: var(--bg-card); border: 1px solid var(--border); padding: 2rem; border-radius: 16px; border-left: 5px solid var(--accent); backdrop-filter: blur(5px); transform-style: preserve-3d; transform: perspective(1000px); }
-        .edu-card h3 { transform: translateZ(20px); font-size: 1.25rem; margin-bottom: 0.2rem; font-weight: 700; }
-        .edu-card h4 { transform: translateZ(20px); color: var(--accent); font-weight: 600; }
-        .edu-card .date { transform: translateZ(20px); color: var(--text-sub); font-size: 0.85rem; font-style: italic; margin-bottom: 1rem; display: block; }
+        .edu-card { background: var(--bg-card); border: 1px solid var(--border); padding: 2rem; border-radius: 16px; border-left: 5px solid var(--accent); backdrop-filter: blur(5px); }
+        .edu-card:hover { transform: translateY(-5px); box-shadow: var(--shadow); }
+        .edu-card h3 { font-size: 1.25rem; margin-bottom: 0.2rem; font-weight: 700; color: var(--text-main); }
+        .edu-card h4 { color: var(--accent); font-weight: 600; }
+        .edu-card .date { color: var(--text-sub); font-size: 0.85rem; font-style: italic; margin-bottom: 1rem; display: block; }
 
         /* --- AWARDS --- */
-        .award-card { background: var(--bg-card); border: 1px solid var(--border); border-left: 5px solid #f59e0b; padding: 2.5rem; border-radius: 16px; display: flex; gap: 2rem; max-width: 900px; margin: 0 auto; align-items: flex-start; backdrop-filter: blur(5px); transform-style: preserve-3d; transform: perspective(1000px); }
-        .award-icon { font-size: 3rem; color: #f59e0b; transform: translateZ(30px); }
+        .award-card { background: var(--bg-card); border: 1px solid var(--border); border-left: 5px solid #f59e0b; padding: 2.5rem; border-radius: 16px; display: flex; gap: 2rem; max-width: 900px; margin: 0 auto; align-items: flex-start; backdrop-filter: blur(5px); }
+        .award-card:hover { transform: translateY(-5px); box-shadow: var(--shadow); }
+        .award-icon { font-size: 3rem; color: #f59e0b; }
 
         /* --- CONTACT --- */
         .contact-container { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; max-width: 1000px; margin: 0 auto; }
@@ -246,19 +242,43 @@
         </div>
         <div class="grid-container">
             
-            <div class="card reveal" data-tilt data-tilt-max="5" data-tilt-glare data-tilt-max-glare="0.2">
-                <h3>Blog_to_Podcast</h3>
+            <div class="card reveal">
+                <h3>Local_RAG_Assistant</h3>
                 <div class="tags">
-                    <span class="tag">OpenAI API</span> <span class="tag">TTS</span> <span class="tag">Streamlit</span>
+                    <span class="tag">Local LLMs</span> <span class="tag">Privacy</span> <span class="tag">Vector DB</span>
                 </div>
-                <p>Automated pipeline converting written articles into audio podcasts using GPT summarization.</p>
+                <p>Privacy-first document assistant running offline using local open-source LLMs and vector stores.</p>
                 <div class="card-actions">
-                    <span class="card-link" onclick="openModal('blog2pod')">View Details <i class="fas fa-info-circle"></i></span>
-                    <a href="https://github.com/AnvithAnvi/Blog_to_Podcast" target="_blank" class="card-link">GitHub <i class="fas fa-external-link-alt"></i></a>
+                    <span class="card-link" onclick="openModal('localrag')">View Details <i class="fas fa-info-circle"></i></span>
+                    <a href="https://github.com/AnvithAnvi/Local_RAG_Assistant" target="_blank" class="card-link">GitHub <i class="fas fa-external-link-alt"></i></a>
                 </div>
             </div>
 
-            <div class="card reveal" data-tilt data-tilt-max="5" data-tilt-glare data-tilt-max-glare="0.2">
+            <div class="card reveal">
+                <h3>Mcp_agent_browser</h3>
+                <div class="tags">
+                    <span class="tag">Playwright</span> <span class="tag">Automation</span> <span class="tag">AI Agent</span>
+                </div>
+                <p>Autonomous browser agent translating natural language instructions into web actions (clicks, scrolls, scraping).</p>
+                <div class="card-actions">
+                    <span class="card-link" onclick="openModal('mcp')">View Details <i class="fas fa-info-circle"></i></span>
+                    <a href="https://github.com/AnvithAnvi/Mcp_agent_browser" target="_blank" class="card-link">GitHub <i class="fas fa-external-link-alt"></i></a>
+                </div>
+            </div>
+
+            <div class="card reveal">
+                <h3>medical-diagnosis-agent</h3>
+                <div class="tags">
+                    <span class="tag">RAG</span> <span class="tag">LangChain</span> <span class="tag">Healthcare</span>
+                </div>
+                <p>Intelligent agent leveraging Retrieval Augmented Generation (RAG) to provide citation-backed medical insights.</p>
+                <div class="card-actions">
+                    <span class="card-link" onclick="openModal('medical')">View Details <i class="fas fa-info-circle"></i></span>
+                    <a href="https://github.com/AnvithAnvi/medical-diagnosis-agent" target="_blank" class="card-link">GitHub <i class="fas fa-external-link-alt"></i></a>
+                </div>
+            </div>
+
+            <div class="card reveal">
                 <h3>explain-my-model</h3>
                 <div class="tags">
                     <span class="tag">SHAP</span> <span class="tag">XAI</span> <span class="tag">Data Viz</span>
@@ -270,39 +290,15 @@
                 </div>
             </div>
 
-            <div class="card reveal" data-tilt data-tilt-max="5" data-tilt-glare data-tilt-max-glare="0.2">
-                <h3>medical-diagnosis-agent</h3>
+            <div class="card reveal">
+                <h3>Blog_to_Podcast</h3>
                 <div class="tags">
-                    <span class="tag">RAG</span> <span class="tag">LangChain</span> <span class="tag">Healthcare</span>
+                    <span class="tag">OpenAI API</span> <span class="tag">TTS</span> <span class="tag">Streamlit</span>
                 </div>
-                <p>Intelligent agent leveraging RAG to provide citation-backed medical insights.</p>
+                <p>Automated pipeline converting written articles into audio podcasts using GPT summarization and Text-to-Speech models.</p>
                 <div class="card-actions">
-                    <span class="card-link" onclick="openModal('medical')">View Details <i class="fas fa-info-circle"></i></span>
-                    <a href="https://github.com/AnvithAnvi/medical-diagnosis-agent" target="_blank" class="card-link">GitHub <i class="fas fa-external-link-alt"></i></a>
-                </div>
-            </div>
-
-            <div class="card reveal" data-tilt data-tilt-max="5" data-tilt-glare data-tilt-max-glare="0.2">
-                <h3>Mcp_agent_browser</h3>
-                <div class="tags">
-                    <span class="tag">Playwright</span> <span class="tag">Automation</span> <span class="tag">AI Agent</span>
-                </div>
-                <p>Autonomous browser agent translating natural language instructions into web actions.</p>
-                <div class="card-actions">
-                    <span class="card-link" onclick="openModal('mcp')">View Details <i class="fas fa-info-circle"></i></span>
-                    <a href="https://github.com/AnvithAnvi/Mcp_agent_browser" target="_blank" class="card-link">GitHub <i class="fas fa-external-link-alt"></i></a>
-                </div>
-            </div>
-
-            <div class="card reveal" data-tilt data-tilt-max="5" data-tilt-glare data-tilt-max-glare="0.2">
-                <h3>Local_RAG_Assistant</h3>
-                <div class="tags">
-                    <span class="tag">Local LLMs</span> <span class="tag">Privacy</span> <span class="tag">Vector DB</span>
-                </div>
-                <p>Privacy-first document assistant running offline using local open-source LLMs.</p>
-                <div class="card-actions">
-                    <span class="card-link" onclick="openModal('localrag')">View Details <i class="fas fa-info-circle"></i></span>
-                    <a href="https://github.com/AnvithAnvi/Local_RAG_Assistant" target="_blank" class="card-link">GitHub <i class="fas fa-external-link-alt"></i></a>
+                    <span class="card-link" onclick="openModal('blog2pod')">View Details <i class="fas fa-info-circle"></i></span>
+                    <a href="https://github.com/AnvithAnvi/Blog_to_Podcast" target="_blank" class="card-link">GitHub <i class="fas fa-external-link-alt"></i></a>
                 </div>
             </div>
 
@@ -314,20 +310,15 @@
             <h2 class="section-title">Technical Stack</h2>
             <div class="underline"></div>
         </div>
-        
-        <div class="chart-container reveal">
-            <canvas id="skillsChart"></canvas>
-        </div>
-
         <div class="skill-grid reveal">
-            <div class="skill-box" data-tilt data-tilt-scale="1.1"><i class="fab fa-python skill-icon"></i><div class="skill-name">Python</div></div>
-            <div class="skill-box" data-tilt data-tilt-scale="1.1"><i class="fas fa-project-diagram skill-icon"></i><div class="skill-name">LangChain</div></div>
-            <div class="skill-box" data-tilt data-tilt-scale="1.1"><i class="fas fa-search skill-icon"></i><div class="skill-name">RAG</div></div>
-            <div class="skill-box" data-tilt data-tilt-scale="1.1"><i class="fas fa-microchip skill-icon"></i><div class="skill-name">LLMs</div></div>
-            <div class="skill-box" data-tilt data-tilt-scale="1.1"><i class="fas fa-robot skill-icon"></i><div class="skill-name">Playwright</div></div>
-            <div class="skill-box" data-tilt data-tilt-scale="1.1"><i class="fas fa-chart-bar skill-icon"></i><div class="skill-name">SHAP</div></div>
-            <div class="skill-box" data-tilt data-tilt-scale="1.1"><i class="fas fa-laptop-code skill-icon"></i><div class="skill-name">Streamlit</div></div>
-            <div class="skill-box" data-tilt data-tilt-scale="1.1"><i class="fas fa-database skill-icon"></i><div class="skill-name">Vector DBs</div></div>
+            <div class="skill-box"><i class="fab fa-python skill-icon"></i><div class="skill-name">Python</div></div>
+            <div class="skill-box"><i class="fas fa-project-diagram skill-icon"></i><div class="skill-name">LangChain</div></div>
+            <div class="skill-box"><i class="fas fa-search skill-icon"></i><div class="skill-name">RAG</div></div>
+            <div class="skill-box"><i class="fas fa-microchip skill-icon"></i><div class="skill-name">LLMs</div></div>
+            <div class="skill-box"><i class="fas fa-robot skill-icon"></i><div class="skill-name">Playwright</div></div>
+            <div class="skill-box"><i class="fas fa-chart-bar skill-icon"></i><div class="skill-name">SHAP</div></div>
+            <div class="skill-box"><i class="fas fa-laptop-code skill-icon"></i><div class="skill-name">Streamlit</div></div>
+            <div class="skill-box"><i class="fas fa-database skill-icon"></i><div class="skill-name">Vector DBs</div></div>
         </div>
     </section>
 
@@ -338,21 +329,21 @@
         </div>
         
         <div class="edu-grid reveal">
-            <div class="edu-card" data-tilt>
+            <div class="edu-card">
                 <h3>Master of Science in Data Science</h3>
                 <h4>New Jersey Institute of Technology</h4>
                 <span class="date">Aug 2024 - Present</span>
                 <p>Big Data, Deep Learning, Scalable AI Architectures.</p>
             </div>
 
-            <div class="edu-card" data-tilt>
+            <div class="edu-card">
                 <h3>Bachelor's in Computer Science</h3>
                 <h4>Lovely Professional University</h4>
                 <span class="date">Aug 2020 - May 2024</span>
                 <p>AI & Machine Learning Specialization.</p>
             </div>
 
-            <div class="edu-card" data-tilt>
+            <div class="edu-card">
                 <h3>Professional Certifications</h3>
                 <h4>Coursera & DataCamp</h4>
                 <span class="date">2025</span>
@@ -367,7 +358,7 @@
             <div class="underline"></div>
         </div>
         
-        <div class="award-card reveal" data-tilt>
+        <div class="award-card reveal">
             <div class="award-icon"><i class="fas fa-medal"></i></div>
             <div>
                 <h3 style="font-size: 1.5rem; margin-bottom: 0.5rem;">National Service Scheme (NSS)</h3>
@@ -408,7 +399,7 @@
     </section>
 
     <footer>
-        <p>&copy; <span id="year"></span> Krishna Anvith V. Built with AI.</p>
+        <p>&copy; <span id="year"></span> Krishna Anvith V.</p>
     </footer>
 
     <div id="chatbot-icon"><i class="fas fa-comment-dots fa-lg"></i></div>
@@ -428,8 +419,7 @@
     <div class="modal-overlay" id="projectModal">
         <div class="modal-content">
             <i class="fas fa-times modal-close" onclick="closeModal()"></i>
-            <div class="modal-body" id="modalBody">
-                </div>
+            <div class="modal-body" id="modalBody"></div>
         </div>
     </div>
 
@@ -493,7 +483,7 @@
         window.addEventListener('resize', () => { canvas.width = innerWidth; canvas.height = innerHeight; init(); });
         init(); animate();
 
-        // --- 2. MODAL LOGIC (New Feature) ---
+        // --- 2. MODAL LOGIC ---
         const projectData = {
             'blog2pod': {
                 title: 'Blog_to_Podcast',
@@ -528,69 +518,15 @@
         };
 
         function openModal(id) {
-            const data = projectData[id];
-            if(!data) return;
-            const html = `
-                <h2>${data.title}</h2>
-                <div class="modal-section"><h4>The Problem</h4><p>${data.problem}</p></div>
-                <div class="modal-section"><h4>The Solution</h4><p>${data.solution}</p></div>
-                <div class="modal-section"><h4>The Impact</h4><p>${data.impact}</p></div>
-            `;
-            document.getElementById('modalBody').innerHTML = html;
-            const modal = document.getElementById('projectModal');
-            modal.style.display = 'flex';
-            setTimeout(() => modal.classList.add('open'), 10);
+            const data = projectData[id]; if(!data) return;
+            document.getElementById('modalBody').innerHTML = `<h2>${data.title}</h2><div class="modal-section"><h4>The Problem</h4><p>${data.problem}</p></div><div class="modal-section"><h4>The Solution</h4><p>${data.solution}</p></div><div class="modal-section"><h4>The Impact</h4><p>${data.impact}</p></div>`;
+            const m = document.getElementById('projectModal'); m.style.display = 'flex'; setTimeout(() => m.classList.add('open'), 10);
         }
+        function closeModal() { const m = document.getElementById('projectModal'); m.classList.remove('open'); setTimeout(() => m.style.display = 'none', 300); }
+        document.getElementById('projectModal').addEventListener('click', (e) => { if(e.target === document.getElementById('projectModal')) closeModal(); });
 
-        function closeModal() {
-            const modal = document.getElementById('projectModal');
-            modal.classList.remove('open');
-            setTimeout(() => modal.style.display = 'none', 300);
-        }
-
-        // Close modal when clicking outside
-        document.getElementById('projectModal').addEventListener('click', (e) => {
-            if(e.target === document.getElementById('projectModal')) closeModal();
-        });
-
-        // --- 3. CHART.JS (Radar Chart) ---
-        const cCtx = document.getElementById('skillsChart').getContext('2d');
-        new Chart(cCtx, {
-            type: 'radar',
-            data: {
-                labels: ['Python/Coding', 'Deep Learning', 'SQL/Data Eng', 'Visualization', 'Communication', 'Statistics'],
-                datasets: [{
-                    label: 'Proficiency',
-                    data: [95, 85, 80, 85, 90, 75],
-                    fill: true,
-                    backgroundColor: 'rgba(59, 130, 246, 0.2)',
-                    borderColor: '#3b82f6',
-                    pointBackgroundColor: '#fff',
-                    pointBorderColor: '#3b82f6'
-                }]
-            },
-            options: {
-                scales: {
-                    r: {
-                        angleLines: { color: 'rgba(150, 150, 150, 0.2)' },
-                        grid: { color: 'rgba(150, 150, 150, 0.2)' },
-                        pointLabels: { color: '#94a3b8', font: { size: 12 } },
-                        ticks: { display: false, backdropColor: 'transparent' }
-                    }
-                },
-                plugins: { legend: { display: false } }
-            }
-        });
-
-        // --- 4. VANILLA TILT ---
-        VanillaTilt.init(document.querySelectorAll(".card, .skill-box, .edu-card, .award-card"), {
-            max: 10, speed: 400, glare: true, "max-glare": 0.2, scale: 1.02
-        });
-
-        // --- 5. STANDARD LOGIC (Year, Scroll, Chat, etc.) ---
+        // --- 3. STANDARD LOGIC ---
         document.getElementById('year').textContent = new Date().getFullYear();
-        
-        // Typewriter
         const roles = ["Data Scientist.", "ML Engineer.", "AI Enthusiast."];
         let rI = 0, cI = 0, isDel = false;
         function type() {
@@ -604,38 +540,26 @@
         }
         document.addEventListener('DOMContentLoaded', type);
 
-        // Theme Toggle
         const tog = document.getElementById('theme-toggle');
         tog.addEventListener('click', () => {
-            const html = document.documentElement;
-            const icon = tog.querySelector('i');
-            if(html.getAttribute('data-theme') === 'light') {
-                html.setAttribute('data-theme', 'dark'); icon.className = 'fas fa-sun';
-            } else {
-                html.setAttribute('data-theme', 'light'); icon.className = 'fas fa-moon';
-            }
+            const h = document.documentElement; const i = tog.querySelector('i');
+            if(h.getAttribute('data-theme') === 'light') { h.setAttribute('data-theme', 'dark'); i.className = 'fas fa-sun'; }
+            else { h.setAttribute('data-theme', 'light'); i.className = 'fas fa-moon'; }
         });
 
-        // Scroll Reveal
         const obs = new IntersectionObserver((e) => e.forEach(x => x.isIntersecting && x.target.classList.add('active')));
         document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
-
-        // Contact & Chatbot (Same as before)
+        
         document.getElementById('contactForm').addEventListener('submit', (e) => {
-            e.preventDefault();
-            const n = document.getElementById('name').value;
-            const em = document.getElementById('email').value;
-            const m = document.getElementById('message').value;
+            e.preventDefault(); const n = document.getElementById('name').value, em = document.getElementById('email').value, m = document.getElementById('message').value;
             window.location.href = `mailto:vattikutianvith@gmail.com?subject=Portfolio: ${n}&body=Name: ${n}%0D%0AEmail: ${em}%0D%0A%0D%0A${m}`;
         });
-
+        
+        // --- 4. CHATBOT LOGIC ---
         const cIcon = document.getElementById('chatbot-icon'), cWin = document.getElementById('chatbot-window'), cInp = document.getElementById('chat-input'), cLoad = document.getElementById('loading-indicator');
         cIcon.onclick = () => { cWin.style.display = 'flex'; cIcon.style.display = 'none'; };
         document.getElementById('close-chatbot').onclick = () => { cWin.style.display = 'none'; cIcon.style.display = 'flex'; };
-        function addMsg(t, s) {
-            const d = document.createElement('div'); d.className = `chat-message ${s}`; d.textContent = t;
-            document.getElementById('chat-messages').append(d);
-        }
+        function addMsg(t, s) { const d = document.createElement('div'); d.className = `chat-message ${s}`; d.textContent = t; document.getElementById('chat-messages').append(d); }
         addMsg("Hi! Ask me about Krishna's projects.", 'bot');
         const profile = `Name: Krishna Anvith V. Role: Data Scientist. Education: MS (NJIT). Projects: Blog_to_Podcast, explain-my-model, medical-diagnosis-agent. Skills: Python, RAG, LLMs, Playwright. Email: vattikutianvith@gmail.com`;
         let hist = [{role: "user", parts: [{text: `System: Answer based on: ${profile}`}]}];
@@ -645,9 +569,7 @@
             hist.push({role:"user", parts:[{text:v}]});
             try {
                 const k = "AIzaSyCXd7mUmMhKv2nDnbApTcUOZaHvh3ZPvKw";
-                const r = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${k}`, {
-                    method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({contents:hist})
-                });
+                const r = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${k}`, { method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({contents:hist}) });
                 const d = await r.json(); const ans = d.candidates[0].content.parts[0].text;
                 addMsg(ans, 'bot'); hist.push({role:"model", parts:[{text:ans}]});
             } catch(e) { addMsg("Connection error.", 'bot'); }
