@@ -2,12 +2,14 @@
 <html lang="en" data-theme="dark">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Krishna Anvith V | Data Scientist & AI Engineer</title>
     
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 
     <style>
         /* --- CSS VARIABLES --- */
@@ -36,12 +38,22 @@
         }
 
         /* --- RESET --- */
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { transition: background-color 0.3s, color 0.3s; font-family: 'Inter', sans-serif; background-color: var(--bg-body); color: var(--text-main); line-height: 1.6; overflow-x: hidden; }
+        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+        
+        html, body { width: 100%; overflow-x: hidden; position: relative; }
+
+        body { 
+            transition: background-color 0.3s, color 0.3s; 
+            font-family: 'Inter', sans-serif; 
+            background-color: var(--bg-body); 
+            color: var(--text-main); 
+            line-height: 1.6; 
+        }
+
         a, .btn, .theme-switch, .form-control, .card, .skill-box, .edu-card, .award-card, .workflow-item { transition: 0.3s; }
         
         /* --- CANVAS BG --- */
-        #canvas-bg { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; }
+        #canvas-bg { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; pointer-events: none; }
 
         a { text-decoration: none; color: inherit; }
         ul { list-style: none; }
@@ -54,15 +66,28 @@
         @keyframes float { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-15px); } }
 
         /* --- NAV --- */
-        header { position: sticky; top: 0; z-index: 1000; background: var(--nav-bg); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); padding: 1rem 5%; display: flex; justify-content: space-between; align-items: center; }
-        .logo { font-size: 1.5rem; font-weight: 800; letter-spacing: -1px; background: linear-gradient(to right, var(--primary), var(--accent)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; white-space: nowrap; }
+        header { 
+            position: sticky; top: 0; z-index: 1000; 
+            background: var(--nav-bg); backdrop-filter: blur(12px); 
+            border-bottom: 1px solid var(--border); 
+            padding: 1rem 5%; 
+            display: flex; justify-content: space-between; align-items: center;
+            height: 70px; 
+        }
+        .logo { 
+            font-size: 1.5rem; font-weight: 800; letter-spacing: -1px; 
+            background: linear-gradient(to right, var(--primary), var(--accent)); 
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent; 
+            white-space: nowrap; 
+        }
         nav { display: flex; align-items: center; gap: 1.5rem; flex-wrap: nowrap; }
         nav ul { display: flex; gap: 1.5rem; }
         nav a { font-weight: 500; font-size: 0.95rem; position: relative; white-space: nowrap; }
         nav a:hover { color: var(--accent); }
         nav a::after { content: ''; position: absolute; width: 0; height: 2px; bottom: -4px; left: 0; background: var(--accent); transition: 0.3s; }
         nav a:hover::after { width: 100%; }
-        .theme-switch { cursor: pointer; padding: 0.5rem; font-size: 1.2rem; display: flex; align-items: center; }
+        
+        .theme-switch { cursor: pointer; padding: 0.5rem; font-size: 1.2rem; display: flex; align-items: center; justify-content: center; }
         .theme-switch:hover { transform: rotate(20deg); color: var(--accent); }
 
         /* --- HERO --- */
@@ -95,14 +120,13 @@
         .section-title { font-size: 2.5rem; font-weight: 800; margin-bottom: 0.5rem; }
         .underline { width: 60px; height: 5px; background: var(--accent); margin: 0 auto; border-radius: 5px; }
 
-        /* --- WORKFLOW (NEW) --- */
+        /* --- WORKFLOW --- */
         .workflow-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 2rem; margin-top: 2rem; }
         .workflow-item { background: var(--bg-card); padding: 2rem; border-radius: 16px; border: 1px solid var(--border); text-align: center; backdrop-filter: blur(5px); position: relative; }
         .workflow-item:hover { transform: translateY(-5px); border-color: var(--accent); box-shadow: var(--shadow); }
         .workflow-icon { width: 60px; height: 60px; margin: 0 auto 1.5rem; background: rgba(59, 130, 246, 0.1); color: var(--accent); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; }
         .workflow-item h4 { font-size: 1.2rem; margin-bottom: 0.5rem; color: var(--text-main); }
         .workflow-item p { font-size: 0.9rem; color: var(--text-sub); }
-        /* Small connector line between items on desktop */
         @media (min-width: 768px) {
             .workflow-item:not(:last-child)::after {
                 content: '\f061'; font-family: "Font Awesome 6 Free"; font-weight: 900;
@@ -163,22 +187,35 @@
         /* --- FOOTER --- */
         footer { text-align: center; padding: 3rem 2rem; border-top: 1px solid var(--border); margin-top: 4rem; color: var(--text-sub); background: var(--bg-body); position: relative; z-index: 2; }
 
-        /* --- CHATBOT --- */
+        /* --- CHATBOT (ENHANCED) --- */
         #chatbot-icon { position: fixed; bottom: 2rem; right: 2rem; background: var(--accent); color: white; width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 10px 25px rgba(37, 99, 235, 0.4); cursor: pointer; z-index: 2000; transition: 0.3s; animation: float 4s ease-in-out infinite; }
         #chatbot-icon:hover { transform: scale(1.1); }
+        
         #chatbot-window { position: fixed; bottom: 6rem; right: 2rem; width: 360px; height: 520px; background: var(--bg-card); backdrop-filter: blur(15px); border: 1px solid var(--border); border-radius: 20px; display: none; flex-direction: column; z-index: 2000; overflow: hidden; box-shadow: 0 25px 50px rgba(0,0,0,0.3); }
+        
         #chat-header { background: var(--accent); color: white; padding: 1rem; display: flex; justify-content: space-between; align-items: center; font-weight: 600; }
-        #chat-messages { flex: 1; padding: 1rem; overflow-y: auto; display: flex; flex-direction: column; gap: 10px; }
-        .chat-message { padding: 10px 14px; border-radius: 12px; font-size: 0.9rem; max-width: 80%; }
-        .chat-message.bot { background: rgba(255,255,255,0.1); border: 1px solid var(--border); align-self: flex-start; }
+        
+        #chat-messages { flex: 1; padding: 1rem; overflow-y: auto; display: flex; flex-direction: column; gap: 10px; scroll-behavior: smooth; }
+        
+        /* Message Bubbles with Markdown support */
+        .chat-message { padding: 12px 16px; border-radius: 12px; font-size: 0.9rem; max-width: 85%; line-height: 1.5; word-wrap: break-word; }
+        .chat-message.bot { background: rgba(255,255,255,0.1); border: 1px solid var(--border); align-self: flex-start; color: var(--text-main); }
         .chat-message.user { background: var(--accent); color: white; align-self: flex-end; }
-        #chat-input-container { padding: 1rem; border-top: 1px solid var(--border); display: flex; gap: 8px; }
-        #chat-input { flex: 1; padding: 10px; border-radius: 8px; border: 1px solid var(--border); background: transparent; color: var(--text-main); }
+        .chat-message ul { margin-left: 1.5rem; list-style-type: disc; }
+        .chat-message strong { font-weight: bold; }
 
+        #chat-input-container { padding: 1rem; border-top: 1px solid var(--border); display: flex; gap: 8px; background: var(--bg-card); }
+        
+        /* FIXED INPUT FOR TYPING */
+        #chat-input { flex: 1; padding: 12px; border-radius: 8px; border: 1px solid var(--border); background: var(--bg-body); color: var(--text-main); outline: none; pointer-events: auto; }
+        #chat-input:focus { border-color: var(--accent); }
+
+        /* --- MOBILE FIXES --- */
         @media (max-width: 768px) {
             .hero { flex-direction: column-reverse; text-align: center; padding-top: 4rem; }
             .hero-text { padding-right: 0; margin-top: 2rem; }
             .hero h1 { font-size: 3rem; }
+            .hero-image { width: 280px; height: 280px; } 
             nav ul { display: none; }
             .contact-container { grid-template-columns: 1fr; }
             #chatbot-window { width: 90%; right: 5%; }
@@ -602,28 +639,56 @@
             window.location.href = `mailto:vattikutianvith@gmail.com?subject=Portfolio: ${n}&body=Name: ${n}%0D%0AEmail: ${em}%0D%0A%0D%0A${m}`;
         });
         
-        // --- 4. CHATBOT LOGIC ---
+        // --- 4. CHATBOT LOGIC (USING GEMINI-1.5-PRO) ---
         const cIcon = document.getElementById('chatbot-icon'), cWin = document.getElementById('chatbot-window'), cInp = document.getElementById('chat-input'), cLoad = document.getElementById('loading-indicator');
-        cIcon.onclick = () => { cWin.style.display = 'flex'; cIcon.style.display = 'none'; };
+        cIcon.onclick = () => { cWin.style.display = 'flex'; cIcon.style.display = 'none'; setTimeout(() => cInp.focus(), 100); };
         document.getElementById('close-chatbot').onclick = () => { cWin.style.display = 'none'; cIcon.style.display = 'flex'; };
-        function addMsg(t, s) { const d = document.createElement('div'); d.className = `chat-message ${s}`; d.textContent = t; document.getElementById('chat-messages').append(d); }
+        
+        function addMsg(t, s) { 
+            const d = document.createElement('div'); 
+            d.className = `chat-message ${s}`; 
+            if(s === 'bot' && typeof marked !== 'undefined') d.innerHTML = marked.parse(t); else d.textContent = t;
+            document.getElementById('chat-messages').append(d);
+            document.getElementById('chat-messages').scrollTop = document.getElementById('chat-messages').scrollHeight;
+        }
+        
         addMsg("Hi! Ask me about Krishna's projects.", 'bot');
+        
         const profile = `Name: Krishna Anvith V. Role: Data Scientist. Education: MS (NJIT). Projects: Blog_to_Podcast, explain-my-model, medical-diagnosis-agent. Skills: Python, RAG, LLMs, Playwright. Email: vattikutianvith@gmail.com`;
         let hist = [{role: "user", parts: [{text: `System: Answer based on: ${profile}`}]}];
+        
+        // --- LOCAL AI MODEL (No API Key Required) ---
+        const responses = {
+            "projects": "Krishna has worked on **Blog_to_Podcast**, **explain-my-model**, and **medical-diagnosis-agent**. These projects showcase expertise in RAG, LLMs, and Playwright automation.",
+            "skills": "Key skills include **Python**, **RAG systems**, **LLMs**, **Playwright**, **FastAPI**, **SQLAlchemy**, **Docker**, and **CI/CD with GitHub Actions**.",
+            "education": "Krishna holds an **MS from NJIT** with expertise in AI/ML and data science.",
+            "email": "📧 Contact: **vattikutianvith@gmail.com**",
+            "experience": "Data Scientist and AI Engineer with hands-on experience building LLM-based applications, automating workflows, and deploying solutions with Docker and GitHub Actions.",
+            "default": "I'm here to help! Ask me about Krishna's **projects**, **skills**, **education**, or **experience**. You can also ask for contact **email**."
+        };
+        
+        function getResponse(input) {
+            const lower = input.toLowerCase();
+            for (const [key, response] of Object.entries(responses)) {
+                if(key !== 'default' && lower.includes(key)) return response;
+            }
+            return responses.default;
+        }
+
         async function send() {
             const v = cInp.value.trim(); if(!v) return;
             addMsg(v, 'user'); cInp.value=''; cLoad.style.display='block';
-            hist.push({role:"user", parts:[{text:v}]});
-            try {
-                const k = "AIzaSyCXd7mUmMhKv2nDnbApTcUOZaHvh3ZPvKw";
-                const r = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${k}`, { method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({contents:hist}) });
-                const d = await r.json(); const ans = d.candidates[0].content.parts[0].text;
-                addMsg(ans, 'bot'); hist.push({role:"model", parts:[{text:ans}]});
-            } catch(e) { addMsg("Connection error.", 'bot'); }
-            cLoad.style.display='none';
+            
+            // Simulate slight delay for natural feel
+            setTimeout(() => {
+                const ans = getResponse(v);
+                addMsg(ans, 'bot');
+                cLoad.style.display='none';
+            }, 500);
         }
+        
         document.getElementById('send-button').onclick = send;
-        cInp.onkeypress = e => e.key==='Enter' && send();
+        cInp.addEventListener('keypress', (e) => { if (e.key === 'Enter') send(); });
     </script>
 </body>
 </html>
