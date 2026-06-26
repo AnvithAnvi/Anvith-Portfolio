@@ -6,13 +6,10 @@
     <title>Krishna Anvith V | Data Scientist & AI Engineer</title>
     
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 
     <style>
-        /* --- CSS VARIABLES --- */
         :root {
             --primary: #1e3a8a;
             --accent: #2563eb;
@@ -24,7 +21,6 @@
             --shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.1);
             --nav-bg: rgba(255, 255, 255, 0.85);
         }
-
         [data-theme="dark"] {
             --primary: #60a5fa;
             --accent: #3b82f6;
@@ -37,105 +33,53 @@
             --nav-bg: rgba(11, 17, 32, 0.95);
         }
 
-        /* --- RESET --- */
         * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-        
         html, body { width: 100%; overflow-x: hidden; position: relative; }
-
-        body { 
-            transition: background-color 0.3s, color 0.3s; 
-            font-family: 'Inter', sans-serif; 
-            background-color: var(--bg-body); 
-            color: var(--text-main); 
-            line-height: 1.6; 
-        }
-
+        body { transition: background-color 0.3s, color 0.3s; font-family: 'Inter', sans-serif; background-color: var(--bg-body); color: var(--text-main); line-height: 1.6; }
         a, .btn, .theme-switch, .form-control, .card, .skill-box, .edu-card, .award-card, .workflow-item { transition: 0.3s; }
         
-        /* --- CANVAS BG --- */
         #canvas-bg { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; pointer-events: none; }
-
         a { text-decoration: none; color: inherit; }
         ul { list-style: none; }
         .section-padding { padding: 6rem 5%; }
-        
-        /* --- ANIMATIONS --- */
+
         .reveal { opacity: 0; transform: translateY(30px); transition: all 0.8s ease-out; }
         .reveal.active { opacity: 1; transform: translateY(0); }
-        
-        @keyframes float { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-15px); } }
 
-        /* --- NAV --- */
-        header { 
-            position: sticky; top: 0; z-index: 1000; 
-            background: var(--nav-bg); backdrop-filter: blur(12px); 
-            border-bottom: 1px solid var(--border); 
-            padding: 1rem 5%; 
-            display: flex; justify-content: space-between; align-items: center;
-            height: 70px; 
-        }
-        .logo { 
-            font-size: 1.5rem; font-weight: 800; letter-spacing: -1px; 
-            background: linear-gradient(to right, var(--primary), var(--accent)); 
-            -webkit-background-clip: text; -webkit-text-fill-color: transparent; 
-            white-space: nowrap; 
-        }
+        /* NAV */
+        header { position: sticky; top: 0; z-index: 1000; background: var(--nav-bg); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); padding: 1rem 5%; display: flex; justify-content: space-between; align-items: center; height: 70px; }
+        .logo { font-size: 1.5rem; font-weight: 800; letter-spacing: -1px; background: linear-gradient(to right, var(--primary), var(--accent)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; white-space: nowrap; }
         nav { display: flex; align-items: center; gap: 1.5rem; flex-wrap: nowrap; }
         nav ul { display: flex; gap: 1.5rem; }
         nav a { font-weight: 500; font-size: 0.95rem; position: relative; white-space: nowrap; }
         nav a:hover { color: var(--accent); }
         nav a::after { content: ''; position: absolute; width: 0; height: 2px; bottom: -4px; left: 0; background: var(--accent); transition: 0.3s; }
         nav a:hover::after { width: 100%; }
-        
         .theme-switch { cursor: pointer; padding: 0.5rem; font-size: 1.2rem; display: flex; align-items: center; justify-content: center; }
         .theme-switch:hover { transform: rotate(20deg); color: var(--accent); }
 
-        /* --- HERO --- */
+        /* HERO */
         .hero { min-height: 90vh; display: flex; align-items: center; justify-content: space-between; }
         .hero-text { flex: 1; padding-right: 3rem; }
         .hero-greeting { font-size: 1.2rem; font-weight: 600; color: var(--accent); display: block; margin-bottom: 0.5rem; }
         .hero h1 { font-size: 4.2rem; font-weight: 800; line-height: 1.1; margin-bottom: 1rem; letter-spacing: -1.5px; }
         .hero-role { font-size: 1.5rem; font-weight: 600; color: var(--text-sub); margin-bottom: 1.5rem; }
         .typewriter { font-family: 'Courier New', monospace; color: var(--accent); font-weight: 700; }
-        
         .btn { padding: 0.8rem 2rem; border-radius: 50px; font-weight: 600; display: inline-flex; gap: 0.5rem; align-items: center; font-size: 0.95rem; cursor: pointer; border: none; }
         .btn-primary { background: var(--accent); color: white; box-shadow: 0 5px 15px rgba(37, 99, 235, 0.3); }
         .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 8px 25px rgba(37, 99, 235, 0.5); }
         .btn-outline { border: 2px solid var(--border); color: var(--text-main); background: transparent; }
         .btn-outline:hover { border-color: var(--accent); color: var(--accent); background: rgba(37, 99, 235, 0.05); }
-
         .hero-image-wrapper { position: relative; z-index: 1; }
         .hero-image-wrapper::before { content: ''; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 120%; height: 120%; background: radial-gradient(circle, var(--accent), transparent); opacity: 0.1; border-radius: 50%; }
         .hero-image { width: 380px; height: 380px; border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%; object-fit: cover; border: 4px solid var(--bg-body); box-shadow: 0 20px 40px rgba(0,0,0,0.2); }
 
-        /* --- MARQUEE --- */
-        .marquee-container { overflow: hidden; padding: 2rem 0; background: rgba(255,255,255,0.02); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); margin-top: -2rem; }
-        .marquee { display: flex; gap: 4rem; width: max-content; animation: scroll 30s linear infinite; }
-        .marquee-item { display: flex; align-items: center; gap: 10px; color: var(--text-sub); font-weight: 600; font-size: 1.2rem; }
-        .marquee-item i { color: var(--accent); font-size: 1.5rem; }
-        @keyframes scroll { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
-
-        /* --- SECTIONS --- */
+        /* SECTION */
         .section-header { text-align: center; margin-bottom: 4rem; }
         .section-title { font-size: 2.5rem; font-weight: 800; margin-bottom: 0.5rem; }
         .underline { width: 60px; height: 5px; background: var(--accent); margin: 0 auto; border-radius: 5px; }
 
-        /* --- WORKFLOW --- */
-        .workflow-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 2rem; margin-top: 2rem; }
-        .workflow-item { background: var(--bg-card); padding: 2rem; border-radius: 16px; border: 1px solid var(--border); text-align: center; backdrop-filter: blur(5px); position: relative; }
-        .workflow-item:hover { transform: translateY(-5px); border-color: var(--accent); box-shadow: var(--shadow); }
-        .workflow-icon { width: 60px; height: 60px; margin: 0 auto 1.5rem; background: rgba(59, 130, 246, 0.1); color: var(--accent); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.8rem; }
-        .workflow-item h4 { font-size: 1.2rem; margin-bottom: 0.5rem; color: var(--text-main); }
-        .workflow-item p { font-size: 0.9rem; color: var(--text-sub); }
-        @media (min-width: 768px) {
-            .workflow-item:not(:last-child)::after {
-                content: '\f061'; font-family: "Font Awesome 6 Free"; font-weight: 900;
-                position: absolute; right: -1.5rem; top: 50%; transform: translateY(-50%);
-                color: var(--border); font-size: 1.2rem; z-index: 1;
-            }
-        }
-
-        /* --- CARDS --- */
+        /* CARDS */
         .grid-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 2rem; }
         .card { background: var(--bg-card); border: 1px solid var(--border); padding: 2rem; border-radius: 20px; display: flex; flex-direction: column; backdrop-filter: blur(10px); }
         .card:hover { transform: translateY(-8px); border-color: var(--accent); box-shadow: var(--shadow); }
@@ -147,7 +91,7 @@
         .card-link { color: var(--accent); font-weight: 700; display: inline-flex; align-items: center; gap: 5px; cursor: pointer; font-size: 0.9rem; }
         .card-link:hover { text-decoration: underline; }
 
-        /* --- MODAL --- */
+        /* MODAL */
         .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); backdrop-filter: blur(5px); z-index: 3000; display: none; justify-content: center; align-items: center; opacity: 0; }
         .modal-overlay.open { opacity: 1; }
         .modal-content { background: var(--bg-body); width: 90%; max-width: 700px; padding: 2.5rem; border-radius: 20px; border: 1px solid var(--border); position: relative; max-height: 90vh; overflow-y: auto; transform: translateY(30px); transition: 0.3s; }
@@ -159,13 +103,13 @@
         .modal-section h4 { color: var(--text-main); font-size: 1.1rem; margin-bottom: 0.5rem; border-left: 3px solid var(--accent); padding-left: 10px; }
         .modal-section p { color: var(--text-sub); font-size: 0.95rem; }
 
-        /* --- SKILLS --- */
+        /* SKILLS */
         .skill-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 1.5rem; }
         .skill-box { background: var(--bg-card); border: 1px solid var(--border); padding: 1.5rem; text-align: center; border-radius: 16px; backdrop-filter: blur(5px); }
         .skill-box:hover { transform: translateY(-5px); border-color: var(--accent); }
         .skill-icon { font-size: 2.5rem; color: var(--accent); margin-bottom: 0.8rem; }
 
-        /* --- EDUCATION --- */
+        /* EDUCATION */
         .edu-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; }
         .edu-card { background: var(--bg-card); border: 1px solid var(--border); padding: 2rem; border-radius: 16px; border-left: 5px solid var(--accent); backdrop-filter: blur(5px); }
         .edu-card:hover { transform: translateY(-5px); box-shadow: var(--shadow); }
@@ -173,53 +117,44 @@
         .edu-card h4 { color: var(--accent); font-weight: 600; }
         .edu-card .date { color: var(--text-sub); font-size: 0.85rem; font-style: italic; margin-bottom: 1rem; display: block; }
 
-        /* --- AWARDS --- */
+        /* AWARDS */
         .award-card { background: var(--bg-card); border: 1px solid var(--border); border-left: 5px solid #f59e0b; padding: 2.5rem; border-radius: 16px; display: flex; gap: 2rem; max-width: 900px; margin: 0 auto; }
         .award-card:hover { transform: translateY(-5px); box-shadow: var(--shadow); }
         .award-icon { font-size: 3rem; color: #f59e0b; }
 
-        /* --- CONTACT --- */
+        /* CONTACT */
         .contact-container { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; max-width: 1000px; margin: 0 auto; }
         .contact-icon { width: 50px; height: 50px; background: var(--bg-card); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: var(--accent); border: 1px solid var(--border); }
         .form-control { width: 100%; padding: 1rem; border-radius: 10px; border: 1px solid var(--border); margin-bottom: 1rem; background: var(--bg-card); color: var(--text-main); outline: none; }
         .form-control:focus { border-color: var(--accent); box-shadow: 0 0 0 2px var(--accent); }
 
-        /* --- FOOTER --- */
+        /* FOOTER */
         footer { text-align: center; padding: 3rem 2rem; border-top: 1px solid var(--border); margin-top: 4rem; color: var(--text-sub); background: var(--bg-body); position: relative; z-index: 2; }
 
-        /* --- CHATBOT (ENHANCED) --- */
+        /* CHATBOT */
         #chatbot-icon { position: fixed; bottom: 2rem; right: 2rem; background: var(--accent); color: white; width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: 0 5px 20px rgba(37, 99, 235, 0.4); z-index: 2000; }
         #chatbot-icon:hover { transform: scale(1.1); }
-        
         #chatbot-window { position: fixed; bottom: 6rem; right: 2rem; width: 360px; height: 520px; background: var(--bg-card); backdrop-filter: blur(15px); border: 1px solid var(--border); border-radius: 16px; box-shadow: 0 20px 50px rgba(0,0,0,0.3); display: none; flex-direction: column; z-index: 2001; }
-        
         #chat-header { background: var(--accent); color: white; padding: 1rem; display: flex; justify-content: space-between; align-items: center; font-weight: 600; border-radius: 16px 16px 0 0; }
-        
         #chat-messages { flex: 1; padding: 1rem; overflow-y: auto; display: flex; flex-direction: column; gap: 10px; scroll-behavior: smooth; }
-        
-        /* Message Bubbles with Markdown support */
         .chat-message { padding: 12px 16px; border-radius: 12px; font-size: 0.9rem; max-width: 85%; line-height: 1.5; word-wrap: break-word; }
         .chat-message.bot { background: rgba(255,255,255,0.1); border: 1px solid var(--border); align-self: flex-start; color: var(--text-main); }
         .chat-message.user { background: var(--accent); color: white; align-self: flex-end; }
         .chat-message ul { margin-left: 1.5rem; list-style-type: disc; }
         .chat-message strong { font-weight: bold; }
-
         #chat-input-container { padding: 1rem; border-top: 1px solid var(--border); display: flex; gap: 8px; background: var(--bg-card); border-radius: 0 0 16px 16px; }
-        
-        /* FIXED INPUT FOR TYPING */
         #chat-input { flex: 1; padding: 12px; border-radius: 8px; border: 1px solid var(--border); background: var(--bg-body); color: var(--text-main); outline: none; pointer-events: auto; }
         #chat-input:focus { border-color: var(--accent); }
 
-        /* --- MOBILE FIXES --- */
+        /* MOBILE */
         @media (max-width: 768px) {
             .hero { flex-direction: column-reverse; text-align: center; padding-top: 4rem; }
             .hero-text { padding-right: 0; margin-top: 2rem; }
             .hero h1 { font-size: 3rem; }
-            .hero-image { width: 280px; height: 280px; } 
+            .hero-image { width: 280px; height: 280px; }
             nav ul { display: none; }
             .contact-container { grid-template-columns: 1fr; }
             #chatbot-window { width: 90%; right: 5%; }
-            .workflow-item:not(:last-child)::after { display: none; }
         }
     </style>
 </head>
@@ -268,57 +203,6 @@
         </div>
     </section>
 
-    <!-- <p><div class="marquee-container reveal">
-        <div class="marquee">
-            <div class="marquee-item"><i class="fab fa-python"></i> Python</div>
-            <div class="marquee-item"><i class="fas fa-brain"></i> TensorFlow</div>
-            <div class="marquee-item"><i class="fas fa-fire"></i> PyTorch</div>
-            <div class="marquee-item"><i class="fas fa-database"></i> SQL</div>
-            <div class="marquee-item"><i class="fab fa-docker"></i> Docker</div>
-            <div class="marquee-item"><i class="fas fa-project-diagram"></i> LangChain</div>
-            <div class="marquee-item"><i class="fas fa-server"></i> Apache Spark</div>
-            <div class="marquee-item"><i class="fab fa-aws"></i> AWS</div>
-            <div class="marquee-item"><i class="fab fa-python"></i> Python</div>
-            <div class="marquee-item"><i class="fas fa-brain"></i> TensorFlow</div>
-            <div class="marquee-item"><i class="fas fa-fire"></i> PyTorch</div>
-            <div class="marquee-item"><i class="fas fa-database"></i> SQL</div>
-            <div class="marquee-item"><i class="fab fa-docker"></i> Docker</div>
-            <div class="marquee-item"><i class="fas fa-project-diagram"></i> LangChain</div>
-            <div class="marquee-item"><i class="fas fa-server"></i> Apache Spark</div>
-            <div class="marquee-item"><i class="fab fa-aws"></i> AWS</div>
-        </div>
-    </div>
-
-    <section class="section-padding" id="workflow">
-        <div class="section-header reveal">
-            <h2 class="section-title">My Workflow</h2>
-            <div class="underline"></div>
-            <p style="margin-top: 1rem; color: var(--text-sub);">From Problem to Production</p>
-        </div>
-        <div class="workflow-grid reveal">
-            <div class="workflow-item">
-                <div class="workflow-icon"><i class="fas fa-search"></i></div>
-                <h4>1. Discovery</h4>
-                <p>Translating complex business requirements into clear, solvable data problems.</p>
-            </div>
-            <div class="workflow-item">
-                <div class="workflow-icon"><i class="fas fa-database"></i></div>
-                <h4>2. Data Engineering</h4>
-                <p>Building robust pipelines to clean, transform, and feature-engineer raw data.</p>
-            </div>
-            <div class="workflow-item">
-                <div class="workflow-icon"><i class="fas fa-brain"></i></div>
-                <h4>3. Modeling</h4>
-                <p>Developing and fine-tuning SOTA models (LLMs, CNNs, XGBoost) for peak performance.</p>
-            </div>
-            <div class="workflow-item">
-                <div class="workflow-icon"><i class="fas fa-rocket"></i></div>
-                <h4>4. Deployment</h4>
-                <p>Shipping solutions via APIs, Docker containers, or interactive Streamlit apps.</p>
-            </div>
-        </div>
-    </section></p> -->
-
     <section class="section-padding" id="projects">
         <div class="section-header reveal">
             <h2 class="section-title">Featured Projects</h2>
@@ -326,35 +210,59 @@
             <p style="margin-top: 1rem; color: var(--text-sub);"></p>
         </div>
         <div class="grid-container">
-              <div class="card reveal">
-                  <h3>RAFT ArXiv</h3>
-                  <div class="tags">
-                      <span class="tag">Fine-Tuning</span>
-                      <span class="tag">RAG</span>
-                      <span class="tag">QLoRA</span>
-                      <span class="tag">LLM Evaluation</span>
-                  </div>
-                  <p>Fine-tuned phi-2 using RAFT on 200 ArXiv papers — outperforms vanilla RAG by +77% precision and +14.6% faithfulness via LLM-as-judge benchmarking.</p>
-                  <div class="card-actions">
-                      <span class="card-link" onclick="openModal('raft')">View Details <i class="fas fa-info-circle"></i></span>
-                      <a href="https://github.com/AnvithAnvi/raft-arxiv" target="_blank" class="card-link">GitHub <i class="fas fa-external-link-alt"></i></a>
-                  </div>
-              </div>
+
+            <!-- AgentWatch — NEW -->
+            <div class="card reveal">
+                <h3>AgentWatch</h3>
+                <div class="tags">
+                    <span class="tag">Observability</span>
+                    <span class="tag">FastAPI</span>
+                    <span class="tag">Python SDK</span>
+                    <span class="tag">React</span>
+                    <span class="tag">SQLite</span>
+                </div>
+                <p>End-to-end observability platform for AI agents. Monitor execution traces, capture runtime metadata, auto-evaluate run quality (pass / warning / fail), and visualize every tool call — all with a one-line SDK wrapper.</p>
+                <div class="card-actions">
+                    <span class="card-link" onclick="openModal('agentwatch')">View Details <i class="fas fa-info-circle"></i></span>
+                    <a href="https://github.com/AnvithAnvi/AgentWatch" target="_blank" class="card-link">GitHub <i class="fas fa-external-link-alt"></i></a>
+                </div>
+            </div>
+
+            <div class="card reveal">
+                <h3>RAFT ArXiv</h3>
+                <div class="tags">
+                    <span class="tag">Fine-Tuning</span>
+                    <span class="tag">RAG</span>
+                    <span class="tag">QLoRA</span>
+                    <span class="tag">LLM Evaluation</span>
+                </div>
+                <p>Fine-tuned phi-2 using RAFT on 200 ArXiv papers — outperforms vanilla RAG by +77% precision and +14.6% faithfulness via LLM-as-judge benchmarking.</p>
+                <div class="card-actions">
+                    <span class="card-link" onclick="openModal('raft')">View Details <i class="fas fa-info-circle"></i></span>
+                    <a href="https://github.com/AnvithAnvi/raft-arxiv" target="_blank" class="card-link">GitHub <i class="fas fa-external-link-alt"></i></a>
+                </div>
+            </div>
+
             <div class="card reveal">
                 <h3>Multi-Agent Research Pipeline</h3>
                 <div class="tags">
-                    <span class="tag">LangGraph</span> <span class="tag">Multi-Agent</span> <span class="tag">FastAPI</span>
+                    <span class="tag">LangGraph</span>
+                    <span class="tag">Multi-Agent</span>
+                    <span class="tag">FastAPI</span>
                 </div>
                 <p>Orchestrated research assistant coordinating specialized agents (planner, worker, critic, final) for structured question answering via web search and synthesis.</p>
                 <div class="card-actions">
                     <span class="card-link" onclick="openModal('multiagent')">View Details <i class="fas fa-info-circle"></i></span>
                     <a href="https://github.com/AnvithAnvi/Multi-Agent-research-pipeline" target="_blank" class="card-link">GitHub <i class="fas fa-external-link-alt"></i></a>
                 </div>
-            </div>    
+            </div>
+
             <div class="card reveal">
                 <h3>Local_RAG_Assistant</h3>
                 <div class="tags">
-                    <span class="tag">Local LLMs</span> <span class="tag">Privacy</span> <span class="tag">Vector DB</span>
+                    <span class="tag">Local LLMs</span>
+                    <span class="tag">Privacy</span>
+                    <span class="tag">Vector DB</span>
                 </div>
                 <p>Privacy-first document assistant running offline using local open-source LLMs and vector stores.</p>
                 <div class="card-actions">
@@ -366,7 +274,9 @@
             <div class="card reveal">
                 <h3>Mcp_agent_browser</h3>
                 <div class="tags">
-                    <span class="tag">Playwright</span> <span class="tag">Automation</span> <span class="tag">AI Agent</span>
+                    <span class="tag">Playwright</span>
+                    <span class="tag">Automation</span>
+                    <span class="tag">AI Agent</span>
                 </div>
                 <p>Autonomous browser agent translating natural language instructions into web actions (clicks, scrolls, scraping).</p>
                 <div class="card-actions">
@@ -378,7 +288,9 @@
             <div class="card reveal">
                 <h3>medical-diagnosis-agent</h3>
                 <div class="tags">
-                    <span class="tag">RAG</span> <span class="tag">LangChain</span> <span class="tag">Healthcare</span>
+                    <span class="tag">RAG</span>
+                    <span class="tag">LangChain</span>
+                    <span class="tag">Healthcare</span>
                 </div>
                 <p>Intelligent agent leveraging Retrieval Augmented Generation (RAG) to provide citation-backed medical insights.</p>
                 <div class="card-actions">
@@ -390,7 +302,9 @@
             <div class="card reveal">
                 <h3>explain-my-model</h3>
                 <div class="tags">
-                    <span class="tag">SHAP</span> <span class="tag">XAI</span> <span class="tag">Data Viz</span>
+                    <span class="tag">SHAP</span>
+                    <span class="tag">XAI</span>
+                    <span class="tag">Data Viz</span>
                 </div>
                 <p>Interactive dashboard demystifying black-box ML models using SHAP values.</p>
                 <div class="card-actions">
@@ -402,7 +316,9 @@
             <div class="card reveal">
                 <h3>Blog_to_Podcast</h3>
                 <div class="tags">
-                    <span class="tag">OpenAI API</span> <span class="tag">TTS</span> <span class="tag">Streamlit</span>
+                    <span class="tag">OpenAI API</span>
+                    <span class="tag">TTS</span>
+                    <span class="tag">Streamlit</span>
                 </div>
                 <p>Automated pipeline converting written articles into audio podcasts using GPT summarization and Text-to-Speech models.</p>
                 <div class="card-actions">
@@ -467,7 +383,7 @@
 
         </div>
     </section>
-    
+
     <section class="section-padding" id="skills">
         <div class="section-header reveal">
             <h2 class="section-title">Technical Stack</h2>
@@ -498,7 +414,6 @@
             <h2 class="section-title">Education</h2>
             <div class="underline"></div>
         </div>
-        
         <div class="edu-grid reveal">
             <div class="edu-card">
                 <h3>Master of Science in Data Science</h3>
@@ -506,14 +421,12 @@
                 <span class="date">Aug 2024 - Present</span>
                 <p>Big Data, Deep Learning, Scalable AI Architectures.</p>
             </div>
-
             <div class="edu-card">
                 <h3>Bachelor's in Computer Science</h3>
                 <h4>Lovely Professional University</h4>
                 <span class="date">Aug 2020 - May 2024</span>
                 <p>AI & Machine Learning Specialization.</p>
             </div>
-
             <div class="edu-card">
                 <h3>Professional Certifications</h3>
                 <h4>Coursera & DataCamp</h4>
@@ -528,7 +441,6 @@
             <h2 class="section-title">Awards</h2>
             <div class="underline"></div>
         </div>
-        
         <div class="award-card reveal">
             <div class="award-icon"><i class="fas fa-medal"></i></div>
             <div>
@@ -544,12 +456,10 @@
             <h2 class="section-title">Get In Touch</h2>
             <div class="underline"></div>
         </div>
-
         <div class="contact-container reveal">
             <div>
                 <h3 style="margin-bottom: 1.5rem;">Let's Collaborate</h3>
                 <p style="color: var(--text-sub); margin-bottom: 2rem;">Open to new opportunities in Data Science and AI Engineering.</p>
-                
                 <div class="contact-info-item" style="margin-bottom: 1rem; display: flex; gap: 1rem; align-items: center;">
                     <div class="contact-icon"><i class="fas fa-envelope"></i></div>
                     <span>vattikutianvith@gmail.com</span>
@@ -559,7 +469,6 @@
                     <a href="https://linkedin.com/in/anvithvattikuti" target="_blank">LinkedIn Profile</a>
                 </div>
             </div>
-
             <form id="contactForm">
                 <input type="text" id="name" class="form-control" placeholder="Name" required>
                 <input type="email" id="email" class="form-control" placeholder="Email" required>
@@ -595,26 +504,29 @@
     </div>
 
     <script>
-        // --- 1. NEURAL NETWORK CANVAS ---
+        // 1. CANVAS BACKGROUND
         const canvas = document.getElementById('canvas-bg');
         const ctx = canvas.getContext('2d');
         let particlesArray;
-        canvas.width = window.innerWidth; canvas.height = window.innerHeight;
-        let mouse = { x: null, y: null, radius: (canvas.height/80) * (canvas.width/80) };
-        window.addEventListener('mousemove', (event) => { mouse.x = event.x; mouse.y = event.y; });
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+        let mouse = { x: null, y: null, radius: (canvas.height / 80) * (canvas.width / 80) };
+        window.addEventListener('mousemove', (e) => { mouse.x = e.x; mouse.y = e.y; });
+
         class Particle {
             constructor(x, y, dX, dY, size) { this.x = x; this.y = y; this.dX = dX; this.dY = dY; this.size = size; }
             draw() {
                 ctx.beginPath(); ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
                 const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
-                ctx.fillStyle = isDark ? 'rgba(255,255,255,0.2)' : 'rgba(30, 58, 138, 0.25)'; ctx.fill();
+                ctx.fillStyle = isDark ? 'rgba(255,255,255,0.2)' : 'rgba(30, 58, 138, 0.25)';
+                ctx.fill();
             }
             update() {
                 if (this.x > canvas.width || this.x < 0) this.dX = -this.dX;
                 if (this.y > canvas.height || this.y < 0) this.dY = -this.dY;
                 let dx = mouse.x - this.x, dy = mouse.y - this.y;
-                let distance = Math.sqrt(dx*dx + dy*dy);
-                if (distance < mouse.radius + this.size){
+                let distance = Math.sqrt(dx * dx + dy * dy);
+                if (distance < mouse.radius + this.size) {
                     if (mouse.x < this.x && this.x < canvas.width - 10) this.x += 3;
                     if (mouse.x > this.x && this.x > 10) this.x -= 3;
                     if (mouse.y < this.y && this.y < canvas.height - 10) this.y += 3;
@@ -623,68 +535,62 @@
                 this.x += this.dX; this.y += this.dY; this.draw();
             }
         }
+
         function init() {
             particlesArray = [];
             let num = (canvas.height * canvas.width) / 9000;
             for (let i = 0; i < num; i++) {
                 let size = (Math.random() * 3) + 1;
-                let x = Math.random() * innerWidth, y = Math.random() * innerHeight;
-                particlesArray.push(new Particle(x, y, (Math.random()*2)-1, (Math.random()*2)-1, size));
+                particlesArray.push(new Particle(Math.random() * innerWidth, Math.random() * innerHeight, (Math.random() * 2) - 1, (Math.random() * 2) - 1, size));
             }
         }
-        function animate() {
-            requestAnimationFrame(animate); ctx.clearRect(0, 0, innerWidth, innerHeight);
-            for (let i = 0; i < particlesArray.length; i++) particlesArray[i].update();
-            connect();
-        }
+
         function connect() {
             const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
             for (let a = 0; a < particlesArray.length; a++) {
                 for (let b = a; b < particlesArray.length; b++) {
-                    let d = ((particlesArray[a].x - particlesArray[b].x)**2) + ((particlesArray[a].y - particlesArray[b].y)**2);
-                    if (d < (canvas.width/7) * (canvas.height/7)) {
-                        let op = (1 - (d/20000)) * 0.15;
+                    let d = ((particlesArray[a].x - particlesArray[b].x) ** 2) + ((particlesArray[a].y - particlesArray[b].y) ** 2);
+                    if (d < (canvas.width / 7) * (canvas.height / 7)) {
+                        let op = (1 - (d / 20000)) * 0.15;
                         ctx.strokeStyle = isDark ? `rgba(255,255,255,${op})` : `rgba(30,58,138,${op})`;
-                        ctx.lineWidth = 1; ctx.beginPath(); ctx.moveTo(particlesArray[a].x, particlesArray[a].y);
-                        ctx.lineTo(particlesArray[b].x, particlesArray[b].y); ctx.stroke();
+                        ctx.lineWidth = 1; ctx.beginPath();
+                        ctx.moveTo(particlesArray[a].x, particlesArray[a].y);
+                        ctx.lineTo(particlesArray[b].x, particlesArray[b].y);
+                        ctx.stroke();
                     }
                 }
             }
         }
+
+        function animate() {
+            requestAnimationFrame(animate);
+            ctx.clearRect(0, 0, innerWidth, innerHeight);
+            for (let i = 0; i < particlesArray.length; i++) particlesArray[i].update();
+            connect();
+        }
+
         window.addEventListener('resize', () => { canvas.width = innerWidth; canvas.height = innerHeight; init(); });
         init(); animate();
 
-        // --- 2. MODAL LOGIC ---
+        // 2. PROJECT MODAL DATA
         const projectData = {
+            'agentwatch': {
+                title: 'AgentWatch',
+                problem: 'Building reliable AI agents is hard without visibility. Developers have no way to see which steps ran, what failed, how long each tool call took, or whether the final output was any good — making debugging and quality assurance a guessing game.',
+                solution: 'Built a full-stack observability platform: a lightweight Python SDK that wraps agent runs in a single context manager and auto-captures host, PID, trace IDs, and per-step latency. A FastAPI backend stores runs, spans, and evaluations in SQLite with cascading deletes and project-scoped auth. A React dashboard shows paginated run history, per-run workflow traces with error propagation highlighting, and an automatic rule-based evaluator that scores every run (pass / warning / fail) on errors, tool failures, latency, and output quality.',
+                impact: 'Reduced agent debugging time from hours to minutes. The evaluator detects and scores 4 failure modes automatically with 0 false negatives in testing. Full auth hardening: every endpoint requires a Bearer API key, keys are never exposed after creation, and all data is project-scoped. 63/63 tests passing across API, evaluator, SDK, and security groups.'
+            },
             'raft': {
                 title: 'RAFT ArXiv',
                 problem: 'Standard RAG has a hidden flaw — the LLM is never trained to use retrieved documents. It hallucinates, ignores context, or gets confused when irrelevant chunks are mixed in.',
                 solution: 'Implemented RAFT (Retrieval-Augmented Fine-Tuning) end-to-end on 200 ArXiv ML/AI papers. Fine-tuned Microsoft phi-2 using QLoRA with a custom training dataset where each example teaches the model to cite retrieved chunks.',
                 impact: 'RAFT outperformed vanilla RAG across every metric — +77% precision, +14.6% faithfulness, +5.1% correctness. Discovered that standard F1 metrics are biased toward verbose hallucinations.'
             },
-            'blog2pod': {
-                title: 'Blog_to_Podcast',
-                problem: 'Reading long technical articles takes time and focus that many busy professionals lack.',
-                solution: 'I built an automated pipeline using Streamlit. It takes a URL, scrapes the text, summarizes it using GPT-4, and converts the summary into natural-sounding audio using an API.',
-                impact: 'Increases content accessibility and allows consumption on-the-go. Demonstrated proficiency in API integration and Generative AI workflows.'
-            },
-            'explain': {
-                title: 'explain-my-model',
-                problem: 'Machine Learning models are often "black boxes," making it hard for stakeholders to trust their predictions.',
-                solution: 'Developed an interactive dashboard using SHAP (Shapley Additive exPlanations). Users can upload a model and dataset to see exactly which features drove specific predictions.',
-                impact: 'Improved model transparency and stakeholder trust. Essential for regulated industries like finance and healthcare.'
-            },
-            'medical': {
-                title: 'medical-diagnosis-agent',
-                problem: 'General LLMs often hallucinate when asked for specific medical advice.',
-                solution: 'Built a Retrieval Augmented Generation (RAG) system using LangChain. It retrieves context from a curated database of medical papers before answering, ensuring citations.',
-                impact: 'Reduced hallucination rate and provided evidence-backed answers, showcasing ability to build reliable AI systems.'
-            },
-            'mcp': {
-                title: 'Mcp_agent_browser',
-                problem: 'Web scraping scripts break easily when UI changes, requiring constant maintenance.',
-                solution: 'Created an autonomous agent using Playwright and LLMs. You give it a goal (e.g., "Find the price of X"), and it intelligently figures out which buttons to click and inputs to fill.',
-                impact: 'Created robust, self-healing automation workflows that save hours of manual data entry.'
+            'multiagent': {
+                title: 'Multi-Agent Research Pipeline',
+                problem: 'Complex research questions require breaking down into subtasks, gathering evidence, quality checking, and synthesizing insights — a process that is time-consuming and error-prone when done manually.',
+                solution: 'Built an orchestrated multi-agent system using LangGraph with specialized agents: a planner decomposes questions into subtasks, workers research each subtask via Tavily web search, a critic evaluates and requests revisions (up to 2 iterations), and a final agent synthesizes polished reports. Exposes three interfaces: CLI, FastAPI backend, and Streamlit UI.',
+                impact: 'Demonstrates expertise in agent orchestration, state management, and scalable AI systems. Showcases production-grade architecture with multiple deployment options.'
             },
             'localrag': {
                 title: 'Local_RAG_Assistant',
@@ -692,100 +598,141 @@
                 solution: 'Designed a fully offline RAG system using local open-source models (via Ollama) and a local Vector Database.',
                 impact: 'Enables secure document querying without data ever leaving the local machine, critical for enterprise privacy.'
             },
-            'multiagent': {
-                title: 'Multi-Agent Research Pipeline',
-                problem: 'Complex research questions require breaking down into subtasks, gathering evidence, quality checking, and synthesizing insights — a process that is time-consuming and error-prone when done manually.',
-                solution: 'Built an orchestrated multi-agent system using LangGraph with specialized agents: a planner decomposes questions into subtasks, workers research each subtask via Tavily web search, a critic evaluates and requests revisions (up to 2 iterations), and a final agent synthesizes polished reports. Exposes three interfaces: CLI, FastAPI backend, and Streamlit UI.',
-                impact: 'Demonstrates expertise in agent orchestration, state management, and scalable AI systems. Showcases production-grade architecture with multiple deployment options.'
+            'mcp': {
+                title: 'Mcp_agent_browser',
+                problem: 'Web scraping scripts break easily when UI changes, requiring constant maintenance.',
+                solution: 'Created an autonomous agent using Playwright and LLMs. You give it a goal (e.g., "Find the price of X"), and it intelligently figures out which buttons to click and inputs to fill.',
+                impact: 'Created robust, self-healing automation workflows that save hours of manual data entry.'
+            },
+            'medical': {
+                title: 'medical-diagnosis-agent',
+                problem: 'General LLMs often hallucinate when asked for specific medical advice.',
+                solution: 'Built a Retrieval Augmented Generation (RAG) system using LangChain. It retrieves context from a curated database of medical papers before answering, ensuring citations.',
+                impact: 'Reduced hallucination rate and provided evidence-backed answers, showcasing ability to build reliable AI systems.'
+            },
+            'explain': {
+                title: 'explain-my-model',
+                problem: 'Machine Learning models are often "black boxes," making it hard for stakeholders to trust their predictions.',
+                solution: 'Developed an interactive dashboard using SHAP (Shapley Additive exPlanations). Users can upload a model and dataset to see exactly which features drove specific predictions.',
+                impact: 'Improved model transparency and stakeholder trust. Essential for regulated industries like finance and healthcare.'
+            },
+            'blog2pod': {
+                title: 'Blog_to_Podcast',
+                problem: 'Reading long technical articles takes time and focus that many busy professionals lack.',
+                solution: 'Built an automated pipeline using Streamlit. It takes a URL, scrapes the text, summarizes it using GPT-4, and converts the summary into natural-sounding audio using a TTS API.',
+                impact: 'Increases content accessibility and allows consumption on-the-go. Demonstrated proficiency in API integration and Generative AI workflows.'
             }
         };
 
         function openModal(id) {
-            const data = projectData[id]; if(!data) return;
-            document.getElementById('modalBody').innerHTML = `<h2>${data.title}</h2><div class="modal-section"><h4>The Problem</h4><p>${data.problem}</p></div><div class="modal-section"><h4>The Solution</h4><p>${data.solution}</p></div><div class="modal-section"><h4>Impact</h4><p>${data.impact}</p></div>`;
-            const m = document.getElementById('projectModal'); m.style.display = 'flex'; setTimeout(() => m.classList.add('open'), 10);
+            const data = projectData[id];
+            if (!data) return;
+            document.getElementById('modalBody').innerHTML = `
+                <h2>${data.title}</h2>
+                <div class="modal-section"><h4>The Problem</h4><p>${data.problem}</p></div>
+                <div class="modal-section"><h4>The Solution</h4><p>${data.solution}</p></div>
+                <div class="modal-section"><h4>Impact</h4><p>${data.impact}</p></div>`;
+            const m = document.getElementById('projectModal');
+            m.style.display = 'flex';
+            setTimeout(() => m.classList.add('open'), 10);
         }
-        function closeModal() { const m = document.getElementById('projectModal'); m.classList.remove('open'); setTimeout(() => m.style.display = 'none', 300); }
-        document.getElementById('projectModal').addEventListener('click', (e) => { if(e.target === document.getElementById('projectModal')) closeModal(); });
 
-        // --- 3. STANDARD LOGIC ---
+        function closeModal() {
+            const m = document.getElementById('projectModal');
+            m.classList.remove('open');
+            setTimeout(() => m.style.display = 'none', 300);
+        }
+
+        document.getElementById('projectModal').addEventListener('click', (e) => {
+            if (e.target === document.getElementById('projectModal')) closeModal();
+        });
+
+        // 3. MISC
         document.getElementById('year').textContent = new Date().getFullYear();
+
         const roles = ["Data Scientist.", "ML Engineer.", "AI Enthusiast."];
         let rI = 0, cI = 0, isDel = false;
         function type() {
-            const txt = roles[rI]; const el = document.getElementById('typewriter');
-            el.textContent = txt.substring(0, isDel ? cI-1 : cI+1);
-            cI = isDel ? cI-1 : cI+1;
+            const txt = roles[rI];
+            document.getElementById('typewriter').textContent = txt.substring(0, isDel ? cI - 1 : cI + 1);
+            cI = isDel ? cI - 1 : cI + 1;
             let spd = isDel ? 50 : 100;
-            if(!isDel && cI === txt.length) { spd = 2000; isDel = true; }
-            else if(isDel && cI === 0) { isDel = false; rI = (rI+1)%roles.length; }
+            if (!isDel && cI === txt.length) { spd = 2000; isDel = true; }
+            else if (isDel && cI === 0) { isDel = false; rI = (rI + 1) % roles.length; }
             setTimeout(type, spd);
         }
         document.addEventListener('DOMContentLoaded', type);
 
         const tog = document.getElementById('theme-toggle');
         tog.addEventListener('click', () => {
-            const h = document.documentElement; const i = tog.querySelector('i');
-            if(h.getAttribute('data-theme') === 'light') { h.setAttribute('data-theme', 'dark'); i.className = 'fas fa-sun'; }
+            const h = document.documentElement;
+            const i = tog.querySelector('i');
+            if (h.getAttribute('data-theme') === 'light') { h.setAttribute('data-theme', 'dark'); i.className = 'fas fa-sun'; }
             else { h.setAttribute('data-theme', 'light'); i.className = 'fas fa-moon'; }
         });
 
         const obs = new IntersectionObserver((e) => e.forEach(x => x.isIntersecting && x.target.classList.add('active')));
         document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
-        
+
         document.getElementById('contactForm').addEventListener('submit', (e) => {
-            e.preventDefault(); const n = document.getElementById('name').value, em = document.getElementById('email').value, m = document.getElementById('message').value;
+            e.preventDefault();
+            const n = document.getElementById('name').value;
+            const em = document.getElementById('email').value;
+            const m = document.getElementById('message').value;
             window.location.href = `mailto:vattikutianvith@gmail.com?subject=Portfolio: ${n}&body=Name: ${n}%0D%0AEmail: ${em}%0D%0A%0D%0A${m}`;
         });
-        
-        // --- 4. CHATBOT LOGIC (USING GEMINI-1.5-PRO) ---
-        const cIcon = document.getElementById('chatbot-icon'), cWin = document.getElementById('chatbot-window'), cInp = document.getElementById('chat-input'), cLoad = document.getElementById('loading-indicator');
+
+        // 4. CHATBOT
+        const cIcon = document.getElementById('chatbot-icon');
+        const cWin = document.getElementById('chatbot-window');
+        const cInp = document.getElementById('chat-input');
+        const cLoad = document.getElementById('loading-indicator');
+
         cIcon.onclick = () => { cWin.style.display = 'flex'; cIcon.style.display = 'none'; setTimeout(() => cInp.focus(), 100); };
         document.getElementById('close-chatbot').onclick = () => { cWin.style.display = 'none'; cIcon.style.display = 'flex'; };
-        
-        function addMsg(t, s) { 
-            const d = document.createElement('div'); 
-            d.className = `chat-message ${s}`; 
-            if(s === 'bot' && typeof marked !== 'undefined') d.innerHTML = marked.parse(t); else d.textContent = t;
+
+        function addMsg(t, s) {
+            const d = document.createElement('div');
+            d.className = `chat-message ${s}`;
+            if (s === 'bot' && typeof marked !== 'undefined') d.innerHTML = marked.parse(t);
+            else d.textContent = t;
             document.getElementById('chat-messages').append(d);
             document.getElementById('chat-messages').scrollTop = document.getElementById('chat-messages').scrollHeight;
         }
-        
-        addMsg("Hi! Ask me about Krishna's projects.", 'bot');
-        
-        const profile = `Name: Krishna Anvith V. Role: Data Scientist. Education: MS (NJIT). Projects: Blog_to_Podcast, explain-my-model, medical-diagnosis-agent, Multi-Agent-research-pipeline. Skills: Python, RAG, LLMs, Playwright, LangGraph.`;
-        let hist = [{role: "user", parts: [{text: `System: Answer based on: ${profile}`}]}];
-        
-        // --- LOCAL AI MODEL (No API Key Required) ---
+
+        addMsg("Hi! Ask me about Krishna's projects, skills, or experience.", 'bot');
+
         const responses = {
-            "projects": "Krishna has worked on **Blog_to_Podcast**, **explain-my-model**, **medical-diagnosis-agent**, and **Multi-Agent-research-pipeline**. These projects showcase expertise in RAG, LLMs, Playwright automation, and agent orchestration.",
-            "skills": "Key skills include **Python**, **RAG systems**, **LLMs**, **Playwright**, **FastAPI**, **LangGraph**, **Docker**, and **CI/CD with GitHub Actions**.",
-            "education": "Krishna holds an **MS from NJIT** (Aug 2024-Present) with expertise in AI/ML and data science, and a **BS from LPU** (Aug 2020-May 2024) with AI/ML specialization.",
-            "email": "📧 Contact: **vattikutianvith@gmail.com**",
-            "experience": "Data Scientist and AI Engineer with hands-on experience building LLM-based applications, automating workflows, deploying solutions with Docker, and orchestrating multi-agent systems.",
-            "default": "I'm here to help! Ask me about Krishna's **projects**, **skills**, **education**, or **experience**. You can also ask for contact **email**."
+            "agentwatch":   "**AgentWatch** is Krishna's full-stack AI observability platform — a Python SDK + FastAPI backend + React dashboard that monitors agent runs, captures traces, and auto-evaluates quality (pass/warning/fail). 63/63 tests passing. Check it out on [GitHub](https://github.com/AnvithAnvi/AgentWatch).",
+            "projects":     "Krishna has built **AgentWatch** (AI observability), **RAFT ArXiv** (fine-tuning), **Multi-Agent Pipeline** (LangGraph), **Local RAG Assistant**, **Medical Diagnosis Agent**, **MCP Browser Agent**, **explain-my-model** (XAI), and **Blog_to_Podcast**.",
+            "skills":       "Key skills: **Python**, **RAG**, **LLMs**, **LangChain**, **LangGraph**, **FastAPI**, **Playwright**, **Docker**, **QLoRA/PEFT**, **Hugging Face**, **SHAP**, **Vector DBs**, **PyTorch**, and **Ollama**.",
+            "education":    "Krishna holds an **MS in Data Science from NJIT** (Aug 2024–Present) and a **BS in Computer Science from LPU** (Aug 2020–May 2024) with an AI/ML specialisation.",
+            "experience":   "**AI/ML Intern at UpGrad** (Jan–Apr 2024): HAR pipeline with 97.5% accuracy. **Computer Vision & IoT Intern at TekWissen** (May–Aug 2023): plant disease detection at 7.2 ms latency on edge devices.",
+            "email":        "📧 **vattikutianvith@gmail.com** — feel free to reach out!",
+            "contact":      "📧 **vattikutianvith@gmail.com** · 💼 [LinkedIn](https://linkedin.com/in/anvithvattikuti)",
+            "default":      "I'm here to help! Ask me about Krishna's **projects**, **skills**, **education**, **experience**, or **contact** info."
         };
-        
+
         function getResponse(input) {
             const lower = input.toLowerCase();
             for (const [key, response] of Object.entries(responses)) {
-                if(key !== 'default' && lower.includes(key)) return response;
+                if (key !== 'default' && lower.includes(key)) return response;
             }
             return responses.default;
         }
 
         async function send() {
-            const v = cInp.value.trim(); if(!v) return;
-            addMsg(v, 'user'); cInp.value=''; cLoad.style.display='block';
-            
-            // Simulate slight delay for natural feel
+            const v = cInp.value.trim();
+            if (!v) return;
+            addMsg(v, 'user');
+            cInp.value = '';
+            cLoad.style.display = 'block';
             setTimeout(() => {
-                const ans = getResponse(v);
-                addMsg(ans, 'bot');
-                cLoad.style.display='none';
+                addMsg(getResponse(v), 'bot');
+                cLoad.style.display = 'none';
             }, 500);
         }
-        
+
         document.getElementById('send-button').onclick = send;
         cInp.addEventListener('keypress', (e) => { if (e.key === 'Enter') send(); });
     </script>
