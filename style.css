@@ -301,7 +301,9 @@ footer.site nav{display:flex;flex-wrap:wrap;gap:20px}
 footer.site a{text-decoration:none}footer.site a:hover{color:var(--ink)}
 
 @media (max-width:900px){
-  .pcard{position:relative;top:auto;min-height:0;padding:28px;transform:none !important;filter:none !important}
+  .pcard{position:relative;top:auto;min-height:0;padding:28px;transform:none;filter:none}
+  .js .pcard.rv{transform:translateY(44px) scale(.96)}
+  .js .pcard.rv.in{transform:none}
   .cards{padding-bottom:0}
   .toc{position:static;flex-basis:100%;flex-direction:row;flex-wrap:wrap;gap:6px 16px}
   .toc a{border-left:0;padding:4px 0}
@@ -329,16 +331,16 @@ footer.site a{text-decoration:none}footer.site a:hover{color:var(--ink)}
   .contact{padding-top:64px}
 }
 @media (prefers-reduced-motion: reduce){
+  /* gentle, not off: phones often have reduce-motion on, so keep fades and short reveals; stop loops and big movement */
   html{scroll-behavior:auto}
-  *,*::before,*::after{animation:none !important;transition:none !important}
-  @view-transition{navigation:none}
-  .js .ln>span,.js .rv{transform:none;opacity:1}
-  .js .tr-bar{transform:scaleX(1)}
+  .aurora i,.marq-track,.eyebrow .dot,.tr-bar.live::after,.caret,.v-aw div,.v-raft p.hit,.v-mcp .cur,.v-mcp .go-btn,.playhead{animation:none !important}
+  .term,.term:hover,.about img,.about img:hover{transform:none}
+  .js .ln>span{transform:translateY(30%) rotate(0)}
+  .js .rv{transform:translateY(10px)}
+  .js .pcard.rv{transform:none}
+  .rot span,.rot span.off{transform:none}
   .playhead,.glow{display:none}
-  .log li{opacity:1}
-  .rot span:first-child{opacity:1;transform:none}
   .v-aw div{transform:none}
-  .marq-track{animation:none}
 }
 
 /* lab */
@@ -441,4 +443,33 @@ footer.site a{text-decoration:none}footer.site a:hover{color:var(--ink)}
   nav#nav{order:3;flex:1 0 100%;margin:4px -6px 0;overflow-x:auto}
   nav#nav a{padding:10px 14px;white-space:nowrap}
   nav#nav .ind{left:14px;right:14px;bottom:2px}
+}
+
+/* fallback page fade for browsers without cross-document view transitions */
+@keyframes pagein{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+.no-vt main{animation:pagein .5s cubic-bezier(.2,.7,.2,1) both}
+.no-vt body{transition:opacity .2s,background-color .35s,color .35s}
+.leaving body{opacity:0}
+
+/* menu button + phone header: one compact row, links in a dropdown */
+.menu-btn{display:none;width:44px;height:44px;border-radius:999px;border:1px solid var(--line);background:transparent;cursor:pointer;position:relative;color:var(--ink)}
+.menu-btn span{position:absolute;left:13px;right:13px;height:2px;border-radius:2px;background:currentColor;transition:transform .3s cubic-bezier(.2,.7,.2,1),top .3s}
+.menu-btn span:nth-child(1){top:17px}.menu-btn span:nth-child(2){top:25px}
+.pill.open .menu-btn span:nth-child(1){top:21px;transform:rotate(45deg)}
+.pill.open .menu-btn span:nth-child(2){top:21px;transform:rotate(-45deg)}
+.nav-resume{display:none}
+@keyframes dropin{from{opacity:0;transform:translateY(-8px) scale(.98)}to{opacity:1;transform:none}}
+@media (max-width:760px){
+  .pill{position:relative;flex-wrap:nowrap;border-radius:999px;padding:8px 8px 8px 20px;gap:10px}
+  .menu-btn{display:block;flex:0 0 auto}
+  .hright{gap:8px}
+  .theme{min-height:44px;padding:8px 16px}
+  nav#nav{display:none;order:0;flex:none;margin:0;overflow:visible;position:absolute;top:calc(100% + 10px);left:0;right:0;flex-direction:column;gap:2px;padding:10px;background:var(--card);border:1px solid var(--line);border-radius:24px;box-shadow:0 24px 60px rgba(0,0,0,.45)}
+  .pill.open nav#nav{display:flex;animation:dropin .28s cubic-bezier(.2,.7,.2,1) both}
+  nav#nav a{padding:15px 18px;font-size:18px;font-weight:600;border-radius:16px;white-space:normal}
+  nav#nav a[aria-current="page"]{background:var(--soft);color:var(--ink)}
+  nav#nav .ind{display:none}
+  .nav-resume{display:block;margin-top:6px;text-align:center;background:var(--cta-bg);color:var(--cta-fg) !important}
+  .hero{padding-top:28px}
+  .status{gap:8px}
 }
