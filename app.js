@@ -47,6 +47,7 @@
       if (p < 1) requestAnimationFrame(step);
     })(performance.now());
   }
+  if (innerWidth <= 900) $$('.pcard').forEach(function (c) { c.classList.add('rv'); });
   var revealTargets = $$('.rv, .stat, .trace');
   if ('IntersectionObserver' in window) {
     var rio = new IntersectionObserver(function (es) {
@@ -67,7 +68,7 @@
   if (rot) {
     var words = $$('span', rot), wi = 0;
     words[0].className = 'on';
-    if (!reduce && words.length > 1) {
+    if (words.length > 1) {
       setInterval(function () {
         var cur = words[wi]; wi = (wi + 1) % words.length;
         cur.className = 'off';
@@ -155,7 +156,8 @@
   /* stacking project cards: earlier cards recede as the next one slides over */
   var cards = $$('.pcard');
   function stack() {
-    if (!cards.length || innerWidth <= 900 || reduce) return;
+    if (!cards.length) return;
+    if (innerWidth <= 900 || reduce) { cards.forEach(function (c) { c.style.transform = ''; c.style.filter = ''; }); return; }
     cards.forEach(function (c, i) {
       var next = cards[i + 1], t = 0;
       if (next) {
@@ -199,6 +201,36 @@
       });
     }, { rootMargin: '-30% 0px -60% 0px' });
     Object.keys(map).forEach(function (k) { so.observe(d.getElementById(k)); });
+  }
+
+  /* mobile menu */
+  var menu = $('#menu'), pill = $('.pill');
+  function closeMenu() { if (pill) pill.classList.remove('open'); if (menu) { menu.setAttribute('aria-expanded', 'false'); menu.setAttribute('aria-label', 'Open menu'); } }
+  if (menu && pill) {
+    menu.addEventListener('click', function (e) {
+      e.stopPropagation();
+      var open = !pill.classList.contains('open');
+      pill.classList.toggle('open', open);
+      menu.setAttribute('aria-expanded', open ? 'true' : 'false');
+      menu.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+    });
+    d.addEventListener('click', function (e) { if (!pill.contains(e.target)) closeMenu(); });
+    d.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeMenu(); });
+    addEventListener('resize', function () { if (innerWidth > 760) closeMenu(); });
+  }
+
+  /* page transitions: native cross-document view transitions where supported, a quick fade elsewhere */
+  if (root.classList.contains('no-vt')) {
+    d.addEventListener('click', function (e) {
+      var a = e.target.closest && e.target.closest('a[href]');
+      if (!a || e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+      if (a.target && a.target !== '_self') return;
+      var u; try { u = new URL(a.href, location.href); } catch (x) { return; }
+      if (u.origin !== location.origin || !/\.html?$|\/$/.test(u.pathname) || (u.pathname === location.pathname && u.hash)) return;
+      e.preventDefault(); root.classList.add('leaving');
+      setTimeout(function () { location.href = a.href; }, 200);
+    });
+    addEventListener('pageshow', function (e) { if (e.persisted) root.classList.remove('leaving'); });
   }
 
   var yr = $('#yr'); if (yr) yr.textContent = new Date().getFullYear();
