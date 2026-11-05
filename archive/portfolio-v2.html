@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Krishna Anvith Vattikuti | AI/ML Engineer</title>
+<meta name="description" content="AI/ML engineer building LLM systems, RAG pipelines, AI agents and the evaluations that test them. Currently AI/ML Engineering Intern at Enclavia AI.">
+<script>
+document.documentElement.classList.add('js');
+/* safety net: always reveal content even if the main script fails */
+setTimeout(function () { document.documentElement.classList.add('go'); }, 2000);
+try {
+  var saved = localStorage.getItem('theme');
+  var pref = saved || (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+  document.documentElement.setAttribute('data-theme', pref);
+} catch (e) {}
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#F2F4F1; --panel:#FFFFFF; --ink:#15211C; --sub:#41524A; --line:#C5CFC9; --soft:#E3E9E5; --chip:#9DB0A6;
+  --agents:#0B6E64; --llm:#5B3FB8; --ml:#A24B0C; --study:#6B7A73;
+  --btn-bg:#15211C; --btn-fg:#F2F4F1; --focus:#5B3FB8; --header-bg:rgba(242,244,241,.88);
+}
+[data-theme="dark"]{
+  --bg:#0F1714; --panel:#16221D; --ink:#E8EFEA; --sub:#A8B8AF; --line:#2B3A33; --soft:#1E2B25; --chip:#41554B;
+  --agents:#3DD1BF; --llm:#A99BFF; --ml:#FFA45C; --study:#8FA096;
+  --btn-bg:#E8EFEA; --btn-fg:#0F1714; --focus:#A99BFF; --header-bg:rgba(15,23,20,.88);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--ink);font-family:'Schibsted Grotesk',system-ui,sans-serif;line-height:1.5;transition:background-color .3s,color .3s;overflow-x:hidden}
+a{color:inherit}
+a:focus-visible,button:focus-visible{outline:3px solid var(--focus);outline-offset:3px;border-radius:4px}
+.wrap{max-width:1200px;margin:0 auto;padding:0 32px}
+section{scroll-margin-top:84px}
+.mono{font-family:'JetBrains Mono',monospace}
+
+/* progress + header */
+#progress{position:fixed;top:0;left:0;right:0;height:3px;background:var(--agents);transform:scaleX(0);transform-origin:left;z-index:60}
+header.top{position:sticky;top:0;z-index:50;background:var(--header-bg);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+header.top .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;height:64px}
+.brand{font-weight:800;font-size:18px;letter-spacing:-.01em;text-decoration:none}
+.brand .short{display:none}
+nav#nav{position:relative;display:flex;gap:6px;font-size:15px;font-weight:500}
+nav#nav a{text-decoration:none;padding:8px 12px;color:var(--sub);transition:color .2s}
+nav#nav a:hover,nav#nav a[aria-current="true"]{color:var(--ink)}
+.nav-ind{position:absolute;left:0;bottom:2px;height:3px;width:0;background:var(--agents);border-radius:3px;transition:transform .35s cubic-bezier(.2,.7,.2,1),width .35s cubic-bezier(.2,.7,.2,1)}
+.theme{font:inherit;font-size:14px;font-weight:600;background:transparent;color:var(--ink);border:1.5px solid var(--line);border-radius:6px;padding:7px 12px;cursor:pointer;min-height:36px}
+.theme:hover{border-color:var(--ink)}
+
+/* hero */
+.hero{display:flex;flex-wrap:wrap;gap:56px;align-items:center;padding:64px 0 96px}
+.hero-text{flex:1 1 480px;min-width:0}
+.who{font-size:16px;font-weight:600;color:var(--sub);margin-bottom:18px}
+h1{font-size:52px;line-height:1.06;letter-spacing:-.03em;font-weight:800;margin-bottom:24px}
+h1 .w{display:inline-block;overflow:hidden;vertical-align:top;padding-bottom:.08em;margin-bottom:-.08em}
+h1 .w>span{display:inline-block}
+.js h1 .w>span{transform:translateY(105%);transition:transform .8s cubic-bezier(.2,.7,.2,1);transition-delay:calc(var(--i) * 55ms)}
+.js.go h1 .w>span{transform:none}
+.lede{font-size:19px;line-height:1.55;color:var(--sub);max-width:50ch;margin-bottom:32px}
+.ctas{display:flex;flex-wrap:wrap;gap:12px}
+.btn{display:inline-block;padding:14px 24px;border-radius:6px;font-weight:600;font-size:16px;text-decoration:none;border:1.5px solid var(--btn-bg);transition:transform .2s,background-color .2s,color .2s}
+.btn.primary{background:var(--btn-bg);color:var(--btn-fg)}
+.btn.ghost{background:transparent;color:var(--ink)}
+.btn:hover{transform:translateY(-2px)}
+
+/* trace widget */
+.trace-col{flex:1 1 540px;min-width:0}
+.trace{--lab:144px;background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:22px 22px 20px;transition:background-color .3s,border-color .3s}
+.trace-head{display:flex;flex-wrap:wrap;justify-content:space-between;gap:10px;margin-bottom:14px}
+.trace-title{font-weight:600;font-size:15px}
+.legend{display:flex;flex-wrap:wrap;gap:14px;font-size:13px;color:var(--sub)}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.legend i{width:10px;height:10px;border-radius:2px;display:inline-block}
+.axis{position:relative;display:grid;grid-template-columns:var(--lab) 1fr;gap:12px;height:20px;font-size:11px;color:var(--sub)}
+.axis .ticks{position:relative}
+.axis .ticks span{position:absolute;top:0}
+.rows{position:relative}
+.tr-row{display:grid;grid-template-columns:var(--lab) 1fr;gap:12px;align-items:center;width:100%;background:transparent;border:0;border-top:1px solid var(--soft);padding:9px 6px;margin:0 -6px;width:calc(100% + 12px);font:inherit;color:inherit;text-align:left;cursor:pointer;border-radius:4px;transition:background-color .2s}
+.tr-row:hover,.tr-row[aria-pressed="true"]{background:var(--soft)}
+.tr-label{font-size:13px;font-weight:500}
+.tr-row[aria-pressed="true"] .tr-label{font-weight:700}
+.tr-track{position:relative;height:16px;border-radius:3px;background:var(--soft)}
+.tr-row:hover .tr-track,.tr-row[aria-pressed="true"] .tr-track{background:var(--bg)}
+.tr-bar{position:absolute;top:2px;height:12px;border-radius:3px;min-width:10px;transform-origin:left;transition:transform .55s cubic-bezier(.2,.7,.2,1);transition-delay:var(--d,0s)}
+.js .tr-bar{transform:scaleX(0)}
+.js.go .tr-bar{transform:scaleX(1)}
+.l-agents{background:var(--agents)} .l-llm{background:var(--llm)} .l-ml{background:var(--ml)} .l-study{background:var(--study)}
+.tr-bar.live::after{content:"";position:absolute;right:-3px;top:50%;width:8px;height:8px;margin-top:-4px;border-radius:50%;background:var(--llm);box-shadow:0 0 0 0 var(--llm);opacity:0}
+.go .tr-bar.live::after{opacity:1;animation:pulse 2.2s ease-out 2.6s infinite}
+@keyframes pulse{0%{box-shadow:0 0 0 0 color-mix(in srgb,var(--llm) 55%,transparent)}70%{box-shadow:0 0 0 9px transparent}100%{box-shadow:0 0 0 0 transparent}}
+.over{position:absolute;top:0;bottom:0;left:calc(var(--lab) + 12px);right:0;pointer-events:none}
+.playhead{position:absolute;top:0;bottom:0;left:0;width:2px;background:var(--ink);opacity:0}
+.go .playhead{animation:sweep 2.2s linear .15s both}
+@keyframes sweep{0%{left:0;opacity:1}92%{opacity:1}100%{left:calc(100% - 2px);opacity:.18}}
+.detail{margin-top:16px;padding-top:16px;border-top:1px solid var(--line);min-height:112px}
+.detail h3{font-size:18px;font-weight:700;letter-spacing:-.01em;margin-bottom:2px}
+.detail .when{font-size:13px;color:var(--sub);margin-bottom:8px}
+.detail p{font-size:15px;line-height:1.55;color:var(--sub);max-width:62ch}
+.detail a{display:inline-block;margin-top:8px;font-weight:600;font-size:15px}
+.hint{margin-top:12px;font-size:13px;color:var(--sub)}
+
+/* sections */
+.block{padding:24px 0 96px}
+h2{font-size:34px;letter-spacing:-.02em;font-weight:800;margin-bottom:36px}
+.layer-llm{color:var(--llm)} .layer-ml{color:var(--ml)} .layer-agents{color:var(--agents)}
+
+/* experience timeline */
+.xwrap{position:relative;padding-left:44px;border-top:1px solid var(--line)}
+.xwrap::before{content:"";position:absolute;left:11px;top:0;bottom:0;width:2px;background:var(--soft)}
+.xfill{position:absolute;left:11px;top:0;width:2px;height:var(--fill,0px);background:var(--agents)}
+.xentry{position:relative;display:flex;flex-wrap:wrap;gap:12px 48px;padding:32px 0;border-bottom:1px solid var(--line)}
+.xentry:last-child{border-bottom:0}
+.xentry::before{content:"";position:absolute;left:-40px;top:38px;width:14px;height:14px;border-radius:50%;background:var(--bg);border:2px solid var(--chip);transition:background-color .3s,border-color .3s,transform .3s}
+.xentry.on::before{background:var(--agents);border-color:var(--agents);transform:scale(1.15)}
+.xdate{flex:0 0 170px;font-size:14px;color:var(--sub);padding-top:6px}
+.xbody{flex:1 1 460px;min-width:0}
+.xbody h3{font-size:24px;font-weight:700;letter-spacing:-.01em}
+.xco{font-size:17px;font-weight:600;margin:2px 0 14px}
+.xbody ul{padding-left:20px;font-size:16px;line-height:1.65;color:var(--sub);max-width:68ch}
+.xbody li{margin-bottom:8px}
+
+/* projects */
+.prow{display:flex;flex-wrap:wrap;gap:16px 48px;padding:32px 12px;margin:0 -12px;border-top:1px solid var(--line);background:linear-gradient(var(--soft),var(--soft)) no-repeat left top/0% 100%;transition:background-size .5s cubic-bezier(.2,.7,.2,1)}
+.prow:hover,.prow:focus-within{background-size:100% 100%}
+.pdate{flex:0 0 170px;font-size:14px;color:var(--sub);padding-top:8px}
+.pmain{flex:1 1 480px;min-width:0}
+.pname{display:inline-block;font-weight:800;letter-spacing:-.02em;transition:transform .4s cubic-bezier(.2,.7,.2,1)}
+.prow:hover .pname,.prow:focus-within .pname{transform:translateX(10px)}
+.pdesc{font-size:17px;line-height:1.6;color:var(--sub);max-width:64ch;margin:8px 0 12px}
+.tags{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:14px;font-size:13px}
+.tags span{border:1px solid var(--chip);border-radius:4px;padding:3px 9px;background:var(--panel)}
+.plink{font-weight:600;font-size:16px}
+.also{display:flex;flex-wrap:wrap;gap:16px 48px;border-top:1px solid var(--line);padding-top:32px}
+.also h3{flex:0 0 170px;font-size:17px;font-weight:700}
+.alist{flex:1 1 480px;min-width:0;display:flex;flex-direction:column;gap:12px;font-size:16px;line-height:1.55;color:var(--sub);max-width:68ch}
+.alist a{font-weight:600;color:var(--ink)}
+
+/* stack */
+.stack{display:flex;flex-wrap:wrap;gap:40px 56px;border-top:1px solid var(--line);padding-top:32px}
+.sgroup{flex:1 1 260px;min-width:0}
+.sgroup h3{display:flex;align-items:center;gap:8px;font-size:18px;font-weight:700;margin-bottom:14px}
+.sgroup h3 i{width:12px;height:12px;border-radius:2px;display:inline-block}
+.chips{display:flex;flex-wrap:wrap;gap:8px;font-size:14px}
+.chips span{border:1px solid var(--chip);border-radius:4px;padding:5px 10px;background:var(--panel);transition:transform .2s,border-color .2s}
+.chips span:hover{transform:translateY(-2px);border-color:var(--ink)}
+
+/* education + contact */
+.edu{display:flex;flex-wrap:wrap;gap:16px 48px;border-top:1px solid var(--line);padding-top:32px}
+.edu h2{flex:0 0 170px;font-size:24px;margin:0}
+.edu .list{flex:1 1 480px;min-width:0;display:flex;flex-direction:column;gap:18px;font-size:17px}
+.edu .list .sub{color:var(--sub)}
+.contact{border-top:1px solid var(--ink);padding:64px 0 24px}
+.contact h2{margin-bottom:20px}
+.contact p{font-size:18px;color:var(--sub);max-width:52ch;margin-bottom:20px}
+.email{display:inline-block;font-size:34px;font-weight:700;letter-spacing:-.02em;margin-bottom:24px;word-break:break-word;text-decoration-thickness:2px;text-underline-offset:6px}
+.links{display:flex;flex-wrap:wrap;gap:24px;font-size:17px;font-weight:600}
+footer{padding:40px 0 56px;color:var(--sub);font-size:14px}
+
+@media (max-width:760px){
+  .wrap{padding:0 20px}
+  h1{font-size:40px}
+  .hero{padding:40px 0 64px;gap:40px}
+  .brand .full{display:none}.brand .short{display:inline}
+  nav#nav a{padding:8px 8px}
+  .trace{--lab:112px;padding:16px 14px}
+  .tr-label{font-size:12px}
+  .email{font-size:22px}
+  .xwrap{padding-left:34px}
+  .xentry::before{left:-31px}
+  .xwrap::before,.xfill{left:5px}
+  h2{font-size:30px}
+}
+@media (prefers-reduced-motion: reduce){
+  html{scroll-behavior:auto}
+  *,*::before,*::after{animation:none !important;transition:none !important}
+  .js h1 .w>span{transform:none}
+  .js .tr-bar{transform:none}
+  .playhead{display:none}
+}
+</style>
+</head>
+<body id="top">
+<div id="progress" aria-hidden="true"></div>
+
+<header class="top">
+<div class="wrap">
+<a class="brand" href="#top" aria-label="Back to top"><span class="full">Anvith Vattikuti</span><span class="short">AV</span></a>
+<nav id="nav" aria-label="Sections">
+<a href="#experience">Experience</a>
+<a href="#projects">Projects</a>
+<a href="#stack">Stack</a>
+<a href="#contact">Contact</a>
+<span class="nav-ind" aria-hidden="true"></span>
+</nav>
+<button class="theme" id="theme" type="button" aria-label="Switch color theme">Dark</button>
+</div>
+</header>
+
+<main>
+<div class="wrap">
+
+<section class="hero" id="hero">
+<div class="hero-text">
+<p class="who">Krishna Anvith Vattikuti, AI/ML Engineer</p>
+<h1 id="headline">I build LLM systems, AI agents, and the evaluations that test them.</h1>
+<p class="lede">RAG pipelines, QLoRA fine-tuning, tool-calling agents and evaluation frameworks, on top of applied ML in computer vision and time series. Right now I'm an AI/ML Engineering Intern at Enclavia AI.</p>
+<div class="ctas">
+<a class="btn primary" href="mailto:vattikutianvith@gmail.com">Email me</a>
+<a class="btn ghost" href="../Krishna_Anvith_Vattikuti_Resume.pdf">View resume</a>
+<a class="btn ghost" href="https://github.com/AnvithAnvi">GitHub</a>
+</div>
+</div>
+
+<div class="trace-col">
+<div class="trace" id="trace">
+<div class="trace-head">
+<div class="trace-title">Career trace, May 2023 to now</div>
+<div class="legend">
+<span><i style="background:var(--agents)"></i>Agents and evals</span>
+<span><i style="background:var(--llm)"></i>LLM systems</span>
+<span><i style="background:var(--ml)"></i>Applied ML</span>
+<span><i style="background:var(--study)"></i>Study</span>
+</div>
+</div>
+<div class="axis mono"><div></div><div class="ticks"><span style="left:0">2023</span><span style="left:18.6%">2024</span><span style="left:46.5%">2025</span><span style="left:74.4%">2026</span></div></div>
+<div class="rows" id="rows">
+<div class="over" aria-hidden="true"><div class="playhead"></div></div>
+</div>
+<div class="detail" id="detail" aria-live="polite"></div>
+<p class="hint">Hover or tap a bar to see what that span was.</p>
+</div>
+</div>
+</section>
+
+<section class="block" id="experience">
+<h2>Experience</h2>
+<div class="xwrap" id="xwrap">
+<div class="xfill" aria-hidden="true"></div>
+
+<article class="xentry">
+<div class="xdate mono">Sep 2026 to now</div>
+<div class="xbody">
+<h3>AI/ML Engineering Intern</h3>
+<div class="xco layer-llm">Enclavia AI, on-premises AI agent platform</div>
+<ul>
+<li>Built the dashboard specification and metric engine: a versioned widget contract, a DuckDB metric compiler with a SQL guard, and a semantic data model for column roles, status meanings and joins.</li>
+<li>Added LLM on-task relevance scoring to the guardrail pipeline, logged next to guardrail decisions as a non-blocking signal for monitoring and evaluation.</li>
+<li>Prototyped wireframe-to-dashboard generation that renders uploaded HTML layouts and binds CSV data in place of sample figures, without running untrusted scripts.</li>
+<li>Prepared customer evaluation packets for judiciary, financial services and U.S. Air Force agent demos, and built a spec-driven Vue dashboard designer with YAML upload and data profiling.</li>
+</ul>
+</div>
+</article>
+
+<article class="xentry">
+<div class="xdate mono">Jan to May 2024</div>
+<div class="xbody">
+<h3>Data Science Intern</h3>
+<div class="xco layer-ml">UpGrad</div>
+<ul>
+<li>Developed a TensorFlow training pipeline for Human Activity Recognition across 6 activity classes, split into 4 preprocessing and feature stages.</li>
+<li>Reached 97.5% accuracy on accelerometer and gyroscope time series with ensemble classification and threshold tuning.</li>
+<li>Cut preprocessing time by 30% and model-training time by 20%.</li>
+</ul>
+</div>
+</article>
+
+<article class="xentry">
+<div class="xdate mono">May to Aug 2023</div>
+<div class="xbody">
+<h3>Computer Vision &amp; IoT Summer Intern</h3>
+<div class="xco layer-ml">TekWissen Software</div>
+<ul>
+<li>Built a real-time plant disease detection pipeline with TensorFlow and OpenCV across 8 classes, tuned for sub-second inference on edge hardware.</li>
+<li>Converted the model to TensorFlow Lite with post-training quantization for IoT devices.</li>
+<li>Automated a pipeline that generates 5,000+ synthetic training samples weekly for underrepresented classes.</li>
+</ul>
+</div>
+</article>
+</div>
+</section>
+
+<section class="block" id="projects">
+<h2>Projects</h2>
+
+<article class="prow">
+<div class="pdate mono">Jun 2026</div>
+<div class="pmain">
+<h3 class="pname layer-agents" style="font-size:36px">AgentWatch</h3>
+<p class="pdesc">Observability and evaluation for AI agents. A Python SDK records every run: spans, tool calls, latency, inputs, outputs and statuses. A dashboard lets engineers inspect tool calls and debug failures, and rule-based evals flag failed runs, slow responses, empty outputs and tool-execution errors.</p>
+<div class="tags"><span>Agent tracing</span><span>Rule-based evals</span><span>Python SDK</span><span>FastAPI</span></div>
+<a class="plink" href="https://github.com/AnvithAnvi/AgentWatch">View on GitHub</a>
+</div>
+</article>
+
+<article class="prow">
+<div class="pdate mono">Mar 2026</div>
+<div class="pmain">
+<h3 class="pname layer-llm" style="font-size:28px">RAFT ArXiv</h3>
+<p class="pdesc">Fine-tuned Phi-2 (2.7B) with QLoRA on a QA dataset built from 200 ArXiv papers, using an 80/20 oracle-to-distractor context ratio so the model learns to cite passages and refuse unsupported answers. A side-by-side evaluation UI compares it with Llama-3 on citation precision, faithfulness and refusal accuracy.</p>
+<div class="tags"><span>Phi-2</span><span>QLoRA</span><span>RAFT</span><span>RAG evaluation</span></div>
+<a class="plink" href="https://github.com/AnvithAnvi/raft-arxiv">View on GitHub</a>
+</div>
+</article>
+
+<article class="prow">
+<div class="pdate mono">Nov 2025</div>
+<div class="pmain">
+<h3 class="pname layer-llm" style="font-size:28px">MCP Agent Browser</h3>
+<p class="pdesc">An LLM agent that turns plain-language instructions into click, fill, navigate and extract actions, using LangChain ReAct planning, Playwright and a structured tool-calling interface. Tested across 20+ real workflows, with failure analysis on ambiguous instructions, prompt structure and multi-step planning.</p>
+<div class="tags"><span>LangChain ReAct</span><span>Playwright</span><span>Tool calling</span></div>
+<a class="plink" href="https://github.com/AnvithAnvi/Mcp_agent_browser">View on GitHub</a>
+</div>
+</article>
+
+<div class="also">
+<h3>Also built</h3>
+<div class="alist">
+<div><a href="https://github.com/AnvithAnvi/Multi-Agent-research-pipeline">Multi-Agent Research Pipeline</a>: LangGraph planner, worker, critic and final agents behind a CLI, FastAPI and Streamlit.</div>
+<div><a href="https://github.com/AnvithAnvi/Local_RAG_Assistant">Local RAG Assistant</a>: an offline document assistant on local models and a local vector store.</div>
+<div><a href="https://github.com/AnvithAnvi/medical-diagnosis-agent">medical-diagnosis-agent</a>: citation-backed answers from a RAG pipeline on LangChain.</div>
+<div><a href="https://github.com/AnvithAnvi/explain-my-model">explain-my-model</a>: an interactive SHAP dashboard for explaining model predictions.</div>
+<div><a href="https://github.com/AnvithAnvi/Blog_to_Podcast">Blog_to_Podcast</a>: turns articles into audio with GPT summaries and text-to-speech.</div>
+</div>
+</div>
+</section>
+
+<section class="block" id="stack">
+<h2>Stack</h2>
+<div class="stack">
+<div class="sgroup">
+<h3><i style="background:var(--llm)"></i>LLM systems</h3>
+<div class="chips"><span>RAG</span><span>LangChain</span><span>ChromaDB</span><span>Hugging Face</span><span>QLoRA / PEFT</span><span>Llama-3</span><span>Ollama</span><span>Prompt engineering</span></div>
+</div>
+<div class="sgroup">
+<h3><i style="background:var(--agents)"></i>Agents and evaluation</h3>
+<div class="chips"><span>ReAct agents</span><span>MCP</span><span>Tool calling</span><span>Playwright</span><span>LLM evaluation</span><span>Agent observability</span></div>
+</div>
+<div class="sgroup">
+<h3><i style="background:var(--ml)"></i>Machine learning</h3>
+<div class="chips"><span>PyTorch</span><span>TensorFlow</span><span>TensorFlow Lite</span><span>Scikit-learn</span><span>Pandas / NumPy</span><span>Model evaluation</span></div>
+</div>
+<div class="sgroup">
+<h3><i style="background:var(--study)"></i>Python and tooling</h3>
+<div class="chips"><span>Python</span><span>SQL</span><span>FastAPI</span><span>Docker</span><span>Git</span></div>
+</div>
+</div>
+</section>
+
+<section class="block" id="education" style="padding-bottom:72px">
+<div class="edu">
+<h2>Education</h2>
+<div class="list">
+<div><strong>M.S. Data Science</strong><div class="sub">New Jersey Institute of Technology, Newark NJ. Aug 2024 to May 2026</div></div>
+<div><strong>B.Tech Computer Science</strong><div class="sub">Lovely Professional University, Punjab, India. Jul 2020 to Jul 2024</div></div>
+<div><strong>Certifications</strong><div class="sub">Google Data Analytics, Neural Networks &amp; Deep Learning (Coursera and DataCamp, 2025)</div></div>
+<div><strong>National Service Scheme (NSS)</strong><div class="sub">Govt. of India recognition for 470+ hours of community service, including blood donation camps and sanitation drives</div></div>
+</div>
+</div>
+</section>
+
+<section class="contact" id="contact">
+<h2>Hiring for an AI/ML role?</h2>
+<p>I'm looking for entry-level AI/ML engineering roles, especially LLM systems, RAG, agents and evaluation. Email is the fastest way to reach me.</p>
+<a class="email" href="mailto:vattikutianvith@gmail.com">vattikutianvith@gmail.com</a>
+<div class="links">
+<a href="https://linkedin.com/in/anvithvattikuti">LinkedIn</a>
+<a href="https://github.com/AnvithAnvi">GitHub</a>
+<a href="../Krishna_Anvith_Vattikuti_Resume.pdf">Resume (PDF)</a>
+</div>
+</section>
+
+</div>
+</main>
+
+<footer><div class="wrap">&copy; <span id="year"></span> Krishna Anvith Vattikuti</div></footer>
+
+<script>
+(function () {
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var root = document.documentElement;
+
+  /* 1. Headline: split into words so each one slides up in turn */
+  var h1 = document.getElementById('headline');
+  var words = h1.textContent.trim().split(/\s+/);
+  h1.setAttribute('aria-label', h1.textContent.trim());
+  h1.textContent = '';
+  words.forEach(function (word, i) {
+    var mask = document.createElement('span');
+    mask.className = 'w';
+    mask.setAttribute('aria-hidden', 'true');
+    var inner = document.createElement('span');
+    inner.style.setProperty('--i', i);
+    inner.textContent = word;
+    mask.appendChild(inner);
+    h1.appendChild(mask);
+    if (i < words.length - 1) h1.appendChild(document.createTextNode(' '));
+  });
+
+  /* 2. Career trace: bars are recorded as the playhead sweeps across */
+  var TOTAL = 43; /* months, May 2023 to Nov 2026 */
+  var SWEEP = 2.2; /* seconds, must match the CSS animation */
+  var spans = [
+    { id: 'tek', label: 'TekWissen', layer: 'ml', start: 0, len: 4, when: 'May to Aug 2023', title: 'Computer Vision & IoT Summer Intern', body: 'Real-time plant disease detection across 8 classes with TensorFlow and OpenCV, tuned for sub-second inference on edge hardware, then converted to TensorFlow Lite with post-training quantization.' },
+    { id: 'upg', label: 'UpGrad', layer: 'ml', start: 8, len: 5, when: 'Jan to May 2024', title: 'Data Science Intern', body: 'Human Activity Recognition pipeline across 6 activity classes. 97.5% accuracy on accelerometer and gyroscope data, with preprocessing time cut by 30% and training time by 20%.' },
+    { id: 'njit', label: 'NJIT M.S.', layer: 'study', start: 15, len: 22, when: 'Aug 2024 to May 2026', title: 'M.S. Data Science', body: 'New Jersey Institute of Technology, Newark NJ.' },
+    { id: 'mcp', label: 'MCP Agent Browser', layer: 'agents', start: 30, len: 1, when: 'Nov 2025', title: 'MCP Agent Browser', body: 'LangChain ReAct and Playwright turn plain-language instructions into browser actions through a tool-calling interface. Tested across 20+ real workflows.', href: 'https://github.com/AnvithAnvi/Mcp_agent_browser' },
+    { id: 'raft', label: 'RAFT ArXiv', layer: 'llm', start: 34, len: 1, when: 'Mar 2026', title: 'RAFT ArXiv', body: 'Phi-2 (2.7B) fine-tuned with QLoRA on 200 ArXiv papers so it cites passages and refuses unsupported answers, served behind a FastAPI service and benchmarked against Llama-3.', href: 'https://github.com/AnvithAnvi/raft-arxiv' },
+    { id: 'aw', label: 'AgentWatch', layer: 'agents', start: 37, len: 1, when: 'Jun 2026', title: 'AgentWatch', body: 'Observability and evaluation for AI agents: a Python SDK records runs, spans and tool calls, a dashboard helps debug failures, and rule-based evals flag failed or slow runs.', href: 'https://github.com/AnvithAnvi/AgentWatch' },
+    { id: 'encl', label: 'Enclavia AI', layer: 'llm', start: 40, len: 3, live: true, when: 'Sep 2026 to now', title: 'AI/ML Engineering Intern', body: 'Building the dashboard specification, DuckDB metric engine and guardrail scoring for an on-premises AI agent platform. Still running.' }
+  ];
+
+  var rowsEl = document.getElementById('rows');
+  var detail = document.getElementById('detail');
+  var buttons = {};
+
+  function show(id) {
+    var s = spans.filter(function (x) { return x.id === id; })[0];
+    Object.keys(buttons).forEach(function (k) { buttons[k].setAttribute('aria-pressed', k === id ? 'true' : 'false'); });
+    detail.textContent = '';
+    var h = document.createElement('h3'); h.textContent = s.title;
+    var w = document.createElement('div'); w.className = 'when mono'; w.textContent = s.when;
+    var p = document.createElement('p'); p.textContent = s.body;
+    detail.appendChild(h); detail.appendChild(w); detail.appendChild(p);
+    if (s.href) {
+      var a = document.createElement('a'); a.href = s.href; a.textContent = 'View on GitHub';
+      detail.appendChild(a);
+    }
+  }
+
+  spans.forEach(function (s) {
+    var btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'tr-row';
+    btn.setAttribute('aria-pressed', 'false');
+    var label = document.createElement('span'); label.className = 'tr-label'; label.textContent = s.label;
+    var track = document.createElement('span'); track.className = 'tr-track';
+    var bar = document.createElement('span');
+    bar.className = 'tr-bar l-' + s.layer + (s.live ? ' live' : '');
+    bar.style.left = (s.start / TOTAL * 100) + '%';
+    bar.style.width = (s.len / TOTAL * 100) + '%';
+    bar.style.setProperty('--d', (0.15 + s.start / TOTAL * SWEEP) + 's');
+    track.appendChild(bar);
+    btn.appendChild(label); btn.appendChild(track);
+    btn.addEventListener('pointerenter', function () { show(s.id); });
+    btn.addEventListener('focus', function () { show(s.id); });
+    btn.addEventListener('click', function () { show(s.id); });
+    rowsEl.appendChild(btn);
+    buttons[s.id] = btn;
+  });
+  show('encl');
+
+  /* start the choreography once fonts have had a moment to load */
+  function start() { root.classList.add('go'); }
+  if (reduce) { start(); }
+  else { requestAnimationFrame(function () { setTimeout(start, 250); }); }
+
+  /* 3. Scroll progress, experience timeline fill, scroll-spy */
+  var progress = document.getElementById('progress');
+  var xwrap = document.getElementById('xwrap');
+  var entries = Array.prototype.slice.call(document.querySelectorAll('.xentry'));
+  var ticking = false;
+
+  function onScroll() {
+    var max = document.documentElement.scrollHeight - window.innerHeight;
+    progress.style.transform = 'scaleX(' + (max > 0 ? Math.min(1, window.scrollY / max) : 0) + ')';
+    var mark = window.innerHeight * 0.6;
+    var r = xwrap.getBoundingClientRect();
+    xwrap.style.setProperty('--fill', Math.max(0, Math.min(r.height, mark - r.top)) + 'px');
+    entries.forEach(function (el) {
+      el.classList.toggle('on', el.getBoundingClientRect().top + 44 < mark);
+    });
+    ticking = false;
+  }
+  window.addEventListener('scroll', function () {
+    if (!ticking) { ticking = true; requestAnimationFrame(onScroll); }
+  }, { passive: true });
+  window.addEventListener('resize', onScroll);
+  onScroll();
+
+  var nav = document.getElementById('nav');
+  var ind = nav.querySelector('.nav-ind');
+  var links = Array.prototype.slice.call(nav.querySelectorAll('a'));
+  function mark(id) {
+    var active = null;
+    links.forEach(function (a) {
+      var on = a.getAttribute('href') === '#' + id;
+      a.setAttribute('aria-current', on ? 'true' : 'false');
+      if (on) active = a;
+    });
+    if (active) {
+      ind.style.width = active.offsetWidth + 'px';
+      ind.style.transform = 'translateX(' + active.offsetLeft + 'px)';
+      ind.style.opacity = 1;
+    } else {
+      ind.style.opacity = 0;
+    }
+  }
+  var ids = ['hero', 'experience', 'projects', 'stack', 'education', 'contact'];
+  var io = new IntersectionObserver(function (items) {
+    items.forEach(function (it) { if (it.isIntersecting) mark(it.target.id); });
+  }, { rootMargin: '-40% 0px -55% 0px' });
+  ids.forEach(function (id) { var el = document.getElementById(id); if (el) io.observe(el); });
+  window.addEventListener('resize', function () {
+    var cur = links.filter(function (a) { return a.getAttribute('aria-current') === 'true'; })[0];
+    if (cur) mark(cur.getAttribute('href').slice(1));
+  });
+
+  /* 4. Theme toggle */
+  var themeBtn = document.getElementById('theme');
+  function syncLabel() { themeBtn.textContent = root.getAttribute('data-theme') === 'dark' ? 'Light' : 'Dark'; }
+  syncLabel();
+  themeBtn.addEventListener('click', function () {
+    var next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+    root.setAttribute('data-theme', next);
+    try { localStorage.setItem('theme', next); } catch (e) {}
+    syncLabel();
+  });
+
+  document.getElementById('year').textContent = new Date().getFullYear();
+})();
+</script>
+</body>
+</html>

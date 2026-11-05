@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Lab | Anvith Vattikuti</title>
+<meta name="description" content="An in-browser retrieval and evaluation demo: grounded answers with citations, refusal, traces and evals.">
+<meta name="theme-color" content="#070B09">
+<meta property="og:title" content="Lab | Anvith Vattikuti"><meta property="og:description" content="An in-browser retrieval and evaluation demo: grounded answers with citations, refusal, traces and evals."><meta property="og:type" content="website">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 32 32%27%3E%3Crect width=%2732%27 height=%2732%27 rx=%277%27 fill=%27%23070B09%27/%3E%3Cpath d=%27M8 23 16 8l8 15M11.5 18h9%27 stroke=%27%232EE6C8%27 stroke-width=%273%27 fill=%27none%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27/%3E%3C/svg%3E">
+<script>(function(){var d=document.documentElement,t=null;try{t=localStorage.getItem('av-theme')}catch(e){}if(!t){try{t=sessionStorage.getItem('av-theme')}catch(e){}}if(!t){var m=/^av-theme:(dark|light)$/.exec(window.name||'');if(m)t=m[1]}d.setAttribute('data-theme',t==='light'?'light':'dark');d.classList.add('js');setTimeout(function(){d.classList.add('go')},2000)})()</script>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500&family=Schibsted+Grotesk:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="aurora" aria-hidden="true"><i></i><i></i><i></i></div><div class="glow" id="glow" aria-hidden="true"></div>
+<div id="progress" aria-hidden="true"></div>
+<header class="top"><div class="wrap"><div class="pill">
+<a class="brand" href="index.html"><span class="full">Krishna Anvith Vattikuti</span><span class="short">Anvith V.</span></a>
+<nav id="nav" aria-label="Primary"><a href="index.html">Home</a><a href="experience.html">Experience</a><a href="projects.html">Projects</a><a href="lab.html" aria-current="page">Lab<span class="ind"></span></a><a href="about.html">About</a></nav>
+<div class="hright"><a class="btn-mini" href="Krishna_Anvith_Vattikuti_Resume.pdf">Resume</a><button class="theme" id="theme" type="button">Dark</button></div>
+</div></div></header>
+<main>
+<div class="wrap"><section class="page-hero"><span class="kicker mono">The lab</span><h1 class="page-title" id="headline"><span class="ln"><span style="--i:0">Ask it. Then <em>grade</em> it.</span></span></h1><p class="lede">Retrieval, grounding and evaluation are what I care about in LLM systems. Three small demos run here in your browser: no server, no API key.</p><nav class="lab-nav" aria-label="Demos"><a href="#ask">Ask my portfolio</a><a href="#harness">Eval harness</a><a href="#traces">Trace evals</a></nav></section>
+<section class="block" style="padding-top:8px"><div class="lab-grid">
+<div class="panel rv spot" id="ask" style="flex:1 1 100%"><h2>Ask my portfolio</h2><p class="sub">BM25 retrieval over 21 passages from my résumé. It answers with citations, or refuses when its confidence is below the threshold. Try the two chips about Rust and salary: the refusal is the point.</p>
+<form id="askform" class="askrow"><input id="q" aria-label="Your question" placeholder="Ask anything about my experience or projects" autocomplete="off"><button type="submit">Ask</button></form>
+<div class="qchips"><button type="button" data-q="Where does Anvith work right now?">Where does Anvith work right now?</button><button type="button" data-q="Which model did he fine-tune with QLoRA?">Which model did he fine-tune with QLoRA?</button><button type="button" data-q="What does AgentWatch flag?">What does AgentWatch flag?</button><button type="button" data-q="Does he know Rust?">Does he know Rust?</button><button type="button" data-q="What is his salary expectation?">What is his salary expectation?</button><button type="button" data-q="Has he published a research paper?">Has he published a research paper?</button></div>
+<div class="out"><div class="ans"><div id="answer"><p class="a-text" style="color:var(--sub)">Pick a question above, or type your own.</p></div></div>
+<div class="side"><div id="trace"></div><div id="evals"></div></div></div></div>
+<div class="panel rv" id="harness" style="flex:1 1 100%"><h2>Eval harness</h2><p class="sub">20 questions I wrote: 12 the résumé can answer and 8 it can't. Move the confidence threshold and watch the trade-off. Too low and it answers things it shouldn't, too high and it refuses things it should answer.</p>
+<div class="tau-row"><label for="tau">Confidence threshold</label><input id="tau" type="range" min="0.5" max="7" step="0.1" value="2"><output id="tauv">2.0</output></div>
+<div class="metrics" id="metrics"></div>
+<div id="sweep"></div><p class="lg mono"><span><i></i>answerable: answered with the right citation</span><span><i class="d"></i>unanswerable: correctly refused</span></p>
+<div class="tbl"><table><tbody id="erows"></tbody></table></div></div>
+<div class="panel rv" id="traces" style="flex:1 1 100%"><h2>Agent trace evals</h2><p class="sub">The idea behind <a href="agentwatch.html">AgentWatch</a>: record every step of an agent run, then let simple rules flag the bad ones. Edit the JSON or load a preset and the four rules re-run live.</p>
+<div class="qchips"><button type="button" data-p="ok">Healthy run</button><button type="button" data-p="slow">Slow tool</button><button type="button" data-p="empty">Empty output</button><button type="button" data-p="err">Failed tool call</button></div>
+<div class="tgrid"><div><textarea id="tjson" spellcheck="false" aria-label="Agent trace as JSON"></textarea><div class="tau-row"><label for="slow">Slow limit</label><input id="slow" type="range" min="200" max="5000" step="100" value="2000"><output id="slowv">2000 ms</output></div></div>
+<div><div id="tview"></div><div id="tevals"></div></div></div></div>
+<div class="panel rv" style="flex:1 1 100%"><h2>What this is, honestly</h2><p class="note"><strong>No LLM is involved anywhere on this page.</strong> The answer is the best-matching passage, quoted. The trace evals are plain rules over a sample trace you can edit, not a connection to the real AgentWatch. Retrieval is BM25 with light stemming, and confidence is the top score times the share of question terms (weighted by rarity) found in that passage. The three evals shown beside each trace are rule-based, in the spirit of <a href="agentwatch.html">AgentWatch</a>. The refuse-unless-supported behavior is the same idea I trained into a model in <a href="raft-arxiv.html">RAFT ArXiv</a>.</p>
+<p class="note" style="margin-top:12px"><strong>The 100% is not a benchmark.</strong> I wrote the questions and tuned the passages and stop-words against them, so the score on that set is a ceiling for a demo. Your own questions are the real test, and some will fail: ask about something phrased very differently from my wording and it will usually refuse.</p></div>
+</div></section></div>
+<section class="contact"><div class="wrap">
+<h2>Want to see the real versions?</h2>
+<p>I'm looking for entry-level AI/ML engineering roles, especially LLM systems, RAG, agents and evaluation. Email is the fastest way to reach me.</p>
+<a class="email" href="mailto:vattikutianvith@gmail.com">vattikutianvith@gmail.com</a>
+<div class="links"><a href="https://linkedin.com/in/anvithvattikuti">LinkedIn</a><a href="https://github.com/AnvithAnvi">GitHub</a><a href="Krishna_Anvith_Vattikuti_Resume.pdf">Resume (PDF)</a></div>
+</div></section>
+</main>
+<footer class="site"><div class="wrap">
+<span>&copy; <span id="yr">2026</span> Krishna Anvith Vattikuti</span>
+<nav aria-label="Footer"><a href="index.html">Home</a><a href="experience.html">Experience</a><a href="projects.html">Projects</a><a href="lab.html">Lab</a><a href="about.html">About</a><a href="https://github.com/AnvithAnvi">GitHub</a><a href="https://linkedin.com/in/anvithvattikuti">LinkedIn</a></nav>
+</div></footer>
+<script src="app.js"></script><script src="lab.js"></script><script src="lab-ui.js"></script>
+</body>
+</html>

@@ -1,740 +1,86 @@
-<!DOCTYPE html>
-<html lang="en" data-theme="dark">
+<!doctype html>
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Krishna Anvith V | Data Scientist & AI Engineer</title>
-    
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-
-    <style>
-        :root {
-            --primary: #1e3a8a;
-            --accent: #2563eb;
-            --bg-body: #f8fafc;
-            --bg-card: rgba(255, 255, 255, 0.8);
-            --text-main: #0f172a;
-            --text-sub: #475569;
-            --border: #e2e8f0;
-            --shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.1);
-            --nav-bg: rgba(255, 255, 255, 0.85);
-        }
-        [data-theme="dark"] {
-            --primary: #60a5fa;
-            --accent: #3b82f6;
-            --bg-body: #0b1120;
-            --bg-card: rgba(30, 41, 59, 0.7);
-            --text-main: #f8fafc;
-            --text-sub: #94a3b8;
-            --border: #334155;
-            --shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.5);
-            --nav-bg: rgba(11, 17, 32, 0.95);
-        }
-
-        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-        html, body { width: 100%; overflow-x: hidden; position: relative; }
-        body { transition: background-color 0.3s, color 0.3s; font-family: 'Inter', sans-serif; background-color: var(--bg-body); color: var(--text-main); line-height: 1.6; }
-        a, .btn, .theme-switch, .form-control, .card, .skill-box, .edu-card, .award-card, .workflow-item { transition: 0.3s; }
-        
-        #canvas-bg { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; pointer-events: none; }
-        a { text-decoration: none; color: inherit; }
-        ul { list-style: none; }
-        .section-padding { padding: 6rem 5%; }
-
-        .reveal { opacity: 0; transform: translateY(30px); transition: all 0.8s ease-out; }
-        .reveal.active { opacity: 1; transform: translateY(0); }
-
-        /* NAV */
-        header { position: sticky; top: 0; z-index: 1000; background: var(--nav-bg); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); padding: 1rem 5%; display: flex; justify-content: space-between; align-items: center; height: 70px; }
-        .logo { font-size: 1.5rem; font-weight: 800; letter-spacing: -1px; background: linear-gradient(to right, var(--primary), var(--accent)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; white-space: nowrap; }
-        nav { display: flex; align-items: center; gap: 1.5rem; flex-wrap: nowrap; }
-        nav ul { display: flex; gap: 1.5rem; }
-        nav a { font-weight: 500; font-size: 0.95rem; position: relative; white-space: nowrap; }
-        nav a:hover { color: var(--accent); }
-        nav a::after { content: ''; position: absolute; width: 0; height: 2px; bottom: -4px; left: 0; background: var(--accent); transition: 0.3s; }
-        nav a:hover::after { width: 100%; }
-        .theme-switch { cursor: pointer; padding: 0.5rem; font-size: 1.2rem; display: flex; align-items: center; justify-content: center; }
-        .theme-switch:hover { transform: rotate(20deg); color: var(--accent); }
-
-        /* HERO */
-        .hero { min-height: 90vh; display: flex; align-items: center; justify-content: space-between; }
-        .hero-text { flex: 1; padding-right: 3rem; }
-        .hero-greeting { font-size: 1.2rem; font-weight: 600; color: var(--accent); display: block; margin-bottom: 0.5rem; }
-        .hero h1 { font-size: 4.2rem; font-weight: 800; line-height: 1.1; margin-bottom: 1rem; letter-spacing: -1.5px; }
-        .hero-role { font-size: 1.5rem; font-weight: 600; color: var(--text-sub); margin-bottom: 1.5rem; }
-        .typewriter { font-family: 'Courier New', monospace; color: var(--accent); font-weight: 700; }
-        .btn { padding: 0.8rem 2rem; border-radius: 50px; font-weight: 600; display: inline-flex; gap: 0.5rem; align-items: center; font-size: 0.95rem; cursor: pointer; border: none; }
-        .btn-primary { background: var(--accent); color: white; box-shadow: 0 5px 15px rgba(37, 99, 235, 0.3); }
-        .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 8px 25px rgba(37, 99, 235, 0.5); }
-        .btn-outline { border: 2px solid var(--border); color: var(--text-main); background: transparent; }
-        .btn-outline:hover { border-color: var(--accent); color: var(--accent); background: rgba(37, 99, 235, 0.05); }
-        .hero-image-wrapper { position: relative; z-index: 1; }
-        .hero-image-wrapper::before { content: ''; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 120%; height: 120%; background: radial-gradient(circle, var(--accent), transparent); opacity: 0.1; border-radius: 50%; }
-        .hero-image { width: 380px; height: 380px; border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%; object-fit: cover; border: 4px solid var(--bg-body); box-shadow: 0 20px 40px rgba(0,0,0,0.2); }
-
-        /* SECTION */
-        .section-header { text-align: center; margin-bottom: 4rem; }
-        .section-title { font-size: 2.5rem; font-weight: 800; margin-bottom: 0.5rem; }
-        .underline { width: 60px; height: 5px; background: var(--accent); margin: 0 auto; border-radius: 5px; }
-
-        /* CARDS */
-        .grid-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 2rem; }
-        .card { background: var(--bg-card); border: 1px solid var(--border); padding: 2rem; border-radius: 20px; display: flex; flex-direction: column; backdrop-filter: blur(10px); }
-        .card:hover { transform: translateY(-8px); border-color: var(--accent); box-shadow: var(--shadow); }
-        .card h3 { font-size: 1.4rem; margin-bottom: 0.5rem; font-weight: 700; color: var(--text-main); }
-        .tags { margin-bottom: 1rem; display: flex; flex-wrap: wrap; gap: 0.5rem; }
-        .tags .tag { background: rgba(59, 130, 246, 0.1); color: var(--accent); padding: 4px 12px; border-radius: 20px; font-size: 0.75rem; font-weight: 600; border: 1px solid rgba(59, 130, 246, 0.3); }
-        .card p { color: var(--text-sub); font-size: 0.95rem; margin-bottom: 1.5rem; flex-grow: 1; }
-        .card-actions { display: flex; gap: 1rem; }
-        .card-link { color: var(--accent); font-weight: 700; display: inline-flex; align-items: center; gap: 5px; cursor: pointer; font-size: 0.9rem; }
-        .card-link:hover { text-decoration: underline; }
-
-        /* MODAL */
-        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); backdrop-filter: blur(5px); z-index: 3000; display: none; justify-content: center; align-items: center; opacity: 0; }
-        .modal-overlay.open { opacity: 1; }
-        .modal-content { background: var(--bg-body); width: 90%; max-width: 700px; padding: 2.5rem; border-radius: 20px; border: 1px solid var(--border); position: relative; max-height: 90vh; overflow-y: auto; transform: translateY(30px); transition: 0.3s; }
-        .modal-overlay.open .modal-content { transform: translateY(0); }
-        .modal-close { position: absolute; top: 1.5rem; right: 1.5rem; font-size: 1.5rem; cursor: pointer; color: var(--text-sub); transition: 0.3s; }
-        .modal-close:hover { color: var(--accent); }
-        .modal-body h2 { color: var(--accent); margin-bottom: 1.5rem; }
-        .modal-section { margin-bottom: 1.5rem; }
-        .modal-section h4 { color: var(--text-main); font-size: 1.1rem; margin-bottom: 0.5rem; border-left: 3px solid var(--accent); padding-left: 10px; }
-        .modal-section p { color: var(--text-sub); font-size: 0.95rem; }
-
-        /* SKILLS */
-        .skill-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 1.5rem; }
-        .skill-box { background: var(--bg-card); border: 1px solid var(--border); padding: 1.5rem; text-align: center; border-radius: 16px; backdrop-filter: blur(5px); }
-        .skill-box:hover { transform: translateY(-5px); border-color: var(--accent); }
-        .skill-icon { font-size: 2.5rem; color: var(--accent); margin-bottom: 0.8rem; }
-
-        /* EDUCATION */
-        .edu-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; }
-        .edu-card { background: var(--bg-card); border: 1px solid var(--border); padding: 2rem; border-radius: 16px; border-left: 5px solid var(--accent); backdrop-filter: blur(5px); }
-        .edu-card:hover { transform: translateY(-5px); box-shadow: var(--shadow); }
-        .edu-card h3 { font-size: 1.25rem; margin-bottom: 0.2rem; font-weight: 700; color: var(--text-main); }
-        .edu-card h4 { color: var(--accent); font-weight: 600; }
-        .edu-card .date { color: var(--text-sub); font-size: 0.85rem; font-style: italic; margin-bottom: 1rem; display: block; }
-
-        /* AWARDS */
-        .award-card { background: var(--bg-card); border: 1px solid var(--border); border-left: 5px solid #f59e0b; padding: 2.5rem; border-radius: 16px; display: flex; gap: 2rem; max-width: 900px; margin: 0 auto; }
-        .award-card:hover { transform: translateY(-5px); box-shadow: var(--shadow); }
-        .award-icon { font-size: 3rem; color: #f59e0b; }
-
-        /* CONTACT */
-        .contact-container { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; max-width: 1000px; margin: 0 auto; }
-        .contact-icon { width: 50px; height: 50px; background: var(--bg-card); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: var(--accent); border: 1px solid var(--border); }
-        .form-control { width: 100%; padding: 1rem; border-radius: 10px; border: 1px solid var(--border); margin-bottom: 1rem; background: var(--bg-card); color: var(--text-main); outline: none; }
-        .form-control:focus { border-color: var(--accent); box-shadow: 0 0 0 2px var(--accent); }
-
-        /* FOOTER */
-        footer { text-align: center; padding: 3rem 2rem; border-top: 1px solid var(--border); margin-top: 4rem; color: var(--text-sub); background: var(--bg-body); position: relative; z-index: 2; }
-
-        /* CHATBOT */
-        #chatbot-icon { position: fixed; bottom: 2rem; right: 2rem; background: var(--accent); color: white; width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: 0 5px 20px rgba(37, 99, 235, 0.4); z-index: 2000; }
-        #chatbot-icon:hover { transform: scale(1.1); }
-        #chatbot-window { position: fixed; bottom: 6rem; right: 2rem; width: 360px; height: 520px; background: var(--bg-card); backdrop-filter: blur(15px); border: 1px solid var(--border); border-radius: 16px; box-shadow: 0 20px 50px rgba(0,0,0,0.3); display: none; flex-direction: column; z-index: 2001; }
-        #chat-header { background: var(--accent); color: white; padding: 1rem; display: flex; justify-content: space-between; align-items: center; font-weight: 600; border-radius: 16px 16px 0 0; }
-        #chat-messages { flex: 1; padding: 1rem; overflow-y: auto; display: flex; flex-direction: column; gap: 10px; scroll-behavior: smooth; }
-        .chat-message { padding: 12px 16px; border-radius: 12px; font-size: 0.9rem; max-width: 85%; line-height: 1.5; word-wrap: break-word; }
-        .chat-message.bot { background: rgba(255,255,255,0.1); border: 1px solid var(--border); align-self: flex-start; color: var(--text-main); }
-        .chat-message.user { background: var(--accent); color: white; align-self: flex-end; }
-        .chat-message ul { margin-left: 1.5rem; list-style-type: disc; }
-        .chat-message strong { font-weight: bold; }
-        #chat-input-container { padding: 1rem; border-top: 1px solid var(--border); display: flex; gap: 8px; background: var(--bg-card); border-radius: 0 0 16px 16px; }
-        #chat-input { flex: 1; padding: 12px; border-radius: 8px; border: 1px solid var(--border); background: var(--bg-body); color: var(--text-main); outline: none; pointer-events: auto; }
-        #chat-input:focus { border-color: var(--accent); }
-
-        /* MOBILE */
-        @media (max-width: 768px) {
-            .hero { flex-direction: column-reverse; text-align: center; padding-top: 4rem; }
-            .hero-text { padding-right: 0; margin-top: 2rem; }
-            .hero h1 { font-size: 3rem; }
-            .hero-image { width: 280px; height: 280px; }
-            nav ul { display: none; }
-            .contact-container { grid-template-columns: 1fr; }
-            #chatbot-window { width: 90%; right: 5%; }
-        }
-    </style>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Anvith Vattikuti, AI/ML Engineer</title>
+<meta name="description" content="AI/ML engineer building LLM systems, agents and evaluations.">
+<meta name="theme-color" content="#070B09">
+<meta property="og:title" content="Anvith Vattikuti, AI/ML Engineer"><meta property="og:description" content="AI/ML engineer building LLM systems, agents and evaluations."><meta property="og:type" content="website">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 32 32%27%3E%3Crect width=%2732%27 height=%2732%27 rx=%277%27 fill=%27%23070B09%27/%3E%3Cpath d=%27M8 23 16 8l8 15M11.5 18h9%27 stroke=%27%232EE6C8%27 stroke-width=%273%27 fill=%27none%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27/%3E%3C/svg%3E">
+<script>(function(){var d=document.documentElement,t=null;try{t=localStorage.getItem('av-theme')}catch(e){}if(!t){try{t=sessionStorage.getItem('av-theme')}catch(e){}}if(!t){var m=/^av-theme:(dark|light)$/.exec(window.name||'');if(m)t=m[1]}d.setAttribute('data-theme',t==='light'?'light':'dark');d.classList.add('js');setTimeout(function(){d.classList.add('go')},2000)})()</script>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500&family=Schibsted+Grotesk:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
-
-    <canvas id="canvas-bg"></canvas>
-
-    <header>
-        <div class="logo">ANVITH PortFolio</div>
-        <nav>
-            <ul>
-                <li><a href="#about">About</a></li>
-                <li><a href="#projects">Projects</a></li>
-                <li><a href="#experience">Experience</a></li>
-                <li><a href="#skills">Skills</a></li>
-                <li><a href="#education">Education</a></li>
-                <li><a href="#contact">Contact</a></li>
-            </ul>
-            <div class="theme-switch" id="theme-toggle" title="Switch Theme">
-                <i class="fas fa-sun"></i>
-            </div>
-        </nav>
-    </header>
-
-    <section class="hero section-padding" id="about">
-        <div class="hero-text reveal active">
-            <span class="hero-greeting">👋 Hi there, I'm</span>
-            <h1>Krishna Anvith V.</h1>
-            <div class="hero-role">
-                I am a <span class="typewriter" id="typewriter"></span>
-            </div>
-            <p>
-                I specialize in building predictive models and scalable AI systems. My work bridges the gap between raw data and real-world impact, focusing on Generative AI, Automation, and Environmental applications.
-            </p>
-            <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
-                <a href="https://github.com/AnvithAnvi" target="_blank" class="btn btn-primary">
-                    View GitHub <i class="fab fa-github"></i>
-                </a>
-                <a href="KAV.pdf" target="_blank" class="btn btn-outline">
-                    Resume <i class="fas fa-download"></i>
-                </a>
-            </div>
-        </div>
-        <div class="hero-image-wrapper reveal active">
-            <img src="Pf.jpg" alt="Krishna Anvith V" class="hero-image">
-        </div>
-    </section>
-
-    <section class="section-padding" id="projects">
-        <div class="section-header reveal">
-            <h2 class="section-title">Featured Projects</h2>
-            <div class="underline"></div>
-            <p style="margin-top: 1rem; color: var(--text-sub);"></p>
-        </div>
-        <div class="grid-container">
-
-            <!-- AgentWatch — NEW -->
-            <div class="card reveal">
-                <h3>AgentWatch</h3>
-                <div class="tags">
-                    <span class="tag">Observability</span>
-                    <span class="tag">FastAPI</span>
-                    <span class="tag">Python SDK</span>
-                    <span class="tag">React</span>
-                    <span class="tag">SQLite</span>
-                </div>
-                <p>End-to-end observability platform for AI agents. Monitor execution traces, capture runtime metadata, auto-evaluate run quality (pass / warning / fail), and visualize every tool call — all with a one-line SDK wrapper.</p>
-                <div class="card-actions">
-                    <span class="card-link" onclick="openModal('agentwatch')">View Details <i class="fas fa-info-circle"></i></span>
-                    <a href="https://github.com/AnvithAnvi/AgentWatch" target="_blank" class="card-link">GitHub <i class="fas fa-external-link-alt"></i></a>
-                </div>
-            </div>
-
-            <div class="card reveal">
-                <h3>RAFT ArXiv</h3>
-                <div class="tags">
-                    <span class="tag">Fine-Tuning</span>
-                    <span class="tag">RAG</span>
-                    <span class="tag">QLoRA</span>
-                    <span class="tag">LLM Evaluation</span>
-                </div>
-                <p>Fine-tuned phi-2 using RAFT on 200 ArXiv papers — outperforms vanilla RAG by +77% precision and +14.6% faithfulness via LLM-as-judge benchmarking.</p>
-                <div class="card-actions">
-                    <span class="card-link" onclick="openModal('raft')">View Details <i class="fas fa-info-circle"></i></span>
-                    <a href="https://github.com/AnvithAnvi/raft-arxiv" target="_blank" class="card-link">GitHub <i class="fas fa-external-link-alt"></i></a>
-                </div>
-            </div>
-
-            <div class="card reveal">
-                <h3>Multi-Agent Research Pipeline</h3>
-                <div class="tags">
-                    <span class="tag">LangGraph</span>
-                    <span class="tag">Multi-Agent</span>
-                    <span class="tag">FastAPI</span>
-                </div>
-                <p>Orchestrated research assistant coordinating specialized agents (planner, worker, critic, final) for structured question answering via web search and synthesis.</p>
-                <div class="card-actions">
-                    <span class="card-link" onclick="openModal('multiagent')">View Details <i class="fas fa-info-circle"></i></span>
-                    <a href="https://github.com/AnvithAnvi/Multi-Agent-research-pipeline" target="_blank" class="card-link">GitHub <i class="fas fa-external-link-alt"></i></a>
-                </div>
-            </div>
-
-            <div class="card reveal">
-                <h3>Local_RAG_Assistant</h3>
-                <div class="tags">
-                    <span class="tag">Local LLMs</span>
-                    <span class="tag">Privacy</span>
-                    <span class="tag">Vector DB</span>
-                </div>
-                <p>Privacy-first document assistant running offline using local open-source LLMs and vector stores.</p>
-                <div class="card-actions">
-                    <span class="card-link" onclick="openModal('localrag')">View Details <i class="fas fa-info-circle"></i></span>
-                    <a href="https://github.com/AnvithAnvi/Local_RAG_Assistant" target="_blank" class="card-link">GitHub <i class="fas fa-external-link-alt"></i></a>
-                </div>
-            </div>
-
-            <div class="card reveal">
-                <h3>Mcp_agent_browser</h3>
-                <div class="tags">
-                    <span class="tag">Playwright</span>
-                    <span class="tag">Automation</span>
-                    <span class="tag">AI Agent</span>
-                </div>
-                <p>Autonomous browser agent translating natural language instructions into web actions (clicks, scrolls, scraping).</p>
-                <div class="card-actions">
-                    <span class="card-link" onclick="openModal('mcp')">View Details <i class="fas fa-info-circle"></i></span>
-                    <a href="https://github.com/AnvithAnvi/Mcp_agent_browser" target="_blank" class="card-link">GitHub <i class="fas fa-external-link-alt"></i></a>
-                </div>
-            </div>
-
-            <div class="card reveal">
-                <h3>medical-diagnosis-agent</h3>
-                <div class="tags">
-                    <span class="tag">RAG</span>
-                    <span class="tag">LangChain</span>
-                    <span class="tag">Healthcare</span>
-                </div>
-                <p>Intelligent agent leveraging Retrieval Augmented Generation (RAG) to provide citation-backed medical insights.</p>
-                <div class="card-actions">
-                    <span class="card-link" onclick="openModal('medical')">View Details <i class="fas fa-info-circle"></i></span>
-                    <a href="https://github.com/AnvithAnvi/medical-diagnosis-agent" target="_blank" class="card-link">GitHub <i class="fas fa-external-link-alt"></i></a>
-                </div>
-            </div>
-
-            <div class="card reveal">
-                <h3>explain-my-model</h3>
-                <div class="tags">
-                    <span class="tag">SHAP</span>
-                    <span class="tag">XAI</span>
-                    <span class="tag">Data Viz</span>
-                </div>
-                <p>Interactive dashboard demystifying black-box ML models using SHAP values.</p>
-                <div class="card-actions">
-                    <span class="card-link" onclick="openModal('explain')">View Details <i class="fas fa-info-circle"></i></span>
-                    <a href="https://github.com/AnvithAnvi/explain-my-model" target="_blank" class="card-link">GitHub <i class="fas fa-external-link-alt"></i></a>
-                </div>
-            </div>
-
-            <div class="card reveal">
-                <h3>Blog_to_Podcast</h3>
-                <div class="tags">
-                    <span class="tag">OpenAI API</span>
-                    <span class="tag">TTS</span>
-                    <span class="tag">Streamlit</span>
-                </div>
-                <p>Automated pipeline converting written articles into audio podcasts using GPT summarization and Text-to-Speech models.</p>
-                <div class="card-actions">
-                    <span class="card-link" onclick="openModal('blog2pod')">View Details <i class="fas fa-info-circle"></i></span>
-                    <a href="https://github.com/AnvithAnvi/Blog_to_Podcast" target="_blank" class="card-link">GitHub <i class="fas fa-external-link-alt"></i></a>
-                </div>
-            </div>
-
-        </div>
-    </section>
-
-    <section class="section-padding" id="experience">
-        <div class="section-header reveal">
-            <h2 class="section-title">Experience</h2>
-            <div class="underline"></div>
-        </div>
-
-        <div style="max-width: 800px; margin: 0 auto; display: flex; flex-direction: column; gap: 2rem;">
-
-            <div class="edu-card reveal" style="border-left: 5px solid var(--accent);">
-                <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 0.5rem;">
-                    <div>
-                        <h3>AI/ML Engineer Intern</h3>
-                        <h4>UpGrad</h4>
-                    </div>
-                    <span style="background: rgba(59,130,246,0.1); color: var(--accent); padding: 4px 14px; border-radius: 20px; font-size: 0.8rem; font-weight: 600; white-space: nowrap;">Jan 2024 – Apr 2024</span>
-                </div>
-                <span class="date">Punjab, India</span>
-                <ul style="color: var(--text-sub); font-size: 0.93rem; display: flex; flex-direction: column; gap: 0.5rem; padding-left: 1.2rem; list-style: disc;">
-                    <li>Built and maintained a TensorFlow training pipeline for Human Activity Recognition across 6 activity classes — modularized into 4 independent preprocessing stages.</li>
-                    <li>Applied ensemble classification with tuned decision thresholds on accelerometer/gyroscope time-series, achieving <strong style="color: var(--text-main);">97.5% accuracy</strong> with <strong style="color: var(--text-main);">zero false positives</strong>.</li>
-                </ul>
-                <div class="tags" style="margin-top: 1rem; margin-bottom: 0;">
-                    <span class="tag">TensorFlow</span>
-                    <span class="tag">Time-Series</span>
-                    <span class="tag">Ensemble Methods</span>
-                    <span class="tag">MLflow</span>
-                </div>
-            </div>
-
-            <div class="edu-card reveal" style="border-left: 5px solid #8b5cf6;">
-                <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 0.5rem;">
-                    <div>
-                        <h3>Computer Vision & IoT Intern</h3>
-                        <h4>TekWissen Software</h4>
-                    </div>
-                    <span style="background: rgba(139,92,246,0.1); color: #8b5cf6; padding: 4px 14px; border-radius: 20px; font-size: 0.8rem; font-weight: 600; white-space: nowrap;">May 2023 – Aug 2023</span>
-                </div>
-                <span class="date">Visakhapatnam, India</span>
-                <ul style="color: var(--text-sub); font-size: 0.93rem; display: flex; flex-direction: column; gap: 0.5rem; padding-left: 1.2rem; list-style: disc;">
-                    <li>Built an end-to-end computer vision pipeline for real-time plant disease detection across 8 disease classes — optimized inference loop for <strong style="color: var(--text-main);">7.2 ms latency</strong> on edge devices.</li>
-                    <li>Deployed to IoT devices using TensorFlow Lite with post-training quantization; built an automated data pipeline generating <strong style="color: var(--text-main);">5,000+ synthetic samples</strong> via augmentation.</li>
-                </ul>
-                <div class="tags" style="margin-top: 1rem; margin-bottom: 0;">
-                    <span class="tag">TensorFlow Lite</span>
-                    <span class="tag">OpenCV</span>
-                    <span class="tag">IoT</span>
-                    <span class="tag">Docker</span>
-                    <span class="tag">CI/CD</span>
-                </div>
-            </div>
-
-        </div>
-    </section>
-
-    <section class="section-padding" id="skills">
-        <div class="section-header reveal">
-            <h2 class="section-title">Technical Stack</h2>
-            <div class="underline"></div>
-        </div>
-        <div class="skill-grid reveal">
-            <div class="skill-box"><i class="fab fa-python skill-icon"></i><div class="skill-name">Python</div></div>
-            <div class="skill-box"><i class="fas fa-project-diagram skill-icon"></i><div class="skill-name">LangChain</div></div>
-            <div class="skill-box"><i class="fas fa-search skill-icon"></i><div class="skill-name">RAG</div></div>
-            <div class="skill-box"><i class="fas fa-microchip skill-icon"></i><div class="skill-name">LLMs</div></div>
-            <div class="skill-box"><i class="fas fa-robot skill-icon"></i><div class="skill-name">Playwright</div></div>
-            <div class="skill-box"><i class="fas fa-chart-bar skill-icon"></i><div class="skill-name">SHAP</div></div>
-            <div class="skill-box"><i class="fas fa-laptop-code skill-icon"></i><div class="skill-name">Streamlit</div></div>
-            <div class="skill-box"><i class="fas fa-database skill-icon"></i><div class="skill-name">Vector DBs</div></div>
-            <div class="skill-box"><i class="fas fa-sliders-h skill-icon"></i><div class="skill-name">Fine-Tuning</div></div>
-            <div class="skill-box"><i class="fas fa-compress-arrows-alt skill-icon"></i><div class="skill-name">QLoRA / PEFT</div></div>
-            <div class="skill-box"><i class="fas fa-brain skill-icon"></i><div class="skill-name">Hugging Face</div></div>
-            <div class="skill-box"><i class="fas fa-flask skill-icon"></i><div class="skill-name">FastAPI</div></div>
-            <div class="skill-box"><i class="fab fa-docker skill-icon"></i><div class="skill-name">Docker</div></div>
-            <div class="skill-box"><i class="fas fa-balance-scale skill-icon"></i><div class="skill-name">LLM Evaluation</div></div>
-            <div class="skill-box"><i class="fas fa-fire skill-icon"></i><div class="skill-name">PyTorch</div></div>
-            <div class="skill-box"><i class="fas fa-cube skill-icon"></i><div class="skill-name">Ollama</div></div>
-        </div>
-    </section>
-
-    <section class="section-padding" id="education">
-        <div class="section-header reveal">
-            <h2 class="section-title">Education</h2>
-            <div class="underline"></div>
-        </div>
-        <div class="edu-grid reveal">
-            <div class="edu-card">
-                <h3>Master of Science in Data Science</h3>
-                <h4>New Jersey Institute of Technology</h4>
-                <span class="date">Aug 2024 - Present</span>
-                <p>Big Data, Deep Learning, Scalable AI Architectures.</p>
-            </div>
-            <div class="edu-card">
-                <h3>Bachelor's in Computer Science</h3>
-                <h4>Lovely Professional University</h4>
-                <span class="date">Aug 2020 - May 2024</span>
-                <p>AI & Machine Learning Specialization.</p>
-            </div>
-            <div class="edu-card">
-                <h3>Professional Certifications</h3>
-                <h4>Coursera & DataCamp</h4>
-                <span class="date">2025</span>
-                <p>Google Data Analytics, Neural Networks & Deep Learning.</p>
-            </div>
-        </div>
-    </section>
-
-    <section class="section-padding" id="awards">
-        <div class="section-header reveal">
-            <h2 class="section-title">Awards</h2>
-            <div class="underline"></div>
-        </div>
-        <div class="award-card reveal">
-            <div class="award-icon"><i class="fas fa-medal"></i></div>
-            <div>
-                <h3 style="font-size: 1.5rem; margin-bottom: 0.5rem;">National Service Scheme (NSS)</h3>
-                <p style="font-weight: 600; color: var(--accent); margin-bottom: 0.8rem;">Govt. of India Recognition</p>
-                <p style="color: var(--text-sub);">Completed <strong>470+ hours</strong> of community service, leading blood donation camps and sanitation drives.</p>
-            </div>
-        </div>
-    </section>
-
-    <section class="section-padding" id="contact">
-        <div class="section-header reveal">
-            <h2 class="section-title">Get In Touch</h2>
-            <div class="underline"></div>
-        </div>
-        <div class="contact-container reveal">
-            <div>
-                <h3 style="margin-bottom: 1.5rem;">Let's Collaborate</h3>
-                <p style="color: var(--text-sub); margin-bottom: 2rem;">Open to new opportunities in Data Science and AI Engineering.</p>
-                <div class="contact-info-item" style="margin-bottom: 1rem; display: flex; gap: 1rem; align-items: center;">
-                    <div class="contact-icon"><i class="fas fa-envelope"></i></div>
-                    <span>vattikutianvith@gmail.com</span>
-                </div>
-                <div class="contact-info-item" style="margin-bottom: 1rem; display: flex; gap: 1rem; align-items: center;">
-                    <div class="contact-icon"><i class="fab fa-linkedin-in"></i></div>
-                    <a href="https://linkedin.com/in/anvithvattikuti" target="_blank">LinkedIn Profile</a>
-                </div>
-            </div>
-            <form id="contactForm">
-                <input type="text" id="name" class="form-control" placeholder="Name" required>
-                <input type="email" id="email" class="form-control" placeholder="Email" required>
-                <textarea id="message" rows="5" class="form-control" placeholder="Message" required></textarea>
-                <button type="submit" class="btn btn-primary" style="width: 100%; justify-content: center;">Send <i class="fas fa-paper-plane"></i></button>
-            </form>
-        </div>
-    </section>
-
-    <footer>
-        <p>&copy; <span id="year"></span> Krishna Anvith V</p>
-    </footer>
-
-    <div id="chatbot-icon"><i class="fas fa-comment-dots fa-lg"></i></div>
-    <div id="chatbot-window">
-        <div id="chat-header">
-            <span>Ask Krishna AI</span>
-            <i class="fas fa-times" id="close-chatbot" style="cursor:pointer;"></i>
-        </div>
-        <div id="chat-messages"></div>
-        <div id="loading-indicator" style="text-align: center; padding: 10px; color: #888; font-size: 0.8rem; display:none;">Thinking...</div>
-        <div id="chat-input-container">
-            <input type="text" id="chat-input" placeholder="Ask about skills...">
-            <button id="send-button" style="border:none; background:transparent; cursor:pointer; color:var(--accent);"><i class="fas fa-paper-plane fa-lg"></i></button>
-        </div>
-    </div>
-
-    <div class="modal-overlay" id="projectModal">
-        <div class="modal-content">
-            <i class="fas fa-times modal-close" onclick="closeModal()"></i>
-            <div class="modal-body" id="modalBody"></div>
-        </div>
-    </div>
-
-    <script>
-        // 1. CANVAS BACKGROUND
-        const canvas = document.getElementById('canvas-bg');
-        const ctx = canvas.getContext('2d');
-        let particlesArray;
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
-        let mouse = { x: null, y: null, radius: (canvas.height / 80) * (canvas.width / 80) };
-        window.addEventListener('mousemove', (e) => { mouse.x = e.x; mouse.y = e.y; });
-
-        class Particle {
-            constructor(x, y, dX, dY, size) { this.x = x; this.y = y; this.dX = dX; this.dY = dY; this.size = size; }
-            draw() {
-                ctx.beginPath(); ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-                const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
-                ctx.fillStyle = isDark ? 'rgba(255,255,255,0.2)' : 'rgba(30, 58, 138, 0.25)';
-                ctx.fill();
-            }
-            update() {
-                if (this.x > canvas.width || this.x < 0) this.dX = -this.dX;
-                if (this.y > canvas.height || this.y < 0) this.dY = -this.dY;
-                let dx = mouse.x - this.x, dy = mouse.y - this.y;
-                let distance = Math.sqrt(dx * dx + dy * dy);
-                if (distance < mouse.radius + this.size) {
-                    if (mouse.x < this.x && this.x < canvas.width - 10) this.x += 3;
-                    if (mouse.x > this.x && this.x > 10) this.x -= 3;
-                    if (mouse.y < this.y && this.y < canvas.height - 10) this.y += 3;
-                    if (mouse.y > this.y && this.y > 10) this.y -= 3;
-                }
-                this.x += this.dX; this.y += this.dY; this.draw();
-            }
-        }
-
-        function init() {
-            particlesArray = [];
-            let num = (canvas.height * canvas.width) / 9000;
-            for (let i = 0; i < num; i++) {
-                let size = (Math.random() * 3) + 1;
-                particlesArray.push(new Particle(Math.random() * innerWidth, Math.random() * innerHeight, (Math.random() * 2) - 1, (Math.random() * 2) - 1, size));
-            }
-        }
-
-        function connect() {
-            const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
-            for (let a = 0; a < particlesArray.length; a++) {
-                for (let b = a; b < particlesArray.length; b++) {
-                    let d = ((particlesArray[a].x - particlesArray[b].x) ** 2) + ((particlesArray[a].y - particlesArray[b].y) ** 2);
-                    if (d < (canvas.width / 7) * (canvas.height / 7)) {
-                        let op = (1 - (d / 20000)) * 0.15;
-                        ctx.strokeStyle = isDark ? `rgba(255,255,255,${op})` : `rgba(30,58,138,${op})`;
-                        ctx.lineWidth = 1; ctx.beginPath();
-                        ctx.moveTo(particlesArray[a].x, particlesArray[a].y);
-                        ctx.lineTo(particlesArray[b].x, particlesArray[b].y);
-                        ctx.stroke();
-                    }
-                }
-            }
-        }
-
-        function animate() {
-            requestAnimationFrame(animate);
-            ctx.clearRect(0, 0, innerWidth, innerHeight);
-            for (let i = 0; i < particlesArray.length; i++) particlesArray[i].update();
-            connect();
-        }
-
-        window.addEventListener('resize', () => { canvas.width = innerWidth; canvas.height = innerHeight; init(); });
-        init(); animate();
-
-        // 2. PROJECT MODAL DATA
-        const projectData = {
-            'agentwatch': {
-                title: 'AgentWatch',
-                problem: 'Building reliable AI agents is hard without visibility. Developers have no way to see which steps ran, what failed, how long each tool call took, or whether the final output was any good — making debugging and quality assurance a guessing game.',
-                solution: 'Built a full-stack observability platform: a lightweight Python SDK that wraps agent runs in a single context manager and auto-captures host, PID, trace IDs, and per-step latency. A FastAPI backend stores runs, spans, and evaluations in SQLite with cascading deletes and project-scoped auth. A React dashboard shows paginated run history, per-run workflow traces with error propagation highlighting, and an automatic rule-based evaluator that scores every run (pass / warning / fail) on errors, tool failures, latency, and output quality.',
-                impact: 'Reduced agent debugging time from hours to minutes. The evaluator detects and scores 4 failure modes automatically with 0 false negatives in testing. Full auth hardening: every endpoint requires a Bearer API key, keys are never exposed after creation, and all data is project-scoped. 63/63 tests passing across API, evaluator, SDK, and security groups.'
-            },
-            'raft': {
-                title: 'RAFT ArXiv',
-                problem: 'Standard RAG has a hidden flaw — the LLM is never trained to use retrieved documents. It hallucinates, ignores context, or gets confused when irrelevant chunks are mixed in.',
-                solution: 'Implemented RAFT (Retrieval-Augmented Fine-Tuning) end-to-end on 200 ArXiv ML/AI papers. Fine-tuned Microsoft phi-2 using QLoRA with a custom training dataset where each example teaches the model to cite retrieved chunks.',
-                impact: 'RAFT outperformed vanilla RAG across every metric — +77% precision, +14.6% faithfulness, +5.1% correctness. Discovered that standard F1 metrics are biased toward verbose hallucinations.'
-            },
-            'multiagent': {
-                title: 'Multi-Agent Research Pipeline',
-                problem: 'Complex research questions require breaking down into subtasks, gathering evidence, quality checking, and synthesizing insights — a process that is time-consuming and error-prone when done manually.',
-                solution: 'Built an orchestrated multi-agent system using LangGraph with specialized agents: a planner decomposes questions into subtasks, workers research each subtask via Tavily web search, a critic evaluates and requests revisions (up to 2 iterations), and a final agent synthesizes polished reports. Exposes three interfaces: CLI, FastAPI backend, and Streamlit UI.',
-                impact: 'Demonstrates expertise in agent orchestration, state management, and scalable AI systems. Showcases production-grade architecture with multiple deployment options.'
-            },
-            'localrag': {
-                title: 'Local_RAG_Assistant',
-                problem: 'Companies cannot upload sensitive documents to public cloud LLMs due to privacy concerns.',
-                solution: 'Designed a fully offline RAG system using local open-source models (via Ollama) and a local Vector Database.',
-                impact: 'Enables secure document querying without data ever leaving the local machine, critical for enterprise privacy.'
-            },
-            'mcp': {
-                title: 'Mcp_agent_browser',
-                problem: 'Web scraping scripts break easily when UI changes, requiring constant maintenance.',
-                solution: 'Created an autonomous agent using Playwright and LLMs. You give it a goal (e.g., "Find the price of X"), and it intelligently figures out which buttons to click and inputs to fill.',
-                impact: 'Created robust, self-healing automation workflows that save hours of manual data entry.'
-            },
-            'medical': {
-                title: 'medical-diagnosis-agent',
-                problem: 'General LLMs often hallucinate when asked for specific medical advice.',
-                solution: 'Built a Retrieval Augmented Generation (RAG) system using LangChain. It retrieves context from a curated database of medical papers before answering, ensuring citations.',
-                impact: 'Reduced hallucination rate and provided evidence-backed answers, showcasing ability to build reliable AI systems.'
-            },
-            'explain': {
-                title: 'explain-my-model',
-                problem: 'Machine Learning models are often "black boxes," making it hard for stakeholders to trust their predictions.',
-                solution: 'Developed an interactive dashboard using SHAP (Shapley Additive exPlanations). Users can upload a model and dataset to see exactly which features drove specific predictions.',
-                impact: 'Improved model transparency and stakeholder trust. Essential for regulated industries like finance and healthcare.'
-            },
-            'blog2pod': {
-                title: 'Blog_to_Podcast',
-                problem: 'Reading long technical articles takes time and focus that many busy professionals lack.',
-                solution: 'Built an automated pipeline using Streamlit. It takes a URL, scrapes the text, summarizes it using GPT-4, and converts the summary into natural-sounding audio using a TTS API.',
-                impact: 'Increases content accessibility and allows consumption on-the-go. Demonstrated proficiency in API integration and Generative AI workflows.'
-            }
-        };
-
-        function openModal(id) {
-            const data = projectData[id];
-            if (!data) return;
-            document.getElementById('modalBody').innerHTML = `
-                <h2>${data.title}</h2>
-                <div class="modal-section"><h4>The Problem</h4><p>${data.problem}</p></div>
-                <div class="modal-section"><h4>The Solution</h4><p>${data.solution}</p></div>
-                <div class="modal-section"><h4>Impact</h4><p>${data.impact}</p></div>`;
-            const m = document.getElementById('projectModal');
-            m.style.display = 'flex';
-            setTimeout(() => m.classList.add('open'), 10);
-        }
-
-        function closeModal() {
-            const m = document.getElementById('projectModal');
-            m.classList.remove('open');
-            setTimeout(() => m.style.display = 'none', 300);
-        }
-
-        document.getElementById('projectModal').addEventListener('click', (e) => {
-            if (e.target === document.getElementById('projectModal')) closeModal();
-        });
-
-        // 3. MISC
-        document.getElementById('year').textContent = new Date().getFullYear();
-
-        const roles = ["Data Scientist.", "ML Engineer.", "AI Enthusiast."];
-        let rI = 0, cI = 0, isDel = false;
-        function type() {
-            const txt = roles[rI];
-            document.getElementById('typewriter').textContent = txt.substring(0, isDel ? cI - 1 : cI + 1);
-            cI = isDel ? cI - 1 : cI + 1;
-            let spd = isDel ? 50 : 100;
-            if (!isDel && cI === txt.length) { spd = 2000; isDel = true; }
-            else if (isDel && cI === 0) { isDel = false; rI = (rI + 1) % roles.length; }
-            setTimeout(type, spd);
-        }
-        document.addEventListener('DOMContentLoaded', type);
-
-        const tog = document.getElementById('theme-toggle');
-        tog.addEventListener('click', () => {
-            const h = document.documentElement;
-            const i = tog.querySelector('i');
-            if (h.getAttribute('data-theme') === 'light') { h.setAttribute('data-theme', 'dark'); i.className = 'fas fa-sun'; }
-            else { h.setAttribute('data-theme', 'light'); i.className = 'fas fa-moon'; }
-        });
-
-        const obs = new IntersectionObserver((e) => e.forEach(x => x.isIntersecting && x.target.classList.add('active')));
-        document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
-
-        document.getElementById('contactForm').addEventListener('submit', (e) => {
-            e.preventDefault();
-            const n = document.getElementById('name').value;
-            const em = document.getElementById('email').value;
-            const m = document.getElementById('message').value;
-            window.location.href = `mailto:vattikutianvith@gmail.com?subject=Portfolio: ${n}&body=Name: ${n}%0D%0AEmail: ${em}%0D%0A%0D%0A${m}`;
-        });
-
-        // 4. CHATBOT
-        const cIcon = document.getElementById('chatbot-icon');
-        const cWin = document.getElementById('chatbot-window');
-        const cInp = document.getElementById('chat-input');
-        const cLoad = document.getElementById('loading-indicator');
-
-        cIcon.onclick = () => { cWin.style.display = 'flex'; cIcon.style.display = 'none'; setTimeout(() => cInp.focus(), 100); };
-        document.getElementById('close-chatbot').onclick = () => { cWin.style.display = 'none'; cIcon.style.display = 'flex'; };
-
-        function addMsg(t, s) {
-            const d = document.createElement('div');
-            d.className = `chat-message ${s}`;
-            if (s === 'bot' && typeof marked !== 'undefined') d.innerHTML = marked.parse(t);
-            else d.textContent = t;
-            document.getElementById('chat-messages').append(d);
-            document.getElementById('chat-messages').scrollTop = document.getElementById('chat-messages').scrollHeight;
-        }
-
-        addMsg("Hi! Ask me about Krishna's projects, skills, or experience.", 'bot');
-
-        const responses = {
-            "agentwatch":   "**AgentWatch** is Krishna's full-stack AI observability platform — a Python SDK + FastAPI backend + React dashboard that monitors agent runs, captures traces, and auto-evaluates quality (pass/warning/fail). 63/63 tests passing. Check it out on [GitHub](https://github.com/AnvithAnvi/AgentWatch).",
-            "projects":     "Krishna has built **AgentWatch** (AI observability), **RAFT ArXiv** (fine-tuning), **Multi-Agent Pipeline** (LangGraph), **Local RAG Assistant**, **Medical Diagnosis Agent**, **MCP Browser Agent**, **explain-my-model** (XAI), and **Blog_to_Podcast**.",
-            "skills":       "Key skills: **Python**, **RAG**, **LLMs**, **LangChain**, **LangGraph**, **FastAPI**, **Playwright**, **Docker**, **QLoRA/PEFT**, **Hugging Face**, **SHAP**, **Vector DBs**, **PyTorch**, and **Ollama**.",
-            "education":    "Krishna holds an **MS in Data Science from NJIT** (Aug 2024–Present) and a **BS in Computer Science from LPU** (Aug 2020–May 2024) with an AI/ML specialisation.",
-            "experience":   "**AI/ML Intern at UpGrad** (Jan–Apr 2024): HAR pipeline with 97.5% accuracy. **Computer Vision & IoT Intern at TekWissen** (May–Aug 2023): plant disease detection at 7.2 ms latency on edge devices.",
-            "email":        "📧 **vattikutianvith@gmail.com** — feel free to reach out!",
-            "contact":      "📧 **vattikutianvith@gmail.com** · 💼 [LinkedIn](https://linkedin.com/in/anvithvattikuti)",
-            "default":      "I'm here to help! Ask me about Krishna's **projects**, **skills**, **education**, **experience**, or **contact** info."
-        };
-
-        function getResponse(input) {
-            const lower = input.toLowerCase();
-            for (const [key, response] of Object.entries(responses)) {
-                if (key !== 'default' && lower.includes(key)) return response;
-            }
-            return responses.default;
-        }
-
-        async function send() {
-            const v = cInp.value.trim();
-            if (!v) return;
-            addMsg(v, 'user');
-            cInp.value = '';
-            cLoad.style.display = 'block';
-            setTimeout(() => {
-                addMsg(getResponse(v), 'bot');
-                cLoad.style.display = 'none';
-            }, 500);
-        }
-
-        document.getElementById('send-button').onclick = send;
-        cInp.addEventListener('keypress', (e) => { if (e.key === 'Enter') send(); });
-    </script>
+<div class="aurora" aria-hidden="true"><i></i><i></i><i></i></div><div class="glow" id="glow" aria-hidden="true"></div>
+<div id="progress" aria-hidden="true"></div>
+<header class="top"><div class="wrap"><div class="pill">
+<a class="brand" href="index.html"><span class="full">Krishna Anvith Vattikuti</span><span class="short">Anvith V.</span></a>
+<nav id="nav" aria-label="Primary"><a href="index.html" aria-current="page">Home<span class="ind"></span></a><a href="experience.html">Experience</a><a href="projects.html">Projects</a><a href="lab.html">Lab</a><a href="about.html">About</a></nav>
+<div class="hright"><a class="btn-mini" href="Krishna_Anvith_Vattikuti_Resume.pdf">Resume</a><button class="theme" id="theme" type="button">Dark</button></div>
+</div></div></header>
+<main>
+<section class="hero"><div class="wrap hero-grid">
+<div class="hero-copy">
+<div class="status"><p class="eyebrow mono"><span class="dot"></span>Working now: AI/ML Engineering Intern at Enclavia AI</p><p class="eyebrow open mono"><span class="dot"></span>Open to opportunities</p></div>
+<h1 id="headline"><span class="ln"><span style="--i:0">I build</span></span><span class="ln"><span style="--i:1"><span class="rot" id="rot"><span>LLM systems</span><span>AI agents</span><span>RAG pipelines</span></span></span></span><span class="ln"><span style="--i:2">and test them.</span></span></h1>
+<p class="lede">RAG pipelines, QLoRA fine-tuning, tool-calling agents and evaluation frameworks.</p>
+<div class="ctas"><a class="btn primary" href="mailto:vattikutianvith@gmail.com">Email me</a><a class="btn ghost" href="projects.html">See projects</a></div>
+</div>
+<div class="hero-side"><div class="term" aria-hidden="true">
+<div class="term-bar mono"><i></i><i></i><i></i><span>agent.trace</span></div>
+<ul class="log mono">
+<li style="--i:0"><span>run_01 &middot; agent.plan</span><span class="t">212ms</span></li>
+<li class="sp" style="--i:1;--in:16px"><span>&#9492; tool.navigate "pricing"</span><span class="ok">ok 88ms</span></li>
+<li class="sp" style="--i:2;--in:16px"><span>&#9492; tool.click "Sign in"</span><span class="ok">ok 64ms</span></li>
+<li class="sp" style="--i:3;--in:16px"><span>&#9492; tool.extract table.prices</span><span class="ok">ok 140ms</span></li>
+<li class="sp" style="--i:4;--in:16px"><span>&#9492; tool.fill "email"</span><span class="warn">timeout 3.1s</span></li>
+<li style="--i:5"><span>eval &middot; empty_output</span><span class="ok">pass</span></li>
+<li class="evals" style="--i:6"><span>eval &middot; slow_response</span><span class="warn">flagged</span></li>
+</ul>
+<div class="term-foot mono">sample trace, illustrative <span class="caret"></span></div>
+</div></div>
+</div></section>
+<section class="block"><div class="wrap">
+<div class="sec-head"><h2 class="rv">Selected <em>work</em></h2><a class="rv" href="projects.html">All projects &rarr;</a></div>
+<div class="cards"><article class="pcard spot" style="--n:0"><div class="info"><div class="num mono">01 / Jun 2026</div><h3 class="layer-agents"><a href="agentwatch.html">AgentWatch</a></h3><p>Observability and evaluation for AI agents. A Python SDK records every run and a dashboard lets engineers inspect tool calls. Rule-based evals flag failed runs, slow responses, empty outputs and tool errors.</p><div class="tags mono"><span>Agent tracing</span><span>Rule-based evals</span><span>Python SDK</span><span>FastAPI</span></div><div class="plinks"><a href="agentwatch.html">Case study</a><a href="https://github.com/AnvithAnvi/AgentWatch">GitHub</a></div></div><div class="viz" aria-hidden="true"><div class="v-aw"><div style="--d:0s;width:90%"></div><div style="--d:.25s;width:62%"></div><div style="--d:.5s;width:78%"></div><div style="--d:.75s;width:40%"></div><div style="--d:1s;width:96%"></div><div style="--d:1.25s;width:55%"></div><span class="flag mono">flagged: slow_response</span></div></div></article><article class="pcard spot" style="--n:1"><div class="info"><div class="num mono">02 / Mar 2026</div><h3 class="layer-llm"><a href="raft-arxiv.html">RAFT ArXiv</a></h3><p>Phi-2 fine-tuned with QLoRA on a QA set built from 200 ArXiv papers, trained to cite the right passage and refuse unsupported answers, then compared with Llama-3 side by side.</p><div class="tags mono"><span>Phi-2</span><span>QLoRA</span><span>RAFT</span><span>RAG evaluation</span></div><div class="plinks"><a href="raft-arxiv.html">Case study</a><a href="https://github.com/AnvithAnvi/raft-arxiv">GitHub</a></div></div><div class="viz" aria-hidden="true"><div class="v-raft"><p>Distractor passage about an unrelated paper&hellip;</p><p class="hit">Oracle passage that contains the answer&hellip;</p><p>Another distractor, loosely related&hellip;</p><p class="hit">Second supporting passage&hellip;</p><p>Distractor&hellip;</p></div></div></article><article class="pcard spot" style="--n:2"><div class="info"><div class="num mono">03 / Nov 2025</div><h3 class="layer-llm"><a href="mcp-agent-browser.html">MCP Agent Browser</a></h3><p>An LLM agent that turns plain-language instructions into click, fill, navigate and extract actions with LangChain ReAct and Playwright, tested across 20+ real workflows.</p><div class="tags mono"><span>LangChain ReAct</span><span>Playwright</span><span>Tool calling</span></div><div class="plinks"><a href="mcp-agent-browser.html">Case study</a><a href="https://github.com/AnvithAnvi/Mcp_agent_browser">GitHub</a></div></div><div class="viz" aria-hidden="true"><div class="v-mcp"><div class="f"></div><div class="f"></div><div class="f"></div><div class="go-btn">Submit</div><div class="cur"></div></div></div></article></div>
+</div></section>
+<section class="block" style="padding-top:0"><div class="wrap"><div class="try rv spot">
+<div><span class="kicker mono">The lab</span><h2>Don't take my word. <em>Ask it.</em></h2><p class="lede" style="margin-bottom:0">A retrieval-and-evals demo running in your browser: it answers from my résumé with citations, refuses when it can't, and shows its own trace and eval scores.</p></div>
+<div><form action="lab.html" method="get" class="askrow"><input name="q" aria-label="Ask a question about Anvith" placeholder="Which model did he fine-tune?" autocomplete="off"><button type="submit">Ask</button></form>
+<div class="qchips"><a href="lab.html?q=What%20is%20his%20favorite%20food%3F">What is his favorite food?</a><a href="lab.html?q=How%20accurate%20was%20the%20activity%20recognition%20model%3F">How accurate was the HAR model?</a><a href="lab.html?q=Which%20vector%20database%20does%20he%20use%3F">Which vector database?</a></div></div>
+</div></div></section>
+<section class="block" style="padding-top:0"><div class="wrap">
+<div class="sec-head"><h2 class="rv">Career, as a <em>trace</em></h2></div>
+<div class="trace spot" id="trace">
+<div class="trace-head"><div class="trace-title">Career trace, May 2023 to now</div>
+<div class="legend"><span><i style="background:var(--agents)"></i>Agents and evals</span><span><i style="background:var(--llm)"></i>LLM systems</span><span><i style="background:var(--ml)"></i>Applied ML</span><span><i style="background:var(--study)"></i>Study</span></div></div>
+<div class="axis mono"><div></div><div class="ticks" id="ticks"></div></div>
+<div class="rows" id="rows"></div>
+<div class="detail" id="detail" aria-live="polite"></div>
+<p class="hint">Click a bar to see what that span was.</p>
+</div>
+</div></section>
+<section class="block" style="padding-top:0"><div class="wrap">
+<div class="sec-head"><h2 class="rv">Where I have <em>worked</em></h2><a class="rv" href="experience.html">Full experience &rarr;</a></div>
+<div class="xteaser rv">
+<a class="xt" href="experience.html#enclavia"><span class="d mono">Sep 2026 to now</span><span class="r">AI/ML Engineering Intern</span><span class="c">Enclavia AI</span></a>
+<a class="xt" href="experience.html#upgrad"><span class="d mono">Jan to May 2024</span><span class="r">Data Science Intern</span><span class="c">UpGrad</span></a>
+<a class="xt" href="experience.html#tekwissen"><span class="d mono">May to Aug 2023</span><span class="r">Computer Vision &amp; IoT Summer Intern</span><span class="c">TekWissen</span></a>
+</div></div></section>
+<section class="contact"><div class="wrap">
+<h2>Hiring for an AI/ML role?</h2>
+<p>I'm looking for entry-level AI/ML engineering roles, especially LLM systems, RAG, agents and evaluation. Email is the fastest way to reach me.</p>
+<a class="email" href="mailto:vattikutianvith@gmail.com">vattikutianvith@gmail.com</a>
+<div class="links"><a href="https://linkedin.com/in/anvithvattikuti">LinkedIn</a><a href="https://github.com/AnvithAnvi">GitHub</a><a href="Krishna_Anvith_Vattikuti_Resume.pdf">Resume (PDF)</a></div>
+</div></section>
+</main>
+<footer class="site"><div class="wrap">
+<span>&copy; <span id="yr">2026</span> Krishna Anvith Vattikuti</span>
+<nav aria-label="Footer"><a href="index.html">Home</a><a href="experience.html">Experience</a><a href="projects.html">Projects</a><a href="lab.html">Lab</a><a href="about.html">About</a><a href="https://github.com/AnvithAnvi">GitHub</a><a href="https://linkedin.com/in/anvithvattikuti">LinkedIn</a></nav>
+</div></footer>
+<script src="app.js"></script>
 </body>
 </html>
