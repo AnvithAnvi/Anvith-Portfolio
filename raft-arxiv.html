@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>RAFT ArXiv | Anvith Vattikuti</title>
+<meta name="description" content="Fine-tuning a small model to cite its sources and to refuse when the answer is not in the passages.">
+<meta name="theme-color" content="#070B09">
+<meta property="og:title" content="RAFT ArXiv | Anvith Vattikuti"><meta property="og:description" content="Fine-tuning a small model to cite its sources and to refuse when the answer is not in the passages."><meta property="og:type" content="website">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 32 32%27%3E%3Crect width=%2732%27 height=%2732%27 rx=%277%27 fill=%27%23070B09%27/%3E%3Cpath d=%27M8 23 16 8l8 15M11.5 18h9%27 stroke=%27%232EE6C8%27 stroke-width=%273%27 fill=%27none%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27/%3E%3C/svg%3E">
+<script>(function(){var d=document.documentElement,t=null;try{t=localStorage.getItem('av-theme')}catch(e){}if(!t){try{t=sessionStorage.getItem('av-theme')}catch(e){}}if(!t){var m=/^av-theme:(dark|light)$/.exec(window.name||'');if(m)t=m[1]}d.setAttribute('data-theme',t==='light'?'light':'dark');d.classList.add('js');setTimeout(function(){d.classList.add('go')},2000)})()</script>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500&family=Schibsted+Grotesk:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="aurora" aria-hidden="true"><i></i><i></i><i></i></div><div class="glow" id="glow" aria-hidden="true"></div>
+<div id="progress" aria-hidden="true"></div>
+<header class="top"><div class="wrap"><div class="pill">
+<a class="brand" href="index.html"><span class="full">Krishna Anvith Vattikuti</span><span class="short">Anvith V.</span></a>
+<nav id="nav" aria-label="Primary"><a href="index.html">Home</a><a href="experience.html">Experience</a><a href="projects.html" aria-current="page">Projects<span class="ind"></span></a><a href="lab.html">Lab</a><a href="about.html">About</a></nav>
+<div class="hright"><a class="btn-mini" href="Anvith_Vattikuti_Resume.pdf">Resume</a><button class="theme" id="theme" type="button">Dark</button></div>
+</div></div></header>
+<main>
+<div class="wrap"><section class="page-hero"><a class="crumb" href="projects.html">&larr; All projects</a><h1 class="page-title layer-llm" id="headline"><span class="ln"><span style="--i:0">RAFT ArXiv</span></span></h1><p class="lede">Fine-tuning a small model to cite its sources and to refuse when the answer is not in the passages.</p></section>
+<dl class="facts spot"><div><dt>When</dt><dd>Mar 2026</dd></div><div><dt>Role</dt><dd>Solo project</dd></div><div><dt>Model</dt><dd>Phi-2 (2.7B), QLoRA</dd></div><div><dt>Data</dt><dd>QA set from 200 ArXiv papers</dd></div></dl>
+<div class="cs"><nav class="toc" aria-label="On this page"><a href="#problem">The problem</a><a href="#approach">The approach</a><a href="#refusal">Teaching it to refuse</a><a href="#eval">Evaluation</a></nav><div class="cs-body"><section id="problem"><h2>The problem</h2><p>Retrieval-augmented generation fails in two ways: the model ignores the retrieved passages, or it answers confidently when the passages do not contain the answer. I wanted a small model that does neither.</p></section><section id="approach"><h2>The approach</h2><p>I followed the RAFT recipe (retrieval-augmented fine-tuning). I built a QA dataset from 200 ArXiv papers and trained each example with an <strong>80/20 mix of oracle and distractor context</strong>, so the model learns to find the passage that matters, ignore the rest, and cite it. Phi-2 was fine-tuned with <strong>QLoRA</strong>, which keeps training feasible on modest hardware.</p></section><section id="refusal"><h2>Teaching it to refuse</h2><p>Some training questions are paired with context that does not contain the answer, and the target output is a refusal. That is what makes unsupported answers a learned behavior instead of a prompt instruction.</p></section><section id="eval"><h2>Evaluation</h2><p>A side-by-side UI compares the fine-tuned model with Llama-3 on three measures: <strong>citation precision</strong>, <strong>faithfulness</strong> and <strong>refusal accuracy</strong>. Seeing the two answers next to each other made failure cases easy to find.</p></section>
+<p><a href="https://github.com/AnvithAnvi/raft-arxiv"><strong>View the code on GitHub &rarr;</strong></a></p>
+<div class="cs-next"><a href="agentwatch.html">&larr; AgentWatch</a><a href="mcp-agent-browser.html">MCP Agent Browser &rarr;</a></div></div></div></div>
+<section class="contact"><div class="wrap">
+<h2>Questions about this project?</h2>
+<p>I'm looking for entry-level AI/ML engineering roles, especially LLM systems, RAG, agents and evaluation. Email is the fastest way to reach me.</p>
+<a class="email" href="mailto:vattikutianvith@gmail.com">vattikutianvith@gmail.com</a>
+<div class="links"><a href="https://linkedin.com/in/anvithvattikuti">LinkedIn</a><a href="https://github.com/AnvithAnvi">GitHub</a><a href="Anvith_Vattikuti_Resume.pdf">Resume (PDF)</a></div>
+</div></section>
+</main>
+<footer class="site"><div class="wrap">
+<span>&copy; <span id="yr">2026</span> Krishna Anvith Vattikuti</span>
+<nav aria-label="Footer"><a href="index.html">Home</a><a href="experience.html">Experience</a><a href="projects.html">Projects</a><a href="lab.html">Lab</a><a href="about.html">About</a><a href="https://github.com/AnvithAnvi">GitHub</a><a href="https://linkedin.com/in/anvithvattikuti">LinkedIn</a></nav>
+</div></footer>
+<script src="app.js"></script>
+</body>
+</html>
