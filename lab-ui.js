@@ -2,7 +2,7 @@
 (function () {
   'use strict';
   if (!window.Lab) return;
-  var L = Lab, d = document, tau = L.TAU;
+  var L = Lab, d = document, tau = L.TAU, split = 'test', LO = 0.2, HI = 6;
   function $(s) { return d.querySelector(s); }
   function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
   var q = $('#q'), form = $('#askform');
@@ -30,7 +30,7 @@
         (r.top.s > 0 ? '<p class="near mono">Closest passage: <a href="' + esc(r.top.d.h) + '">' + esc(r.top.d.t) + '</a>, but confidence ' + r.conf.toFixed(2) + ' is below the ' + tau.toFixed(1) + ' threshold.</p>'
           : '<p class="near mono">No passage shares a meaningful term with the question.</p>');
     }
-    html += '<div class="gauge" aria-hidden="true"><i style="width:' + Math.min(100, r.conf / 9 * 100) + '%"></i><b style="left:' + Math.min(100, tau / 9 * 100) + '%"></b></div>' +
+    html += '<div class="gauge" aria-hidden="true"><i style="width:' + Math.min(100, r.conf / HI * 100) + '%"></i><b style="left:' + Math.min(100, tau / HI * 100) + '%"></b></div>' +
       '<p class="gl mono"><span>confidence ' + r.conf.toFixed(2) + '</span><span>threshold ' + tau.toFixed(1) + '</span></p>';
     a.innerHTML = html;
     var tot = r.spans.reduce(function (s, x) { return s + x.ms; }, 0) || 1;
@@ -57,25 +57,25 @@
   var tauEl = $('#tau');
   function sweepSvg() {
     var W = 560, H = 180, pad = 28, pts = [], t;
-    for (t = 0.5; t <= 7.001; t += 0.25) { var e = L.runEval(t); pts.push([t, e.hit / e.ans, e.ref / e.neg]); }
-    function x(v) { return pad + (v - 0.5) / 6.5 * (W - pad * 2); }
+    for (t = LO; t <= HI + 0.001; t += 0.2) { var e = L.runEval(t, split); pts.push([t, e.hit / e.ans, e.ref / e.neg]); }
+    function x(v) { return pad + (v - LO) / (HI - LO) * (W - pad * 2); }
     function y(v) { return H - pad - v * (H - pad * 2); }
     function line(i, cls) { return '<polyline class="' + cls + '" fill="none" points="' + pts.map(function (p) { return x(p[0]).toFixed(1) + ',' + y(p[i]).toFixed(1); }).join(' ') + '"/>'; }
     var grid = [0, 0.5, 1].map(function (v) { return '<line class="gr" x1="' + pad + '" x2="' + (W - pad) + '" y1="' + y(v) + '" y2="' + y(v) + '"/><text x="2" y="' + (y(v) + 4) + '">' + (v * 100) + '%</text>'; }).join('');
-    var xs = [1, 2, 3, 4, 5, 6, 7].map(function (v) { return '<text x="' + (x(v) - 4) + '" y="' + (H - 8) + '">' + v + '</text>'; }).join('');
+    var xs = [1, 2, 3, 4, 5, 6].map(function (v) { return '<text x="' + (x(v) - 4) + '" y="' + (H - 8) + '">' + v + '</text>'; }).join('');
     return '<svg viewBox="0 0 ' + W + ' ' + H + '" role="img" aria-label="Answerable questions answered correctly and unanswerable questions refused, across confidence thresholds">' + grid + xs + line(1, 'l-hit') + line(2, 'l-ref') + '<line id="tmark" class="tm" y1="' + (pad - 6) + '" y2="' + (H - pad) + '"/></svg>';
   }
   function paintEval() {
-    var e = L.runEval(tau);
+    var e = L.runEval(tau, split);
     $('#tauv').textContent = tau.toFixed(1);
     $('#metrics').innerHTML =
       '<div class="m"><b>' + e.hit + '/' + e.ans + '</b><span>answerable questions answered with the right citation</span></div>' +
       '<div class="m"><b>' + e.ref + '/' + e.neg + '</b><span>unanswerable questions correctly refused</span></div>' +
-      '<div class="m"><b>' + Math.round(e.total * 100) + '%</b><span>overall on this set</span></div>';
-    var m = $('#tmark'); if (m) { var X = 28 + (tau - 0.5) / 6.5 * (560 - 56); m.setAttribute('x1', X); m.setAttribute('x2', X); }
+      '<div class="m"><b>' + Math.round(e.total * 100) + '%</b><span>overall on this question set</span></div>';
+    var m = $('#tmark'); if (m) { var X = 28 + (tau - LO) / (HI - LO) * (560 - 56); m.setAttribute('x1', X); m.setAttribute('x2', X); }
     $('#erows').innerHTML = e.rows.map(function (r) {
       var out = r.r.answered ? 'answered from [' + r.r.cites.map(function (h) { return h.d.id; }).join(', ') + ']' : 'refused';
-      var want = r.c.want ? 'expects ' + r.c.want : 'should refuse';
+      var want = r.c.want ? 'expects ' + r.c.want.join(' or ') : 'should refuse';
       return '<tr class="' + (r.pass ? 'p' : 'f') + '"><td class="mono">' + (r.pass ? 'pass' : 'FAIL') + '</td><td>' + esc(r.c.q) + '</td><td class="mono">' + want + '</td><td class="mono">' + out + '</td></tr>';
     }).join('');
     if (q && q.value) run(q.value);
@@ -84,6 +84,8 @@
     tauEl.value = tau;
     $('#sweep').innerHTML = sweepSvg();
     tauEl.addEventListener('input', function () { tau = parseFloat(tauEl.value); paintEval(); });
+    var sp = $('#split');
+    if (sp) sp.addEventListener('change', function () { split = sp.value; $('#sweep').innerHTML = sweepSvg(); paintEval(); });
     paintEval();
   }
 
