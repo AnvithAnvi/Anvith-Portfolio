@@ -49,6 +49,13 @@
     render(L.ask(text, tau));
   }
   if (form) form.addEventListener('submit', function (e) { e.preventDefault(); run(q.value); });
+  var rb = $('#rand');
+  if (rb) rb.addEventListener('click', function () {
+    /* mostly answerable questions, sometimes an out-of-scope one so the refusal is easy to see */
+    var want = Math.random() < 0.7, pool = L.DATA.filter(function (r) { return !!r.want === want && r.q !== q.value; });
+    var pick = pool[Math.floor(Math.random() * pool.length)];
+    q.value = pick.q; run(pick.q);
+  });
   Array.prototype.forEach.call(d.querySelectorAll('[data-q]'), function (b) {
     b.addEventListener('click', function () { q.value = b.getAttribute('data-q'); run(q.value); });
   });

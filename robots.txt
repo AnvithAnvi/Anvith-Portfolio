@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+Disallow: /Anvith-Portfolio/archive/
+Disallow: /Anvith-Portfolio/lab-eval/
+
+Sitemap: https://anvithanvi.github.io/Anvith-Portfolio/sitemap.xml

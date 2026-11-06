@@ -3738,5 +3738,606 @@
   "kind": "neg",
   "key": "HOLD",
   "split": "holdout"
+ },
+ {
+  "q": "What does his internship at Enclavia involve?",
+  "want": [
+   "p1",
+   "p2",
+   "p3",
+   "p4"
+  ],
+  "kind": "pos",
+  "key": "EXT",
+  "split": "train"
+ },
+ {
+  "q": "Is the guardrail relevance score used to block answers?",
+  "want": [
+   "p3"
+  ],
+  "kind": "pos",
+  "key": "EXT",
+  "split": "train"
+ },
+ {
+  "q": "What format are the uploaded wireframes in?",
+  "want": [
+   "p4"
+  ],
+  "kind": "pos",
+  "key": "EXT",
+  "split": "train"
+ },
+ {
+  "q": "What is DuckDB used for in his work?",
+  "want": [
+   "p2"
+  ],
+  "kind": "pos",
+  "key": "EXT",
+  "split": "dev"
+ },
+ {
+  "q": "Which time-series signals did the UpGrad model classify?",
+  "want": [
+   "p7",
+   "p6"
+  ],
+  "kind": "pos",
+  "key": "EXT",
+  "split": "train"
+ },
+ {
+  "q": "Did the preprocessing speedup come from feature engineering?",
+  "want": [
+   "p7"
+  ],
+  "kind": "pos",
+  "key": "EXT",
+  "split": "train"
+ },
+ {
+  "q": "How was the plant disease model made fast enough for edge devices?",
+  "want": [
+   "p8",
+   "p9"
+  ],
+  "kind": "pos",
+  "key": "EXT",
+  "split": "train"
+ },
+ {
+  "q": "How does he deal with class imbalance?",
+  "want": [
+   "p9"
+  ],
+  "kind": "pos",
+  "key": "EXT",
+  "split": "dev"
+ },
+ {
+  "q": "What does the AgentWatch SDK record?",
+  "want": [
+   "p10"
+  ],
+  "kind": "pos",
+  "key": "EXT",
+  "split": "train"
+ },
+ {
+  "q": "Which storage layer does AgentWatch use?",
+  "want": [
+   "p10"
+  ],
+  "kind": "pos",
+  "key": "EXT",
+  "split": "train"
+ },
+ {
+  "q": "What kinds of failures does AgentWatch catch automatically?",
+  "want": [
+   "p11"
+  ],
+  "kind": "pos",
+  "key": "EXT",
+  "split": "train"
+ },
+ {
+  "q": "How many papers did RAFT start from?",
+  "want": [
+   "p12"
+  ],
+  "kind": "pos",
+  "key": "EXT",
+  "split": "dev"
+ },
+ {
+  "q": "Why does the RAFT model sometimes say it does not know?",
+  "want": [
+   "p12"
+  ],
+  "kind": "pos",
+  "key": "EXT",
+  "split": "train"
+ },
+ {
+  "q": "What does the side-by-side RAFT UI compare?",
+  "want": [
+   "p13"
+  ],
+  "kind": "pos",
+  "key": "EXT",
+  "split": "train"
+ },
+ {
+  "q": "What can the browser agent click or fill?",
+  "want": [
+   "p14"
+  ],
+  "kind": "pos",
+  "key": "EXT",
+  "split": "train"
+ },
+ {
+  "q": "Which kind of step errors carry through in the browser agent?",
+  "want": [
+   "p15"
+  ],
+  "kind": "pos",
+  "key": "EXT",
+  "split": "dev"
+ },
+ {
+  "q": "Does he have a multi-agent research project?",
+  "want": [
+   "p16"
+  ],
+  "kind": "pos",
+  "key": "EXT",
+  "split": "train"
+ },
+ {
+  "q": "Where did he go for his bachelor's in India?",
+  "want": [
+   "p17"
+  ],
+  "kind": "pos",
+  "key": "EXT",
+  "split": "train"
+ },
+ {
+  "q": "Which Python libraries for data does he use?",
+  "want": [
+   "p24"
+  ],
+  "kind": "pos",
+  "key": "EXT",
+  "split": "train"
+ },
+ {
+  "q": "Does he work with local LLMs?",
+  "want": [
+   "p18",
+   "p16"
+  ],
+  "kind": "pos",
+  "key": "EXT",
+  "split": "dev"
+ },
+ {
+  "q": "Which certificates does he hold?",
+  "want": [
+   "p20"
+  ],
+  "kind": "pos",
+  "key": "EXT",
+  "split": "train"
+ },
+ {
+  "q": "Would he consider a full-time role?",
+  "want": [
+   "p21"
+  ],
+  "kind": "pos",
+  "key": "EXT",
+  "split": "train"
+ },
+ {
+  "q": "Where can I see his projects on GitHub?",
+  "want": [
+   "p23",
+   "p16"
+  ],
+  "kind": "pos",
+  "key": "EXT",
+  "split": "train"
+ },
+ {
+  "q": "What is his background in one sentence?",
+  "want": [
+   "p22"
+  ],
+  "kind": "pos",
+  "key": "EXT",
+  "split": "dev"
+ },
+ {
+  "q": "Did he work at Apple?",
+  "want": null,
+  "kind": "neg",
+  "key": "EXT",
+  "split": "train"
+ },
+ {
+  "q": "Did he intern at Tesla?",
+  "want": null,
+  "kind": "neg",
+  "key": "EXT",
+  "split": "train"
+ },
+ {
+  "q": "Has he worked at IBM?",
+  "want": null,
+  "kind": "neg",
+  "key": "EXT",
+  "split": "train"
+ },
+ {
+  "q": "Did he work at Netflix?",
+  "want": null,
+  "kind": "neg",
+  "key": "EXT",
+  "split": "dev"
+ },
+ {
+  "q": "Did he work at Nvidia?",
+  "want": null,
+  "kind": "neg",
+  "key": "EXT",
+  "split": "train"
+ },
+ {
+  "q": "Did he intern at Stripe?",
+  "want": null,
+  "kind": "neg",
+  "key": "EXT",
+  "split": "train"
+ },
+ {
+  "q": "Does he work at Google now?",
+  "want": null,
+  "kind": "neg",
+  "key": "EXT",
+  "split": "train"
+ },
+ {
+  "q": "Does he know Vertex AI?",
+  "want": null,
+  "kind": "neg",
+  "key": "EXT",
+  "split": "dev"
+ },
+ {
+  "q": "Has he used SageMaker?",
+  "want": null,
+  "kind": "neg",
+  "key": "EXT",
+  "split": "train"
+ },
+ {
+  "q": "Does he know LlamaIndex?",
+  "want": null,
+  "kind": "neg",
+  "key": "EXT",
+  "split": "train"
+ },
+ {
+  "q": "Does he use FAISS?",
+  "want": null,
+  "kind": "neg",
+  "key": "EXT",
+  "split": "train"
+ },
+ {
+  "q": "Does he know Qdrant?",
+  "want": null,
+  "kind": "neg",
+  "key": "EXT",
+  "split": "dev"
+ },
+ {
+  "q": "Does he know Milvus?",
+  "want": null,
+  "kind": "neg",
+  "key": "EXT",
+  "split": "train"
+ },
+ {
+  "q": "Does he know vLLM?",
+  "want": null,
+  "kind": "neg",
+  "key": "EXT",
+  "split": "train"
+ },
+ {
+  "q": "Does he know ONNX?",
+  "want": null,
+  "kind": "neg",
+  "key": "EXT",
+  "split": "train"
+ },
+ {
+  "q": "Does he know CUDA?",
+  "want": null,
+  "kind": "neg",
+  "key": "EXT",
+  "split": "dev"
+ },
+ {
+  "q": "Has he used Ray?",
+  "want": null,
+  "kind": "neg",
+  "key": "EXT",
+  "split": "train"
+ },
+ {
+  "q": "Does he know LangSmith?",
+  "want": null,
+  "kind": "neg",
+  "key": "EXT",
+  "split": "train"
+ },
+ {
+  "q": "Does he know Weights and Biases?",
+  "want": null,
+  "kind": "neg",
+  "key": "EXT",
+  "split": "train"
+ },
+ {
+  "q": "Does he know MLflow?",
+  "want": null,
+  "kind": "neg",
+  "key": "EXT",
+  "split": "dev"
+ },
+ {
+  "q": "Does he know Grafana?",
+  "want": null,
+  "kind": "neg",
+  "key": "EXT",
+  "split": "train"
+ },
+ {
+  "q": "Does he know Prometheus?",
+  "want": null,
+  "kind": "neg",
+  "key": "EXT",
+  "split": "train"
+ },
+ {
+  "q": "Does he know OpenTelemetry?",
+  "want": null,
+  "kind": "neg",
+  "key": "EXT",
+  "split": "train"
+ },
+ {
+  "q": "Does he use Datadog?",
+  "want": null,
+  "kind": "neg",
+  "key": "EXT",
+  "split": "dev"
+ },
+ {
+  "q": "Does he know TypeScript?",
+  "want": null,
+  "kind": "neg",
+  "key": "EXT",
+  "split": "train"
+ },
+ {
+  "q": "Does he know Next.js?",
+  "want": null,
+  "kind": "neg",
+  "key": "EXT",
+  "split": "train"
+ },
+ {
+  "q": "Does he know Django?",
+  "want": null,
+  "kind": "neg",
+  "key": "EXT",
+  "split": "train"
+ },
+ {
+  "q": "Does he know Flask?",
+  "want": null,
+  "kind": "neg",
+  "key": "EXT",
+  "split": "dev"
+ },
+ {
+  "q": "Does he know Kotlin?",
+  "want": null,
+  "kind": "neg",
+  "key": "EXT",
+  "split": "train"
+ },
+ {
+  "q": "Does he know MATLAB?",
+  "want": null,
+  "kind": "neg",
+  "key": "EXT",
+  "split": "train"
+ },
+ {
+  "q": "Does he know Elasticsearch?",
+  "want": null,
+  "kind": "neg",
+  "key": "EXT",
+  "split": "train"
+ },
+ {
+  "q": "Does he have an MBA?",
+  "want": null,
+  "kind": "neg",
+  "key": "EXT",
+  "split": "dev"
+ },
+ {
+  "q": "Did he study at Stanford?",
+  "want": null,
+  "kind": "neg",
+  "key": "EXT",
+  "split": "train"
+ },
+ {
+  "q": "Does he have a Ph.D. in machine learning?",
+  "want": null,
+  "kind": "neg",
+  "key": "EXT",
+  "split": "train"
+ },
+ {
+  "q": "Did he lead a team at Enclavia?",
+  "want": null,
+  "kind": "neg",
+  "key": "EXT",
+  "split": "train"
+ },
+ {
+  "q": "Has he published on arXiv?",
+  "want": null,
+  "kind": "neg",
+  "key": "EXT",
+  "split": "dev"
+ },
+ {
+  "q": "Did he win a Kaggle competition?",
+  "want": null,
+  "kind": "neg",
+  "key": "EXT",
+  "split": "train"
+ },
+ {
+  "q": "Has he taught a class?",
+  "want": null,
+  "kind": "neg",
+  "key": "EXT",
+  "split": "train"
+ },
+ {
+  "q": "Has he mentored interns?",
+  "want": null,
+  "kind": "neg",
+  "key": "EXT",
+  "split": "train"
+ },
+ {
+  "q": "Did he work on self-driving cars?",
+  "want": null,
+  "kind": "neg",
+  "key": "EXT",
+  "split": "dev"
+ },
+ {
+  "q": "Has he built a trading bot?",
+  "want": null,
+  "kind": "neg",
+  "key": "EXT",
+  "split": "train"
+ },
+ {
+  "q": "Did he do research at NJIT?",
+  "want": null,
+  "kind": "neg",
+  "key": "EXT",
+  "split": "train"
+ },
+ {
+  "q": "How much did the activity recognition project cost?",
+  "want": null,
+  "kind": "neg",
+  "key": "EXT",
+  "split": "train"
+ },
+ {
+  "q": "Who funded AgentWatch?",
+  "want": null,
+  "kind": "neg",
+  "key": "EXT",
+  "split": "dev"
+ },
+ {
+  "q": "How many users does AgentWatch have?",
+  "want": null,
+  "kind": "neg",
+  "key": "EXT",
+  "split": "train"
+ },
+ {
+  "q": "How many GitHub stars does RAFT have?",
+  "want": null,
+  "kind": "neg",
+  "key": "EXT",
+  "split": "train"
+ },
+ {
+  "q": "What license does AgentWatch use?",
+  "want": null,
+  "kind": "neg",
+  "key": "EXT",
+  "split": "train"
+ },
+ {
+  "q": "What GPUs did he train Phi-2 on?",
+  "want": null,
+  "kind": "neg",
+  "key": "EXT",
+  "split": "dev"
+ },
+ {
+  "q": "How long did the browser agent project take?",
+  "want": null,
+  "kind": "neg",
+  "key": "EXT",
+  "split": "train"
+ },
+ {
+  "q": "How many people worked on AgentWatch?",
+  "want": null,
+  "kind": "neg",
+  "key": "EXT",
+  "split": "train"
+ },
+ {
+  "q": "What was the budget for the plant disease project?",
+  "want": null,
+  "kind": "neg",
+  "key": "EXT",
+  "split": "train"
+ },
+ {
+  "q": "Which cloud did Enclavia deploy on?",
+  "want": null,
+  "kind": "neg",
+  "key": "EXT",
+  "split": "dev"
+ },
+ {
+  "q": "Which customers does Enclavia have?",
+  "want": null,
+  "kind": "neg",
+  "key": "EXT",
+  "split": "train"
+ },
+ {
+  "q": "What is Enclavia's revenue?",
+  "want": null,
+  "kind": "neg",
+  "key": "EXT",
+  "split": "train"
  }
 ]

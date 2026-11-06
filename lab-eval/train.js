@@ -17,9 +17,9 @@ const pick = a => a[Math.floor(R() * a.length)];
 
 const SPACE = {
   k1: [0.6, 0.9, 1.2, 1.5, 2.0, 2.5], b: [0, 0.25, 0.5, 0.75, 1], tw: [0, 1, 2, 3], aw: [0, 0.3, 0.6, 1, 1.5],
-  stem: [0, 1, 2], syn: [0, 1, 2], r2: [0.6, 0.75, 0.9, 2], T: [5, 7, 10, 999], fdf: [0.2, 0.4, 1], g: [1, 1.5, 2, 3], mc: [0, 0.3, 0.4, 0.5, 0.6]
+  stem: [0, 1, 2], syn: [0, 1, 2], r2: [0.6, 0.75, 0.9, 2], T: [5, 7, 10, 999], fdf: [0.2, 0.4, 1], g: [1, 1.5, 2, 3], mc: [0, 0.3, 0.4, 0.5, 0.6], cap: [0, 1], um: [99, 4, 3, 2]
 };
-const BASELINE = { k1: 1.5, b: 0.75, tw: 2, aw: 0, stem: 1, syn: 1, r2: 0.75, T: 999, fdf: 1, g: 1, mc: 0 };
+const BASELINE = { k1: 1.5, b: 0.75, tw: 2, aw: 0, stem: 1, syn: 1, r2: 0.75, T: 999, fdf: 1, g: 1, mc: 0, cap: 0, um: 99 };
 
 /* learn query filler words and passage aliases from labelled rows */
 function learn(cfg, rows) {
@@ -41,7 +41,7 @@ function learn(cfg, rows) {
 }
 function model(cfg, tau, rows) {
   const l = learn(cfg, rows);
-  const params = { k1: cfg.k1, b: cfg.b, tw: cfg.tw, aw: cfg.aw, stem: cfg.stem, syn: cfg.syn, r2: cfg.r2, g: cfg.g, mc: cfg.mc };
+  const params = { k1: cfg.k1, b: cfg.b, tw: cfg.tw, aw: cfg.aw, stem: cfg.stem, syn: cfg.syn, r2: cfg.r2, g: cfg.g, mc: cfg.mc, cap: cfg.cap, um: cfg.um };
   return { tau, params, filler: l.filler, aliases: l.aliases, cfg };
 }
 function scoreAll(M, rows) { const e = Lab.build(Lab.DOCS, M); return rows.map(r => ({ r, s: e.score(r.q), e })); }
@@ -105,7 +105,7 @@ const wrong = tScored.filter(x => { const s = x.e.finish(Object.assign({}, x.s),
 if (process.argv.includes('--showtest')) wrong.forEach(x => { const s = x.e.finish(Object.assign({}, x.s), finalM.tau); console.log('  miss:', x.r.q, '| want', x.r.want ? x.r.want.join('/') : 'refuse', '| got', s.answered ? s.cites.map(h => h.d.id).join(',') : 'refused', '| conf', s.conf.toFixed(2)); });
 
 const hFinal = tally(scoreAll(finalM, hold), finalM.tau), hBase = tally(scoreAll(baseM, hold), 2.0);
-console.log('\nHOLDOUT (fresh questions, scored once)  baseline:', hBase.ok + '/' + hBase.pos, hBase.ref + '/' + hBase.neg, (hBase.acc * 100).toFixed(1) + '%', ' tuned:', hFinal.ok + '/' + hFinal.pos, hFinal.ref + '/' + hFinal.neg, (hFinal.acc * 100).toFixed(1) + '%');
+console.log('\nHOLDOUT (fresh questions, never used for any setting)  baseline:', hBase.ok + '/' + hBase.pos, hBase.ref + '/' + hBase.neg, (hBase.acc * 100).toFixed(1) + '%', ' tuned:', hFinal.ok + '/' + hFinal.pos, hFinal.ref + '/' + hFinal.neg, (hFinal.acc * 100).toFixed(1) + '%');
 if (process.argv.includes('--showhold')) scoreAll(finalM, hold).forEach(x => { const s = x.e.finish(Object.assign({}, x.s), finalM.tau); const bad = x.r.want ? !(s.answered && s.cites.some(h => x.r.want.includes(h.d.id))) : s.answered; if (bad) console.log('  miss:', x.r.q, '| want', x.r.want ? x.r.want.join('/') : 'refuse', '| got', s.answered ? s.cites.map(h => h.d.id).join(',') : 'refused(top ' + s.top.d.id + ')', '| conf', s.conf.toFixed(2)); });
 if (process.argv.includes('--write')) {
   const out = { tau: finalM.tau, params: finalM.params, filler: finalM.filler, aliases: finalM.aliases };

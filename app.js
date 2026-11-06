@@ -18,7 +18,6 @@
   function paintTheme() {
     if (!tbtn) return;
     var dark = isDark();
-    tbtn.textContent = dark ? 'Light' : 'Dark';
     tbtn.setAttribute('aria-label', dark ? 'Switch to light theme' : 'Switch to dark theme');
   }
   if (tbtn) {

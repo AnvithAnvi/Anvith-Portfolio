@@ -14,7 +14,7 @@
     { id: 'p7', t: 'UpGrad: results', h: 'experience.html#upgrad', x: 'The activity recognition model reached 97.5% accuracy on accelerometer and gyroscope time series using ensemble classification and threshold tuning, which improved fall-detection reliability. Better feature engineering and model iteration workflows cut preprocessing time 30% and model-training time 20%.' },
     { id: 'p8', t: 'TekWissen internship', h: 'experience.html#tekwissen', x: 'Computer Vision and IoT Summer Intern at TekWissen, May to Aug 2023. He built a real-time plant disease detection pipeline with TensorFlow and OpenCV across 8 classes, tuned for sub-second inference on edge hardware.' },
     { id: 'p9', t: 'TekWissen: deployment', h: 'experience.html#tekwissen', x: 'He converted the vision model to TensorFlow Lite with post-training quantization for IoT devices, and automated a pipeline that generates 5,000+ synthetic training samples weekly for underrepresented classes.' },
-    { id: 'p10', t: 'AgentWatch', h: 'agentwatch.html', x: 'AgentWatch (June 2026) is an observability and tracing platform for AI agents. Its tech stack: a Python SDK records every run as spans with tool calls, latency, inputs, outputs, statuses and evaluation results, stored through SQLite and SQLAlchemy behind a FastAPI backend, and a React and Vite dashboard lets engineers monitor runs, inspect tool calls and debug failures.' },
+    { id: 'p10', t: 'AgentWatch', h: 'agentwatch.html', x: 'AgentWatch (June 2026) is an observability and tracing platform for AI agents, built with a Python SDK, a FastAPI backend, SQLite and SQLAlchemy storage and a React and Vite dashboard (its tech stack). The SDK records every run as spans with tool calls, latency, inputs, outputs, statuses and evaluation results, and the dashboard lets engineers monitor runs, inspect tool calls and debug failures.' },
     { id: 'p11', t: 'AgentWatch: evals', h: 'agentwatch.html#evals', x: 'AgentWatch runs rule-based evaluations over recorded traces from simulated agent workflows. They flag failed runs, slow responses, empty outputs and tool-execution errors, in line with eval-driven LLM engineering.' },
     { id: 'p12', t: 'RAFT ArXiv', h: 'raft-arxiv.html', x: 'RAFT ArXiv (March 2026) is retrieval-augmented fine-tuning. It fine-tunes Phi-2 (2.7B parameters) with QLoRA, a LoRA-based PEFT method, on a custom question-answer dataset built from 200 ArXiv papers, using an 80/20 mix of oracle and distractor context so the model learns to give citation-grounded answers and refuse unsupported ones.' },
     { id: 'p13', t: 'RAFT: evaluation', h: 'raft-arxiv.html#eval', x: 'A FastAPI side-by-side evaluation interface benchmarks the fine-tuned model against Llama-3 on citation precision, answer faithfulness and refusal accuracy.' },
@@ -58,6 +58,7 @@
 
   /* intent routes: a few phrasings that carry no content words ("who is he", "short bio") but clearly ask for one passage */
   var ROUTES = [
+    ['p1', /\bwhere (does|is|do) (he|anvith|krishna|you) (work|working|employed)\b|\bcurrent(ly)? (job|role|position|employer|company)\b|\bwhat (is|s) (his|your) (current )?(job|role|position|title)\b|\bwork(ing)? (right )?now\b|\bwho (does|is) (he|anvith) (work|working) (for|at)\b/i],
     ['p22', /\bwho (is|'s|s) (he|anvith|krishna|this)\b|\bwho are you\b|\bintroduce (him|yourself|anvith)\b|\b(short |quick )?bio\b|\btell me about (him|yourself|anvith|krishna)\b|\bwhat (does|do) (he|anvith|you) do\b|\bwhat (is|are|s) (his|your) (specialty|speciality|specialization|expertise|area of expertise)\b|\bfield of expertise\b|\bknown for\b|\bwhat (kind|sort|type) of (engineer|developer|person|professional)\b|\bsummar(y|ize|ise)\b/i],
     ['p23', /e-?mail|\blinkedin\b|\bcontact\b|get in touch|reach (him|out)|\bgithub (username|profile|handle|account|link)\b|\bwhere (can|do) i (find|see) (his )?(code|github)\b/i]
   ];
@@ -104,11 +105,14 @@
       }
       var top = hits[0], tot = 0, got = 0;
       qt.forEach(function (w) { var i = (df[w] ? idf(w) : MAXIDF); tot += i; if (top.e.tf[w]) got += i; });
-      var cov = route ? 1 : (tot ? got / tot : 0);
-      return { q: q, qt: qt, hits: hits, top: top, cov: cov, routed: route, conf: top.s * Math.pow(cov, P.g || 1) };
+      var cov = route ? 1 : (tot ? got / tot : 0), unseen = 0, unk = 0;
+      qt.forEach(function (w) { if (!df[w]) unseen++; });
+      /* a capitalised word (a product, employer or school) that appears nowhere in the material is a strong sign the question is out of scope */
+      q.split(/[^A-Za-z0-9+.#-]+/).forEach(function (w, i) { if (i > 0 && /^[A-Z]|[a-z][A-Z]/.test(w)) { var t = tok(w, true); if (t.length && !df[t[0]]) unk++; } });
+      return { q: q, qt: qt, hits: hits, top: top, cov: cov, routed: route, unseen: unseen, unk: unk, conf: top.s * Math.pow(cov, P.g || 1) };
     }
     function finish(r, tau) {
-      var ok = r.conf >= tau && (r.qt.length > 0 || r.routed) && r.cov >= (P.mc || 0), cites = [];
+      var ok = r.conf >= tau && (r.qt.length > 0 || r.routed) && r.cov >= (P.mc || 0) && (r.routed || (!(P.cap && r.unk > 0) && r.unseen < (P.um || 99))), cites = [];
       if (ok) { cites.push(r.top); if (P.r2 < 1.5 && r.hits[1].s >= P.r2 * r.top.s && r.hits[1].s * Math.pow(r.cov, P.g || 1) >= tau) cites.push(r.hits[1]); }
       r.answered = ok; r.cites = cites; return r;
     }
